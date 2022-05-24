@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace IALDashboard
 {
@@ -20,11 +19,14 @@ namespace IALDashboard
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/js/adminlte.min.js",
+                      "~/Scripts/js/demo.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/plugins/fontawesome-free/css/all.min.css",
+                      "~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
+                      "~/Content/dist/css/adminlte.min.css"));
         }
     }
 }
