@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "UserList";
+    var userlist = ViewBag.userlist;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container-fluid">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">user Information</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- form start -->
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>User Name</th>
+                                    <th>User Email</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (System.Data.DataRow user in userlist.Rows)
+                                    {
+                                        var uid = @user["USER_ID"];
+                                        <tr>
+                                            <td>@uid</td>
+                                            <td>@user["USER_NAME"]</td>
+                                            <td>@user["USER_EMAIL"]</td>
+                                            <td><a href="~/User/EditUser?user_id=@uid"><i class="fa fa-edit"></i> </a></td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+

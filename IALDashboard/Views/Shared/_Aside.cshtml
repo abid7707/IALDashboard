@@ -1,19 +1,39 @@
-﻿<aside class="main-sidebar sidebar-dark-primary elevation-4">
+﻿@{ 
+
+    System.Data.DataTable menuAccess = Session["menuAccess"] as System.Data.DataTable;
+    var UserName = Session["user_name"];
+    var UserId = Session["user_id"];
+    var user_image = UserId + ".jpg";
+
+    var user_image_path = Url.Content("~/Content/dist/img/" + user_image);
+
+    if (!File.Exists(user_image_path))
+    {
+        user_image_path = Url.Content("~/Content/dist/img/ifad-wave.png");
+    }
+
+}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
-        <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <img src="@(Url.Content("~/Content/dist/img/ifad-wave.png"))" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+        <span class="brand-text font-weight-light">IFAD Autos</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
+        <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="@user_image_path" class="img-circle elevation-2" alt="User Image">
+
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">
+                    @UserName
+                </a>
             </div>
         </div>
 
@@ -31,9 +51,75 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                @{
+                    if (menuAccess != null && menuAccess.Rows.Count > 0)
+                    {
+                        var mainMenu = menuAccess.Select("MENU_PARENT = 0");
+
+                        foreach (System.Data.DataRow dr in mainMenu)
+                        {
+                            var childMenu = menuAccess.Select("MENU_PARENT =" + dr["MENU_ID"]);
+                            if (childMenu.Length > 0)
+                            {
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            @dr["MENU_LABEL"]
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @{
+                                            foreach (System.Data.DataRow sm in childMenu)
+                                            {
+
+                                                <li class="nav-item">
+
+                                                    <a href="~/@sm["MENU_LINK"]" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>@sm["MENU_LABEL"]</p>
+                                                    </a>
+                                                </li>
+
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+
+
+
+                            }
+                            else
+                            {
+
+                                <li class="nav-item">
+                                    <a href="~/@dr["MENU_LINK"]" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            @dr["MENU_LABEL"]
+                                        </p>
+                                    </a>
+                                </li>
+
+                            }
+
+                        }
+
+                    }
+                }
+
+
+            </ul>
+
+
+
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
+            with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>

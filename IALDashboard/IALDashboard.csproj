@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -135,10 +136,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\BaseDataAccessLayer.cs" />
+    <Compile Include="DAL\User_DAL.cs" />
+    <Compile Include="Filters\AuthorizedUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +205,7 @@
     <Content Include="Content\dist\img\credit\visa.png" />
     <Content Include="Content\dist\img\default-150x150.png" />
     <Content Include="Content\dist\img\icons.png" />
+    <Content Include="Content\dist\img\ifad-wave.png" />
     <Content Include="Content\dist\img\photo1.png" />
     <Content Include="Content\dist\img\photo2.png" />
     <Content Include="Content\dist\img\photo3.jpg" />
@@ -208,6 +215,7 @@
     <Content Include="Content\dist\img\prod-3.jpg" />
     <Content Include="Content\dist\img\prod-4.jpg" />
     <Content Include="Content\dist\img\prod-5.jpg" />
+    <Content Include="Content\dist\img\logo.png" />
     <Content Include="Content\dist\img\user1-128x128.jpg" />
     <Content Include="Content\dist\img\user2-160x160.jpg" />
     <Content Include="Content\dist\img\user3-128x128.jpg" />
@@ -2358,6 +2366,10 @@
     <Content Include="Views\Shared\_Aside.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

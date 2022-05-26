@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Data.DataTable menuAccess = ViewBag.usermenu;
+    int menu_rows = menuAccess.Rows.Count;
+    var userinfo = ViewBag.userinfo;
+    System.Data.DataRow user = userinfo.Rows[0];
+
+}
+
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>
+
+<div class="container-fluid">
+    <!-- Info boxes -->
+    <!-- /.row -->
+    <form role="form" method="post" action="~/User/UserUpdate">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-7">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">User Information</h3>
+                        <div class="card-tools">
+
+                            <button type="submit" class="btn btn-default btn-sm">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="USER_ID">User Id</label>
+                            <input type="text" class="form-control" id="USER_ID" placeholder="User ID" name="USER_ID" required="required" readonly value='@user["USER_ID"]'>
+                        </div>
+                        <div class="form-group">
+                            <label for="USER_NAME">User Name</label>
+                            <input type="text" class="form-control" id="USER_NAME" name="USER_NAME" placeholder="User Name" required="required" value='@user["USER_NAME"]'>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" name="USER_EMAIL" placeholder="Enter email" value='@user["USER_EMAIL"]'>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Area</label>
+                            <select name="USER_AREA" class="form-control">
+                                <option value='@user["USER_AREA"]'>@user["USER_AREA"]</option>
+                                <option value="PD">PD</option>
+                                <option value="MATERIAL STORE">MATERIAL STORE</option>
+                                <option value="TANNERY">TANNERY</option>
+                                <option value="PRODUCTION">PRODUCTION</option>
+                                <option value="UNIT2">UNIT2</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-5">
+                <!-- general form elements disabled -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Menu List</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <nav class="mt-2">
+
+                            <ul>
+
+                                @{
+                                    if (menu_rows > 0) {
+                                        var mMenu = menuAccess.Select("MENU_PARENT = 0");
+
+                                        foreach (System.Data.DataRow dr in mMenu)
+                                        {
+                                            var mid = dr["MENU_ID"];
+                                            string id_u = Convert.ToString(dr["USER_ID"]);
+
+                                            var chk_state = "";
+                                            if (id_u != "")
+                                            {
+                                                chk_state = "checked";
+                                            }
+
+
+                                            var cMenu = menuAccess.Select("MENU_PARENT =" + mid);
+                                            if (cMenu != null && cMenu.Length > 0)
+                                            {
+
+
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="MENU_ID" value="@mid" @chk_state>
+                                                    <label class="form-check-label">@dr["MENU_LABEL"]</label>
+                                                </div>
+
+                                                <ul>
+                                                    @{
+                                                        foreach (System.Data.DataRow sm in cMenu)
+                                                        {
+                                                            var cm_id = sm["MENU_ID"];
+                                                            id_u = Convert.ToString(sm["USER_ID"]);
+                                                            chk_state = "";
+                                                            if (id_u != "")
+                                                            {
+                                                                chk_state = "checked";
+                                                            }
+
+                                                            <li>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" name="MENU_ID" value="@cm_id" @chk_state>
+                                                                    <label class="form-check-label">@sm["MENU_LABEL"]</label>
+                                                                </div>
+
+                                                            </li>
+
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+
+                                                        }
+                                                        else
+                                                        {
+
+                                            <li>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="MENU_ID" value="@mid" @chk_state>
+                                                    <label class="form-check-label">@dr["MENU_LABEL"]</label>
+                                                </div>
+                                            </li>
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                            </ul>
+
+                        </nav>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+            <!-- Main row -->
+    </form>
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+
+        $("document").ready(function () {
+
+
+            $("body").on("change", "#USER_ID", function () {
+                var USER_ID = $(this).val();
+                $.ajax({
+                    url: "../User/user_info",
+                    data: { "user_id": USER_ID },
+                    beforeSend: function () {
+                    },
+                    success: function (result) {
+                        var data = $.parseJSON(result);
+                        if (data.length > 0) {
+                            alert(USER_ID + " already exists.");
+                            $("#USER_ID").val("").focus();
+                        }
+
+                    }
+                })
+            })
+
+        })
+    </script>
+}
+
