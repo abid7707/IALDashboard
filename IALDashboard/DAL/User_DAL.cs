@@ -217,31 +217,6 @@ namespace IALDashboard.DAL
         }
 
 
-        public DataTable getDataFromProcedure() {
-
-            DataTable _dt = new DataTable();
-            try
-            {
-                OracleCommand command = GetSPCommand("SP_Daily_Stock_Report");
-                command.Parameters.Add("P_PART_NO", OracleType.VarChar).Value = "";
-                command.Parameters.Add("P_CONTRACT", OracleType.VarChar).Value = "";
-                command.Parameters.Add("P_RECORDSET", OracleType.Cursor).Direction = ParameterDirection.Output;
-                OracleDataAdapter odaAdept = new OracleDataAdapter(command);
-                odaAdept.Fill((_dt));
-            }
-            catch
-            {
-
-            }
-            finally
-            {
-                Dispose();
-            }
-
-            return _dt;
-
-        }
-
 
         private string MD5(string Metin)
         {
