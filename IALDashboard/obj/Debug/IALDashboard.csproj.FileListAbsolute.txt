@@ -168,3 +168,11 @@ F:\DotNet\IALDashboard\IALDashboard\obj\Debug\IALDashboard.csproj.CoreCompileInp
 F:\DotNet\IALDashboard\IALDashboard\obj\Debug\IALDashboard.csproj.CopyComplete
 F:\DotNet\IALDashboard\IALDashboard\obj\Debug\IALDashboard.dll
 F:\DotNet\IALDashboard\IALDashboard\obj\Debug\IALDashboard.pdb
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ClosedXML.dll
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\DocumentFormat.OpenXml.dll
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ExcelNumberFormat.dll
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\System.IO.Packaging.dll
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ClosedXML.pdb
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ClosedXML.xml
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\DocumentFormat.OpenXml.xml
+D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ExcelNumberFormat.xml

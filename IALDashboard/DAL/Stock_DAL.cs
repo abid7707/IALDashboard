@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data;
+﻿using System.Data;
 using System.Data.OracleClient;
 
 namespace IALDashboard.DAL
 {
-    public class Stock_DAL: BaseDataAccessLayer
+    public class Stock_DAL : BaseDataAccessLayer
     {
 
-        public DataTable DailyStockReport() {
+        public DataTable DailyStockReport()
+        {
 
-            DataTable dt = new DataTable();
+            DataTable dt = new DataTable("Grid");
 
             try
             {
@@ -29,13 +26,44 @@ namespace IALDashboard.DAL
             {
 
             }
-            finally {
+            finally
+            {
                 Dispose();
             }
 
             return dt;
 
-        
+
         }
+
+        public DataTable StockTableTemp()
+        {
+
+            DataTable stocklist = new DataTable();
+
+
+
+            try
+            {
+
+
+                string StrSql = " SELECT * FROM  IAL_STOCK_LOCATION_TEMP";
+                OracleCommand command = GetSQLCommand(StrSql);
+                OracleDataAdapter odaAdapter = new OracleDataAdapter(command);
+                odaAdapter.Fill(stocklist);
+            }
+
+            catch
+            {
+            }
+
+            finally
+            {
+                Dispose();
+            }
+
+            return stocklist;
+        }
+
     }
 }
