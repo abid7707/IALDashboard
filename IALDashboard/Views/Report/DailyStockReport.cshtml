@@ -8,145 +8,155 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">DataTable with default features</h3>
+       
     </div>
     <!-- /.card-header -->
-    <div class="card-body table-responsive">
-        <table id="example1" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th rowspan="2">SL No</th>
-                    <th rowspan="2">Segment</th>
-                    <th rowspan="2">Model</th>
-                    <th rowspan="2">Total Qty</th>
-                    <th colspan="4">Dhamrai CKD</th>
-                    <th colspan="4">Dhamrai CBU </th>
-                    <th colspan="4">Joydevpur</th>
-                    <th colspan="4">Chattagram</th>
-                    <th colspan="4">Cumilla</th>
-                    <th colspan="4">Jashore</th>
-                    <th colspan="4">Bogra</th>
-                    <th colspan="4">Total</th>
-                    <th rowspan="2">Fair & Demo</th>
-                    <th rowspan="2">Dealer Point Display</th>
-                    <th rowspan="2">Outside Body W/S</th>
-                    <th rowspan="2">Bus Body</th>
-                    <th rowspan="2">Total OT Stock</th>
-                    <th rowspan="2">LC</th>
-                </tr>
-                <tr>
-                    <!--Dhamrai CKD-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Dhamrai CBU-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Joydevpur-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Chattagram-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Cumilla-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Jassore-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Bogra-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                    <!--Total-->
-                    <th>RFD</th>
-                    <th>DO ISSUED</th>
-                    <th>Booked</th>
-                    <th>PDI/PTS</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ 
-                    foreach (System.Data.DataRow stock in ViewBag.stocklist.Rows)
-                    {
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@stock["PRODUCT_FAMILY"]</td>
-                                    <td nowrap>@stock["PARTDES"]</td>
-                                    <td></td>
-                                    <!--Dhamrai CKD-->
-                                    <td></td>
-                                    <td>@stock["DHAMRAI_CKD#DO_ISSUED"]</td>
-                                    <td></td>
-                                    <td></td>
-                                    <!--Dhamrai CBU-->
-                                    <td></td>
-                                    <td>@stock["DHAMRAI_CBU#DO_ISSUED"]</td>
-                                    <td></td>
-                                    <td></td>
-                                    <!--Joydevpur-->
-                                    <td>@stock["JOYDEBPUR#RFD"]</td>
-                                    <td>@stock["JOYDEBPUR#DO_ISSUED"]</td>
-                                    <td>@stock["JOYDEBPUR#BOOKED"]</td>
-                                    <td></td>
-                                    <!--Chattagram-->
-                                    <td>@stock["CHATTOGRAM#RFD"]</td>
-                                    <td>@stock["CHATTOGRAM#DO_ISSUED"]</td>
-                                    <td>@stock["CHATTOGRAM#BOOKED"]</td>
-                                    <td></td>
-                                    <!--Cumilla-->
-                                    <td>@stock["CUMILLA#RFD"]</td>
-                                    <td>@stock["CUMILLA#DO_ISSUED"]</td>
-                                    <td>@stock["CUMILLA#BOOKED"]</td>
-                                    <td></td>
-                                    <!--Jashore-->
-                                    <td>@stock["JASHORE#RFD"]</td>
-                                    <td>@stock["JASHORE#DO_ISSUED"]</td>
-                                    <td>@stock["JASHORE#BOOKED"]</td>
-                                    <td></td>
-                                    <!--Bogra-->
-                                    <td>@stock["BOGRA#RFD"]</td>
-                                    <td>@stock["BOGRA#DO_ISSUED"]</td>
-                                    <td></td>
-                                    <td></td>
-                                    <!--Total-->
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <!--Others-->
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+    <div class="card-body">
+        <button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>
+        <div class="table-responsive">
+            <table id="dailyStockReport" class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th rowspan="2">SL No</th>
+                        <th rowspan="2">Segment</th>
+                        <th rowspan="2">Model</th>
+                        <th rowspan="2">Total Qty</th>
+                        <th colspan="4">Dhamrai CKD</th>
+                        <th colspan="4">Dhamrai CBU </th>
+                        <th colspan="4">Joydevpur</th>
+                        <th colspan="4">Chattagram</th>
+                        <th colspan="4">Cumilla</th>
+                        <th colspan="4">Jashore</th>
+                        <th colspan="4">Bogra</th>
+                        <th colspan="4">Total</th>
+                        <th rowspan="2">Fair & Demo</th>
+                        <th rowspan="2">Dealer Point Display</th>
+                        <th rowspan="2">Outside Body W/S</th>
+                        <th rowspan="2">Bus Body</th>
+                        <th rowspan="2">Total OT Stock</th>
+                        <th rowspan="2">LC</th>
+                    </tr>
+                    <tr>
+                        <!--Dhamrai CKD-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Dhamrai CBU-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Joydevpur-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Chattagram-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Cumilla-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Jassore-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Bogra-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                        <!--Total-->
+                        <th>RFD</th>
+                        <th nowrap>DO ISSUED</th>
+                        <th>Booked</th>
+                        <th>PDI/PTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+
+                        foreach (System.Data.DataRow stock in ViewBag.stocklist.Rows)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@stock["PRODUCT_FAMILY"]</td>
+                                <td nowrap>@stock["PARTDES"]</td>
+                                <td></td>
+                                <!--Dhamrai CKD-->
+                                <td></td>
+                                <td>@stock["DHAMRAI_CKD#DO_ISSUED"]</td>
+                                <td></td>
+                                <td></td>
+                                <!--Dhamrai CBU-->
+                                <td></td>
+                                <td>@stock["DHAMRAI_CBU#DO_ISSUED"]</td>
+                                <td></td>
+                                <td></td>
+                                <!--Joydevpur-->
+                                <td>@stock["JOYDEBPUR#RFD"]</td>
+                                <td>@stock["JOYDEBPUR#DO_ISSUED"]</td>
+                                <td>@stock["JOYDEBPUR#BOOKED"]</td>
+                                <td></td>
+                                <!--Chattagram-->
+                                <td>@stock["CHATTOGRAM#RFD"]</td>
+                                <td>@stock["CHATTOGRAM#DO_ISSUED"]</td>
+                                <td>@stock["CHATTOGRAM#BOOKED"]</td>
+                                <td></td>
+                                <!--Cumilla-->
+                                <td>@stock["CUMILLA#RFD"]</td>
+                                <td>@stock["CUMILLA#DO_ISSUED"]</td>
+                                <td>@stock["CUMILLA#BOOKED"]</td>
+                                <td></td>
+                                <!--Jashore-->
+                                <td>@stock["JASHORE#RFD"]</td>
+                                <td>@stock["JASHORE#DO_ISSUED"]</td>
+                                <td>@stock["JASHORE#BOOKED"]</td>
+                                <td></td>
+                                <!--Bogra-->
+                                <td>@stock["BOGRA#RFD"]</td>
+                                <td>@stock["BOGRA#DO_ISSUED"]</td>
+                                <td></td>
+                                <td></td>
+                                <!--Total-->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <!--Others-->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
 
 
-                                </tr>
+                            </tr>
 
-                        i++;
+                            i++;
                         }
                     }
-            </tbody>
-            <tfoot>
+                </tbody>
+                <tfoot>
 
-            </tfoot>
-        </table>
-    </div>
+                </tfoot>
+            </table>
+        </div>
+        </div>
     <!-- /.card-body -->
 </div>
 <!-- /.card -->
+
+@section Scripts{
+
+
+}
 
 

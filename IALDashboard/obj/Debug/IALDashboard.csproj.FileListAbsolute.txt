@@ -176,3 +176,11 @@ D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ClosedXML.pdb
 D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ClosedXML.xml
 D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\DocumentFormat.OpenXml.xml
 D:\Official\ASP.net\IALDashboard\IALDashboard\IALDashboard\bin\ExcelNumberFormat.xml
+F:\DotNet\IALDashboard\IALDashboard\bin\ClosedXML.dll
+F:\DotNet\IALDashboard\IALDashboard\bin\DocumentFormat.OpenXml.dll
+F:\DotNet\IALDashboard\IALDashboard\bin\ExcelNumberFormat.dll
+F:\DotNet\IALDashboard\IALDashboard\bin\System.IO.Packaging.dll
+F:\DotNet\IALDashboard\IALDashboard\bin\ClosedXML.pdb
+F:\DotNet\IALDashboard\IALDashboard\bin\ClosedXML.xml
+F:\DotNet\IALDashboard\IALDashboard\bin\DocumentFormat.OpenXml.xml
+F:\DotNet\IALDashboard\IALDashboard\bin\ExcelNumberFormat.xml
