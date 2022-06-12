@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    @Styles.Render("~/Content/plugins/fontawesome-free/css/all.min.css")
+    @Styles.Render("~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css")
+    @Styles.Render("~/Content/dist/css/adminlte.min.css")
+<style>
+    .login-page {
+        background-image: url( @Url.Content("~/Content/images/banner.jpg") );
+        background-color: #cccccc;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
+</head>
+
+
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <!-- <img src="~/Content/images/logo.png"  /><a href="#">Autos Limited</a> -->
+    </div>
+    <!-- /.login-logo -->
+            <div class="card">
+                <div class="card-body login-card-body">
+                    
+                        <img src="~/Content/images/logo.png" /><a href="#"> Autos Limited</a>
+                    
+                    <p class="login-box-msg">Sign in to start your session</p>
+
+                    @using (Html.BeginForm("Verify", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="User ID" name="user_id" required="required">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Password" name="password" required="required">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    }
+
+                </div>
+                <!-- /.login-card-body -->
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

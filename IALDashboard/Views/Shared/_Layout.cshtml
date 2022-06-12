@@ -22,6 +22,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/dtcss")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/stickytable")
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -63,6 +64,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/datatable")
     @RenderSection("scripts", required: false)
+    
+    @Scripts.Render("~/bundles/stickytable")
 
     <!-- Page specific script -->
     <script type="text/javascript">

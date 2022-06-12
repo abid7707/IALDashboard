@@ -14,16 +14,44 @@
     @Styles.Render("~/Content/plugins/fontawesome-free/css/all.min.css")
     @Styles.Render("~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css")
     @Styles.Render("~/Content/dist/css/adminlte.min.css")
+<style>
+    
+    .login-banner {
+        height: 10em;
+        background-image: url( @Url.Content("~/Content/images/banner.jpg") );
+        background-color: #cccccc;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+</style>
 </head>
 
-<body class="hold-transition login-page" >
+
+
+<body class="hold-transition login-page">
     <div class="login-box">
+        
         <div class="login-logo">
-            <a href="#"><b>IFAD </b>Autos Limited</a>
+            <!-- <img src="~/Content/images/logo.png"  /><a href="#">Autos Limited</a> -->
         </div>
         <!-- /.login-logo -->
         <div class="card">
+            <div class="login-banner">
+            </div>
+
             <div class="card-body login-card-body">
+
+                <div class="login-header">
+                    <img src="~/Content/images/logo.png" /><a href="#"> Autos Limited</a>
+                </div>
+
+
+                <br />
+
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 @using (Html.BeginForm("Verify", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -56,12 +84,12 @@
                     </div>
                 }
 
-                </div>
+            </div>
             <!-- /.login-card-body -->
         </div>
     </div>
-   
 
-        </div>
-    </body>
+
+    </div>
+</body>
 </html>

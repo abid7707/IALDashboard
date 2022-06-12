@@ -5,10 +5,13 @@
     int i = 1;
 }
 
+
+
+
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">DataTable with default features</h3>
-       
+
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -16,7 +19,7 @@
         <div class="table-responsive">
             <table id="dailyStockReport" class="table table-bordered table-striped table-condensed">
                 <thead>
-                    <tr>
+                    <tr class="sticky-header">
                         <th rowspan="2">SL No</th>
                         <th rowspan="2">Segment</th>
                         <th rowspan="2">Model</th>
@@ -36,7 +39,7 @@
                         <th rowspan="2">Total OT Stock</th>
                         <th rowspan="2">LC</th>
                     </tr>
-                    <tr>
+                    <tr class="sticky-header">
                         <!--Dhamrai CKD-->
                         <th>RFD</th>
                         <th nowrap>DO ISSUED</th>
@@ -149,7 +152,7 @@
                 </tfoot>
             </table>
         </div>
-        </div>
+    </div>
     <!-- /.card-body -->
 </div>
 <!-- /.card -->

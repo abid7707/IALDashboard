@@ -50,6 +50,13 @@ namespace IALDashboard
                     "~/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css",
                     "~/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css"));
 
+            bundles.Add(new StyleBundle("~/Content/stickytable").Include(
+                    "~/Content/plugins/stickytable/jquery.stickytable.min"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/stickytable").Include(
+                      "~/Scripts/stickytable/jquery.stickytable.js"));
+
         }
     }
 }
