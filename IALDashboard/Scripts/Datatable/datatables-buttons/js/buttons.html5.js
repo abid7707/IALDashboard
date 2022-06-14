@@ -1177,9 +1177,21 @@ DataTable.ext.buttons.excelHtml5 = {
 
 
 		// Table itself
-		if ( config.header ) {
+		/*if ( config.header ) {
 			addRow( data.header, rowPos );
 			$('row:last c', rels).attr( 's', '2' ); // bold
+		}*/
+
+		if (config.header) {
+			/* ----- BEGIN changed Code ----- */
+			var headerMatrix = _fnGetHeaders(dt);
+			for (var rowIdx = 0; rowIdx < headerMatrix.length; rowIdx++) {
+				addRow(headerMatrix[rowIdx], rowPos);
+			}
+			/* ----- OLD Code that is replaced: ----- */
+			//addRow( data.header, rowPos );
+			/* ----- END changed Code ----- */
+			$('row c', rels).attr('s', '2'); // bold
 		}
 	
 		dataStartRow = rowPos;

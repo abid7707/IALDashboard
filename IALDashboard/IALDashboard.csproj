@@ -195,6 +195,10 @@
     <Content Include="Content\build\npm\Plugins.js" />
     <Content Include="Content\build\npm\Publish.js" />
     <Content Include="Content\build\npm\vnu-jar.js" />
+    <Content Include="Content\datatables\buttons.dataTables.min.css" />
+    <Content Include="Content\datatables\fixedcolumns.css" />
+    <Content Include="Content\datatables\fixedheader.css" />
+    <Content Include="Content\datatables\jquery.dataTables.min.css" />
     <Content Include="Content\dist\css\adminlte.css" />
     <Content Include="Content\dist\css\adminlte.min.css" />
     <Content Include="Content\dist\css\alt\adminlte.components.css" />
@@ -1945,6 +1949,7 @@
     <Content Include="Content\plugins\select2\js\select2.min.js" />
     <Content Include="Content\plugins\sparklines\sparkline.js" />
     <Content Include="Content\plugins\stickytable\jquery.stickytable.min.css" />
+    <Content Include="Scripts\Datatable\datatables\dataTables.buttons.min.js" />
     <Content Include="Scripts\stickytable\jquery.stickytable.js" />
     <Content Include="Content\plugins\summernote\lang\summernote-ar-AR.js" />
     <Content Include="Content\plugins\summernote\lang\summernote-ar-AR.min.js" />

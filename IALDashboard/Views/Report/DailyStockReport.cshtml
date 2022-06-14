@@ -5,21 +5,33 @@
     int i = 1;
 }
 
-
+<style>
+    #report-header {
+        /* Background color */
+        background-color: white;
+        /* Stick to the left */
+        /*z-index: 9999 !important;*/
+    }
+</style>
 
 
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">DataTable with default features</h3>
-
+        
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>
-        <div class="table-responsive">
-            <table id="dailyStockReport" class="table table-bordered table-striped table-condensed">
-                <thead>
-                    <tr class="sticky-header">
+        @using (Html.BeginForm("ExportDailyStockReport", "Report", FormMethod.Post))
+        {
+            <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
+        }
+        @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
+        <div class="table">
+            <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
+            <table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap daily-stock-report dailyStockReport" style="width:100%">
+                <thead id="report-header">
+                    <tr>
                         <th rowspan="2">SL No</th>
                         <th rowspan="2">Segment</th>
                         <th rowspan="2">Model</th>
@@ -87,59 +99,59 @@
 
                         foreach (System.Data.DataRow stock in ViewBag.stocklist.Rows)
                         {
-                                        <tr>
-                                            <td>@i</td>
-                                            <td>@stock["PRODUCT_FAMILY"]</td>
-                                            <td nowrap>@stock["PARTDES"]</td>
-                                            <td>@stock["TOTAL_QTY"]</td>
-                                            <!--Dhamrai CKD-->
-                                            <td>@stock["DHAMRAI_CKD#RFD_CKD"]</td>
-                                            <td>@stock["DHAMRAI_CKD#DO_ISSUED"]</td>
-                                            <td>@stock["DHAMRAI_CKD#BOOKED_DAP"]</td>
-                                            <td>@stock["DHAMRAI_CKD#PDI_PTS"]</td>
-                                            <!--Dhamrai CBU-->
-                                            <td>@stock["DHAMRAI_CBU#RFD_CBU"]</td>
-                                            <td>@stock["DHAMRAI_CBU#DO_ISSUED"]</td>
-                                            <td>@stock["DHAMRAI_CBU#BOOKED_DAP"]</td>
-                                            <td>@stock["DHAMRAI_CBU#PDI_PTS"]</td>
-                                            <!--Joydevpur-->
-                                            <td>@stock["JOYDEBPUR#RFD"]</td>
-                                            <td>@stock["JOYDEBPUR#DO_ISSUED"]</td>
-                                            <td>@stock["JOYDEBPUR#BOOKED"]</td>
-                                            <td>@stock["JOYDEBPUR#PDI_PTS"]</td>
-                                            <!--Chattagram-->
-                                            <td>@stock["CTG#RFD"]</td>
-                                            <td>@stock["CTG#DO_ISSUED"]</td>
-                                            <td>@stock["CTG#BOOKED"]</td>
-                                            <td>@stock["CTG#PDI_PTS"]</td>
-                                            <!--Cumilla-->
-                                            <td>@stock["CUMILLA#RFD"]</td>
-                                            <td>@stock["CUMILLA#DO_ISSUED"]</td>
-                                            <td>@stock["CUMILLA#BOOKED"]</td>
-                                            <td>@stock["CUMILLA#PDI_PTS"]</td>
-                                            <!--Jashore-->
-                                            <td>@stock["JASHORE#RFD"]</td>
-                                            <td>@stock["JASHORE#DO_ISSUED"]</td>
-                                            <td>@stock["JASHORE#BOOKED"]</td>
-                                            <td>@stock["JASHORE#PDI_PTS"]</td>
-                                            <!--Bogra-->
-                                            <td>@stock["BOGRA#RFD"]</td>
-                                            <td>@stock["BOGRA#DO_ISSUED"]</td>
-                                            <td>@stock["BOGRA#BOOKED"]</td>
-                                            <td>@stock["BOGRA#PDI_PTS"]</td>
-                                            <!--Total-->
-                                            <td>@stock["RFD"]</td>
-                                            <td>@stock["DO_ISSUED"]</td>
-                                            <td>@stock["BOOKED"]</td>
-                                            <td>@stock["PDI_PTS"]</td>
-                                            <!--Others-->
-                                            <td>@stock["FAIR_DEMO_QTY"]</td>
-                                            <td>@stock["DEALER_PD_QTY"]</td>
-                                            <td>@stock["OUTSIDE_BWS_QTY"]</td>
-                                            <td>@stock["BUS_BODY_QTY"]</td>
-                                            <td>@stock["TOTAL_OT_QTY"]</td>
-                                            <td>@stock["LC_QTY"]</td>
-                                        </tr>
+                            <tr>
+                                <td>@i</td>
+                                <td>@stock["PRODUCT_FAMILY"]</td>
+                                <td nowrap>@stock["PARTDES"]</td>
+                                <td>@stock["TOTAL_QTY"]</td>
+                                <!--Dhamrai CKD-->
+                                <td>@stock["DHAMRAI_CKD#RFD_CKD"]</td>
+                                <td>@stock["DHAMRAI_CKD#DO_ISSUED"]</td>
+                                <td>@stock["DHAMRAI_CKD#BOOKED_DAP"]</td>
+                                <td>@stock["DHAMRAI_CKD#PDI_PTS"]</td>
+                                <!--Dhamrai CBU-->
+                                <td>@stock["DHAMRAI_CBU#RFD_CBU"]</td>
+                                <td>@stock["DHAMRAI_CBU#DO_ISSUED"]</td>
+                                <td>@stock["DHAMRAI_CBU#BOOKED_DAP"]</td>
+                                <td>@stock["DHAMRAI_CBU#PDI_PTS"]</td>
+                                <!--Joydevpur-->
+                                <td>@stock["JOYDEBPUR#RFD"]</td>
+                                <td>@stock["JOYDEBPUR#DO_ISSUED"]</td>
+                                <td>@stock["JOYDEBPUR#BOOKED"]</td>
+                                <td>@stock["JOYDEBPUR#PDI_PTS"]</td>
+                                <!--Chattagram-->
+                                <td>@stock["CTG#RFD"]</td>
+                                <td>@stock["CTG#DO_ISSUED"]</td>
+                                <td>@stock["CTG#BOOKED"]</td>
+                                <td>@stock["CTG#PDI_PTS"]</td>
+                                <!--Cumilla-->
+                                <td>@stock["CUMILLA#RFD"]</td>
+                                <td>@stock["CUMILLA#DO_ISSUED"]</td>
+                                <td>@stock["CUMILLA#BOOKED"]</td>
+                                <td>@stock["CUMILLA#PDI_PTS"]</td>
+                                <!--Jashore-->
+                                <td>@stock["JASHORE#RFD"]</td>
+                                <td>@stock["JASHORE#DO_ISSUED"]</td>
+                                <td>@stock["JASHORE#BOOKED"]</td>
+                                <td>@stock["JASHORE#PDI_PTS"]</td>
+                                <!--Bogra-->
+                                <td>@stock["BOGRA#RFD"]</td>
+                                <td>@stock["BOGRA#DO_ISSUED"]</td>
+                                <td>@stock["BOGRA#BOOKED"]</td>
+                                <td>@stock["BOGRA#PDI_PTS"]</td>
+                                <!--Total-->
+                                <td>@stock["RFD"]</td>
+                                <td>@stock["DO_ISSUED"]</td>
+                                <td>@stock["BOOKED"]</td>
+                                <td>@stock["PDI_PTS"]</td>
+                                <!--Others-->
+                                <td>@stock["FAIR_DEMO_QTY"]</td>
+                                <td>@stock["DEALER_PD_QTY"]</td>
+                                <td>@stock["OUTSIDE_BWS_QTY"]</td>
+                                <td>@stock["BUS_BODY_QTY"]</td>
+                                <td>@stock["TOTAL_OT_QTY"]</td>
+                                <td>@stock["LC_QTY"]</td>
+                            </tr>
 
                             i++;
                         }

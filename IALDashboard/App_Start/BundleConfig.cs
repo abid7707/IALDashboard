@@ -25,19 +25,19 @@ namespace IALDashboard
 
 
 
-            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+            /*bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
                         "~/Scripts/Datatable/datatables/jquery.dataTables.min.js",
                         "~/Scripts/Datatable/datatables-bs4/js/dataTables.bootstrap4.min.js",
-                        "~/Scripts/Datatable/datatables-responsive/js/dataTables.responsive.min.js",
-                        "~/Scripts/Datatable/datatables-responsive/js/responsive.bootstrap4.min.js",
-                        "~/Scripts/Datatable/datatables-buttons/js/dataTables.buttons.min.js",
-                        "~/Scripts/Datatable/datatables-buttons/js/buttons.bootstrap4.min.js",
-                        "~/Scripts/Datatable/jszip/jszip.min.js",
-                        "~/Scripts/Datatable/pdfmake/pdfmake.min.js",
+                        "~/Scripts/Datatable/datatables-fixedheader/js/dataTables.fixedHeader.min.js",
                         "~/Scripts/Datatable/pdfmake/vfs_fonts.js",
                         "~/Scripts/Datatable/datatables-buttons/js/buttons.html5.min.js",
                         "~/Scripts/Datatable/datatables-buttons/js/buttons.print.min.js",
-                        "~/Scripts/Datatable/datatables-buttons/js/buttons.colVis.min.js"));
+                        "~/Scripts/Datatable/datatables-buttons/js/buttons.colVis.min.js")); */
+            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+                       "~/Scripts/Datatable/datatables/jquery.dataTables.min.js",
+                       "~/Scripts/Datatable/datatables-fixedcolumns/js/dataTables.fixedColumns.js",
+                        "~/Scripts/Datatable/datatables-fixedheader/js/dataTables.fixedHeader.min.js"));
+
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -46,9 +46,9 @@ namespace IALDashboard
                       "~/Content/dist/css/adminlte.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/dtcss").Include(
-                    "~/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css",
-                    "~/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css",
-                    "~/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css"));
+                    "~/Content/datatables/jquery.dataTables.min.css",
+                    "~/Content/datatables/fixedcolumns.css",
+                    "~/Content/datatables/fixedheaders.css"));
 
             bundles.Add(new StyleBundle("~/Content/stickytable").Include(
                     "~/Content/plugins/stickytable/jquery.stickytable.min"));
