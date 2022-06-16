@@ -157,6 +157,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\BaseDataAccessLayer.cs" />
+    <Compile Include="DAL\Collection_DAL.cs" />
     <Compile Include="DAL\Stock_DAL.cs" />
     <Compile Include="DAL\User_DAL.cs" />
     <Compile Include="Filters\AuthorizedUser.cs" />

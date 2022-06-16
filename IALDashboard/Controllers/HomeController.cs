@@ -18,6 +18,19 @@ namespace IALDashboard.Controllers
             return View();
         }
 
+        public FileResult ExportCollectionReport()
+        {
+            DataTable dt = new Collection_DAL().CollectionReport();
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+                }
+            }
+        }
 
 
         [HttpPost]
