@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using IALDashboard.DAL;
+using Newtonsoft.Json;
 using System.Data;
 using System.IO;
 using System.Web.Mvc;
@@ -14,6 +15,76 @@ namespace IALDashboard.Controllers
             return View();
         }
 
+        // GET: Report
+        public ActionResult RoSheet()
+        {
+            string zone_name = "";
+            DataTable dt_ro = new Collection_DAL().ROInfo(zone_name);
+            DataTable dt_zone = new Collection_DAL().ZoneInfo();
+            ViewBag.rolist = dt_ro;
+            ViewBag.zonelist = dt_zone;
+            return View();
+        }
+
+
+        [HttpPost]
+        public string GetJsonROList(string from_date, string ro_code, string zone_name)
+        {
+            from_date = from_date + "-01";
+
+            DataTable dt = new Collection_DAL().ROSheet(from_date, ro_code, zone_name);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dt);
+            return JSONString;
+        }
+
+
+        public ActionResult RoSummary()
+        {
+            DataTable dt_zone = new Collection_DAL().ZoneInfo();
+            ViewBag.zonelist = dt_zone;
+            return View();
+        }
+
+
+        [HttpPost]
+        public string GetJsonROSummary(string from_date, string zone_name)
+        {
+            from_date = from_date + "-01";
+
+            DataTable dt = new Collection_DAL().ROSummary(from_date, zone_name);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dt);
+            return JSONString;
+        }
+
+
+        public ActionResult RoZoneWiseSummary()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public string GetJsonRoZoneWiseSummary(string from_date)
+        {
+            from_date = from_date + "-01";
+
+            string[] new_from_date = from_date.Split('-');
+
+            string year = new_from_date[0];
+            string month = new_from_date[1];
+
+            DataTable dt = new Collection_DAL().RoZoneWiseSummary(from_date);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dt);
+            return JSONString;
+        }
+
+
         public ActionResult DailyStockReport()
         {
             DataTable dt = new Stock_DAL().StockTableTemp();
@@ -23,11 +94,12 @@ namespace IALDashboard.Controllers
         }
 
         [HttpPost]
-        public FileResult ExportDailyStockReport()
+        public FileResult ExportCollectionReport(string from_date)
         {
-
-            DataTable dt = new Stock_DAL().StockTableTemp();
-            /*using (XLWorkbook wb = new XLWorkbook())
+            from_date = from_date + "-01";
+            DataTable dt = new Collection_DAL().CollectionReport(from_date);
+            var rows = dt.Rows.Count;
+            using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
                 using (MemoryStream stream = new MemoryStream())
@@ -35,7 +107,15 @@ namespace IALDashboard.Controllers
                     wb.SaveAs(stream);
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
                 }
-            }*/
+            }
+        }
+
+        [HttpPost]
+        public FileResult ExportDailyStockReport()
+        {
+
+            DataTable dt = new Stock_DAL().StockTableTemp();
+
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var ws = wb.Worksheets.Add("Stock Report");

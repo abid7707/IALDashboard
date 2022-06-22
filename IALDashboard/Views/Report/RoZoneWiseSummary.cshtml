@@ -1,0 +1,155 @@
+﻿
+@{
+    var rolist = ViewBag.rolist;
+    var zonelist = ViewBag.zonelist;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+
+
+    <div class="col-md-6">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Monthly RO Summary</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            @*@using (Html.BeginForm("getROSummary", "Report", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {*@
+            <div class="card-body">
+
+                <label>Select Month</label>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                    <input class="form-control" type="month" name="from_date" required id="from-date" />
+                    <!--<input id="datemask" type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/yyyy" data-mask>-->
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button id="btn-get-ro-zonewise-summary" class="btn btn-primary" onclick="">Submit</button>
+            </div>
+            @*}*@
+        </div>
+    </div>
+    <!-- /.card -->
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">DataTable with default features</h3>
+
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+
+
+
+
+            @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
+            {
+                <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
+            }
+            @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
+            <div class="table">
+                <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
+                <table id="ro-table" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">
+                    <thead id="report-header">
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Zone Name</th>
+                            <th>Target Inst. Amt</th>
+                            <th>Actual OD</th>
+                            <th>Monthly Coll</th>
+                            <th>Inst Coll</th>
+                            <th>OD Coll</th>
+                            <th>Excell Coll</th>
+                            <th>No. Veh</th>
+                            <th>Attn Veh</th>
+                            <th>G. Coll (%)</th>
+                            <th>Inst. Coll (%)</th>
+                            <th>Ovd. Coll (%)</th>
+                            <th>Excess Coll (%)</th>
+                            <th>Attn (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ro-tbody">
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('btn-get-ro-zonewise-summary').onclick = function () {
+
+            var table = document.getElementById("ro-table");
+
+            var from_date = document.getElementById('from-date').value;
+
+
+            (async () => {
+                const rawResponse = await fetch('GetJsonRoZoneWiseSummary', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ from_date: from_date })
+                });
+                const roSummary = await rawResponse.json();
+                var i = 0;
+                document.querySelector('#ro-tbody').innerHTML = '';
+                roSummary.forEach(rs => {
+                    i += 1;
+                    row = `<tr>
+                                <td>${i}</td>
+                                <td>${rs["ZONE_NAME"]}</td>
+                                <td>${rs["TAR_INST_AMT"]}</td>
+                                <td>${rs["ACTUAL_OD"]}</td>
+                                <td>${rs["MONTHLY_COLL"]}</td>
+                                <td>${rs["INST_COLL"]}</td>
+                                <td>${rs["OD_COLECTION"]}</td>
+                                <td>${rs["EXCESS_COLLECTION"]}</td>
+                                <td>${rs["NO_OF_VEHICLE"]}</td>
+                                <td>${rs["ATTEN_V"]}</td>
+                                <td>${rs["GROUP_COLL_PERCENT"]}</td>
+                                <td>${rs["INST_COLL_PERCENT"]}</td>
+                                <td></td>
+                                <td></td>
+                                <td>${rs["ATTN_V_PERCENT"]}</td>
+                           </tr>`;
+                    document.querySelector('#ro-tbody').innerHTML += row;
+
+                });
+
+                console.log(roSummary);
+
+
+            })();
+
+        }
+
+    });
+
+
+</script>

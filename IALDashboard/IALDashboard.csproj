@@ -2578,6 +2578,10 @@
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\Report\DailyStockReport.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\RoSheet.cshtml" />
+    <Content Include="Views\Report\RoSummary.cshtml" />
+    <Content Include="Views\Report\RoZoneWiseSummary.cshtml" />
     <None Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>

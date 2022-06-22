@@ -20,7 +20,8 @@ namespace IALDashboard.Controllers
 
         public FileResult ExportCollectionReport()
         {
-            DataTable dt = new Collection_DAL().CollectionReport();
+            string date = "1-5-2022";
+            DataTable dt = new Collection_DAL().CollectionReport(date);
             using (XLWorkbook wb = new XLWorkbook())
             {
                 wb.Worksheets.Add(dt);
