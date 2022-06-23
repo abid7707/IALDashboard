@@ -19,7 +19,7 @@
             <!-- /.card-header -->
             <!-- form start -->
             @*@using (Html.BeginForm("GetROSheet", "Report", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {*@
+        {*@
             <div class="card-body">
 
                 <label>Select Month</label>
@@ -65,7 +65,13 @@
 
             <div class="card-footer">
                 <button id="btn-get-ro-sheet" class="btn btn-primary" onclick="">Submit</button>
+                @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
+                {
+                    <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
+                }
             </div>
+
+            
             @*}*@
         </div>
     </div>
@@ -84,10 +90,7 @@
 
 
 
-            @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
-            {
-                <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
-            }
+           
             @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
             <div class="table">
                 <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->

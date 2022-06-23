@@ -15,7 +15,7 @@ namespace IALDashboard.Controllers
             return View();
         }
 
-        // GET: Report
+        //-------------------------------RO SHEET-------------------------------
         public ActionResult RoSheet()
         {
             string zone_name = "";
@@ -39,6 +39,69 @@ namespace IALDashboard.Controllers
             return JSONString;
         }
 
+        [HttpPost]
+        public FileResult ExportROSheet(string from_date, string ro_code, string zone_name)
+        {
+            from_date = from_date + "-01";
+
+            DataTable dt = new Collection_DAL().ROSheet(from_date, ro_code, zone_name);
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var ws = wb.Worksheets.Add("Stock Report");
+                ws.Cell("A1").Value = "Sl No";
+                ws.Range("A1:A2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                ws.Cell("B1").Value = "Segment";
+                ws.Range("B1:B2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                ws.Cell("C1").Value = "Model";
+                ws.Range("C1:C2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                ws.Cell("D1").Value = "Total Qty";
+                ws.Range("D1:D2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("E1").Value = "Dhamrai CKD";
+                ws.Range("E1:H1").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                ws.Cell("E2").Value = "RFD";
+                ws.Cell("E2").Style.Font.SetBold().Font.FontSize = 11;
+                ws.Cell("F2").Value = "DO ISSUED";
+                ws.Cell("F2").Style.Font.SetBold().Font.FontSize = 11;
+                ws.Cell("G2").Value = "Booked";
+                ws.Cell("G2").Style.Font.SetBold().Font.FontSize = 11;
+                ws.Cell("H2").Value = "PDI/PTS";
+                ws.Cell("H2").Style.Font.SetBold().Font.FontSize = 11;
+
+
+
+                if (dt.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        ws.Cell("A" + (i + 3)).Value = i + 1;
+                        ws.Cell("B" + (i + 3)).Value = dt.Rows[i]["PRODUCT_FAMILY"];
+                        ws.Cell("C" + (i + 3)).Value = dt.Rows[i]["PDI_PTS"];
+                        ws.Cell("D" + (i + 3)).Value = dt.Rows[i]["TOTAL_QTY"];
+                        ws.Cell("E" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#RFD_CKD"];
+                        ws.Cell("F" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#DO_ISSUED"];
+                        ws.Cell("G" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#BOOKED_DAP"];
+                        ws.Cell("H" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#PDI_PTS"];
+
+                    }
+
+                }
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+                }
+
+            }
+
+
+        }
+
+
+        //-------------------------------RO SUMMARY-------------------------------
+
 
         public ActionResult RoSummary()
         {
@@ -59,6 +122,8 @@ namespace IALDashboard.Controllers
             JSONString = JsonConvert.SerializeObject(dt);
             return JSONString;
         }
+
+        //-------------------------------RO ZONE WISE SUMMARY-------------------------------
 
 
         public ActionResult RoZoneWiseSummary()
@@ -85,6 +150,7 @@ namespace IALDashboard.Controllers
         }
 
 
+        //-------------------------------DAILY STOCK REPORT-------------------------------
         public ActionResult DailyStockReport()
         {
             DataTable dt = new Stock_DAL().StockTableTemp();
