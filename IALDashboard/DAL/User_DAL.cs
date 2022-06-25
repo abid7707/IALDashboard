@@ -79,7 +79,7 @@ namespace IALDashboard.DAL
             try
             {
 
-                string StrSql = @"SELECT a.USER_ID,a.MENU_ID,m.MENU_LABEL,m.MENU_LINK,m.MENU_PARENT,m.SEQ FROM MENU_ACCESS_TAB a left outer join MENU_TAB m on a.MENU_ID=m.MENU_ID WHERE a.user_id='" + user_id + "' order by m.seq";
+                string StrSql = @"SELECT a.USER_ID,a.MENU_ID,m.MENU_LABEL,m.MENU_LINK,m.MENU_PARENT,m.SEQ, m.ICON FROM MENU_ACCESS_TAB a left outer join MENU_TAB m on a.MENU_ID=m.MENU_ID WHERE a.user_id='" + user_id + "' order by m.seq";
                 OracleCommand command = GetSQLCommand(StrSql);
                 OracleDataAdapter odaAdapter = new OracleDataAdapter(command);
                 odaAdapter.Fill(usermenu);
@@ -104,7 +104,7 @@ namespace IALDashboard.DAL
             try
             {
 
-                string StrSql = @"SELECT a.USER_ID,m.MENU_ID,m.MENU_LABEL,m.MENU_LINK,m.MENU_PARENT,m.SEQ FROM MENU_TAB m left outer join MENU_ACCESS_TAB a  on a.MENU_ID=m.MENU_ID and a.user_id='" + user_id + "' order by m.seq";
+                string StrSql = @"SELECT a.USER_ID,m.MENU_ID,m.MENU_LABEL,m.MENU_LINK,m.MENU_PARENT,m.SEQ FROM, m.ICON MENU_TAB m left outer join MENU_ACCESS_TAB a  on a.MENU_ID=m.MENU_ID and a.user_id='" + user_id + "' order by m.seq";
                 OracleCommand command = GetSQLCommand(StrSql);
                 OracleDataAdapter odaAdapter = new OracleDataAdapter(command);
                 odaAdapter.Fill(usermenu);
