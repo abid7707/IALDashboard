@@ -9,125 +9,123 @@
 
 <div class="row">
 
+    @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
+    {
 
-    <div class="col-md-6">
-        <!-- general form elements -->
-        <div class="card card-primary">
+
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Monthly RO Sheet</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Select Month</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input class="form-control" type="month" name="from_date" required id="from-date" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Select RO</label>
+                            <select class="form-control select2" style="width: 100%;" name="ro_code" required id="ro-code">
+                                <option selected="" value="">Select</option>
+
+                                @{
+                                    foreach (System.Data.DataRow ro in rolist.Rows)
+                                    {
+                                        <option value="@ro["RO_CODE"]">@ro["RO_CODE"] - @ro["RO_NAME"]</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" style="display:none">
+                        <label>Select Zone</label>
+                        <select class="form-control select2" style="width: 100%;" name="zone_name" id="zone-name">
+                            <option selected="" value="">Select</option>
+                            @{
+                                foreach (System.Data.DataRow zone in zonelist.Rows)
+                                {
+                                    <option value="@zone["ZONE_NAME"]">@zone["ZONE_NAME"]</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button id="btn-get-ro-sheet" class="btn btn-primary" type="button">Submit</button>
+
+                </div>
+               
+            </div>
+        </div>
+        <!-- /.card -->
+
+
+
+        <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Monthly RO Sheet</h3>
+                <input class="btn btn-outline-primary" type="submit" value="Export to Excel" />
+
             </div>
             <!-- /.card-header -->
-            <!-- form start -->
-            @*@using (Html.BeginForm("GetROSheet", "Report", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {*@
             <div class="card-body">
 
-                <label>Select Month</label>
+                
 
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input class="form-control" type="month" name="from_date" required id="from-date" />
-                    <!--<input id="datemask" type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/yyyy" data-mask>-->
+
+
+                @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
+                <div class="table">
+                    <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
+                    <table id="ro-table" class="table-responsive table-striped">
+                        <thead id="report-header" >
+                            <tr style="vertical-align:text-top">
+                                <th>SL No.</th>
+                                <th>Order No</th>
+                                <th>Customer Name</th>
+                                <th>Reg. No.</th>
+                                <th>Model</th>
+                                <th>1st EMI DT. </th>
+                                <th>Target Inst. Amt.</th>
+                                <th>No. of OVD.</th>
+                                <th>MR Coll.</th>
+                                <th>DP+DC Due</th>
+                                <th>INST DC</th>
+                                <th>Overdue</th>
+                                <th>Monthly Coll.</th>
+                                <th>Inst Coll.</th>
+                                <th>Atten V.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ro-tbody">
+                        </tbody>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
                 </div>
-
-                <div class="form-group">
-                    <label>Select RO</label>
-                    <select class="form-control select2" style="width: 100%;" name="ro_code" required id="ro-code">
-                        <option selected="" value="">Select</option>
-
-                        @{
-                            foreach (System.Data.DataRow ro in rolist.Rows)
-                            {
-                                <option value="@ro["RO_CODE"]">@ro["RO_CODE"] - @ro["RO_NAME"]</option>
-                            }
-                        }
-
-                    </select>
-                </div>
-
-                <div class="form-group" style="display:none">
-                    <label>Select Zone</label>
-                    <select class="form-control select2" style="width: 100%;" name="zone_name" id="zone-name">
-                        <option selected="" value="">Select</option>
-                        @{
-                            foreach (System.Data.DataRow zone in zonelist.Rows)
-                            {
-                                <option value="@zone["ZONE_NAME"]">@zone["ZONE_NAME"]</option>
-                            }
-                        }
-                    </select>
-                </div>
-
             </div>
             <!-- /.card-body -->
-
-            <div class="card-footer">
-                <button id="btn-get-ro-sheet" class="btn btn-primary" onclick="">Submit</button>
-                @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
-                {
-                    <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
-                }
-            </div>
-
-            
-            @*}*@
         </div>
-    </div>
-    <!-- /.card -->
-
-
-
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-
-
-
-
-           
-            @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
-            <div class="table">
-                <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
-                <table id="ro-table" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">
-                    <thead id="report-header">
-                        <tr>
-                            <th>SL No.</th>
-                            <th>Order No</th>
-                            <th>Customer Name</th>
-                            <th>Registration No</th>
-                            <th>Model Name</th>
-                            <th>1st EMI Date </th>
-                            <th>Target Inst. Amt</th>
-                            <th>No. of OVD</th>
-                            <th>MR Coll</th>
-                            <th>DP+DC Due</th>
-                            <th>INST DC</th>
-                            <th>Overdue</th>
-                            <th>Monthly Coll</th>
-                            <th>Inst Coll</th>
-                            <th>Atten V</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ro-tbody">
-                        
-
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-
+        <!-- /.card -->
+     }
 </div>
 
 <script>
@@ -139,6 +137,7 @@
            
             var from_date = document.getElementById('from-date').value;
             var ro_code = document.getElementById('ro-code').value;
+            var ro_name = document.getElementById('ro-code').text;
             var zone_name = document.getElementById('zone-name').value;
 
        
@@ -149,9 +148,12 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ from_date: from_date, ro_code: ro_code, zone_name : '' })
+                    body: JSON.stringify({ from_date: from_date, ro_code: ro_code, ro_name: ro_name, zone_name : '' })
                 });
                 const rolist = await rawResponse.json();
+                if (rolist.length == 0) {
+                    alert("Please Set Apropriate Date and RO");
+                } 
                 var i = 0;
                 document.querySelector('#ro-tbody').innerHTML = '';
                 rolist.forEach(ro => {

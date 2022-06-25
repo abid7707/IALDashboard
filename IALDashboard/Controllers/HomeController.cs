@@ -14,7 +14,7 @@ namespace IALDashboard.Controllers
         {
 
             // DataTable dt = new Stock_DAL().DailyStockReport();
-
+            ViewBag.actionName = "";
 
             return View();
         }

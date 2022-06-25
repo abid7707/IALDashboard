@@ -9,108 +9,110 @@
 
 <div class="row">
 
+    @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
+    {
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Monthly RO Summary</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                @*@using (Html.BeginForm("getROSummary", "Report", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {*@
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Select Month</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input class="form-control" type="month" name="from_date" required id="from-date" />
+                            </div>
+                        </div>
 
-    <div class="col-md-6">
-        <!-- general form elements -->
-        <div class="card card-primary">
+
+                        <div class="form-group col-md-6">
+                            <label>Select Zone</label>
+                            <select class="form-control select2" style="width: 100%;" name="zone_name" id="zone-name">
+                                <option selected="" value="">Select</option>
+                                @{
+                                    foreach (System.Data.DataRow zone in zonelist.Rows)
+                                    {
+                                        <option value="@zone["ZONE_NAME"]">@zone["ZONE_NAME"]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button id="btn-get-ro-summary" class="btn btn-primary" type="button">Submit</button>
+                </div>
+                @*}*@
+            </div>
+        </div>
+        <!-- /.card -->
+
+
+
+        <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Monthly RO Summary</h3>
+
+                <input class="btn btn-outline-primary" type="submit" value="Export to Excel" />
+                
+
             </div>
             <!-- /.card-header -->
-            <!-- form start -->
-            @*@using (Html.BeginForm("getROSummary", "Report", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {*@
             <div class="card-body">
 
-                <label>Select Month</label>
 
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                    <input class="form-control" type="month" name="from_date" required id="from-date" />
-                    <!--<input id="datemask" type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/yyyy" data-mask>-->
+
+
+
+                @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
+                <div class="table">
+                    <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
+                    <table id="ro-table" class="table-responsive table-striped" style="width:100%">
+                        <thead id="report-header">
+                            <tr>
+                                <th>SL No.</th>
+                                <th>Zone Name</th>
+                                <th>RO Code</th>
+                                <th>RO Name</th>
+                                <th>Target Inst. Amt</th>
+                                <th>Actual OD</th>
+                                <th>Monthly Coll</th>
+                                <th>Inst Coll</th>
+                                <th>OD Coll</th>
+                                <th>Excell Coll</th>
+                                <th>No. Veh</th>
+                                <th>Attn Veh</th>
+                                <th>Target Coll (%)</th>
+                                <th>Inst. Coll (%)</th>
+                                <th>Ovd. Coll (%)</th>
+                                <th>Excess Coll (%)</th>
+                                <th>Attn (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ro-tbody">
+                        </tbody>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
                 </div>
-
-
-                <div class="form-group">
-                    <label>Select Zone</label>
-                    <select class="form-control select2" style="width: 100%;" name="zone_name" id="zone-name">
-                        <option selected="" value="">Select</option>
-                        @{
-                            foreach (System.Data.DataRow zone in zonelist.Rows)
-                            {
-                                <option value="@zone["ZONE_NAME"]">@zone["ZONE_NAME"]</option>
-                            }
-                        }
-                    </select>
-                </div>
-
             </div>
             <!-- /.card-body -->
-
-            <div class="card-footer">
-                <button id="btn-get-ro-summary" class="btn btn-primary" onclick="">Submit</button>
-            </div>
-            @*}*@
         </div>
-    </div>
-    <!-- /.card -->
-
-
-
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-
-
-
-
-            @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
-            {
-                <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
-            }
-            @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
-            <div class="table">
-                <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
-                <table id="ro-table" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">
-                    <thead id="report-header">
-                        <tr>
-                            <th>SL No.</th>
-                            <th>Zone Name</th>
-                            <th>RO Code</th>
-                            <th>RO Name</th>
-                            <th>Target Inst. Amt</th>
-                            <th>Actual OD</th>
-                            <th>Monthly Coll</th>
-                            <th>Inst Coll</th>
-                            <th>OD Coll</th>
-                            <th>Excell Coll</th>
-                            <th>No. Veh</th>
-                            <th>Attn Veh</th>
-                            <th>Target Coll (%)</th>
-                            <th>Inst. Coll (%)</th>
-                            <th>Ovd. Coll (%)</th>
-                            <th>Excess Coll (%)</th>
-                            <th>Attn (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ro-tbody">
-                    </tbody>
-                    <tfoot>
-
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-
+        <!-- /.card -->
+      }
 </div>
 
 <script>
@@ -134,6 +136,10 @@
                     body: JSON.stringify({ from_date: from_date, zone_name : zone_name })
                 });
                 const roSummary = await rawResponse.json();
+                if (roSummary.length == 0) {
+                    alert("Please Set Apropriate Date and Zone");
+                }  
+
                 var i = 0;
                 document.querySelector('#ro-tbody').innerHTML = '';
                 roSummary.forEach(rs => {

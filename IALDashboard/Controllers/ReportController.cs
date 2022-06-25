@@ -41,7 +41,7 @@ namespace IALDashboard.Controllers
         }
 
         [HttpPost]
-        public FileResult ExportROSheet(string from_date, string ro_code, string zone_name)
+        public FileResult ExportROSheet(string from_date, string ro_code, string ro_name, string zone_name)
         {
             from_date = from_date + "-01";
 
@@ -50,41 +50,77 @@ namespace IALDashboard.Controllers
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var ws = wb.Worksheets.Add("Stock Report");
-                ws.Cell("A1").Value = "Sl No";
-                ws.Range("A1:A2").Merge().Style.Font.SetBold().Font.FontSize = 12;
-                ws.Cell("B1").Value = "Segment";
-                ws.Range("B1:B2").Merge().Style.Font.SetBold().Font.FontSize = 12;
-                ws.Cell("C1").Value = "Model";
-                ws.Range("C1:C2").Merge().Style.Font.SetBold().Font.FontSize = 12;
-                ws.Cell("D1").Value = "Total Qty";
-                ws.Range("D1:D2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                ws.Cell("A1").Value = "Monthly Target Sheet " + ro_name;
+                ws.Range("A1:AO1").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("E1").Value = "Dhamrai CKD";
-                ws.Range("E1:H1").Merge().Style.Font.SetBold().Font.FontSize = 12;
-                ws.Cell("E2").Value = "RFD";
-                ws.Cell("E2").Style.Font.SetBold().Font.FontSize = 11;
-                ws.Cell("F2").Value = "DO ISSUED";
-                ws.Cell("F2").Style.Font.SetBold().Font.FontSize = 11;
-                ws.Cell("G2").Value = "Booked";
-                ws.Cell("G2").Style.Font.SetBold().Font.FontSize = 11;
-                ws.Cell("H2").Value = "PDI/PTS";
-                ws.Cell("H2").Style.Font.SetBold().Font.FontSize = 11;
+                ws.Cell("A2").Value = "Month: " + from_date;
+                ws.Range("A2:AO2").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
+                ws.Cell("A5").Value = "Sl NO";
+                ws.Range("A5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("B5").Value = "Order No";
+                ws.Range("B5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("C5").Value = "Customer Name";
+                ws.Range("C5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("D5").Value = "Registration No";
+                ws.Range("D5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("E5").Value = "Model Name";
+                ws.Range("E5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("F5").Value = "1st EMI DATE";
+                ws.Range("F5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("G5").Value = "Target INST AMT";
+                ws.Range("G5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("H5").Value = "NO of Overdue";
+                ws.Range("H5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("I5").Value = "MR COLL";
+                ws.Range("I5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("J5").Value = "DP+DC Due";
+                ws.Range("J5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("K5").Value = "INST DC";
+                ws.Range("K5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("L5").Value = "Overdue";
+                ws.Range("L5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("M5").Value = "Monthly Coll";
+                ws.Range("M5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("N5").Value = "Inst. Coll";
+                ws.Range("N5").Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("O5").Value = "Atten V";
+                ws.Range("O5").Style.Font.SetBold().Font.FontSize = 12;
 
 
                 if (dt.Rows.Count > 0)
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        ws.Cell("A" + (i + 3)).Value = i + 1;
-                        ws.Cell("B" + (i + 3)).Value = dt.Rows[i]["PRODUCT_FAMILY"];
-                        ws.Cell("C" + (i + 3)).Value = dt.Rows[i]["PDI_PTS"];
-                        ws.Cell("D" + (i + 3)).Value = dt.Rows[i]["TOTAL_QTY"];
-                        ws.Cell("E" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#RFD_CKD"];
-                        ws.Cell("F" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#DO_ISSUED"];
-                        ws.Cell("G" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#BOOKED_DAP"];
-                        ws.Cell("H" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#PDI_PTS"];
-
+                        ws.Cell("A" + (i + 6)).Value = i + 1;
+                        ws.Cell("B" + (i + 6)).Value = dt.Rows[i]["ORDER_NO"];
+                        ws.Cell("C" + (i + 6)).Value = dt.Rows[i]["CUSTOMER_NAME"];
+                        ws.Cell("D" + (i + 6)).Value = dt.Rows[i]["REGNO"];
+                        ws.Cell("E" + (i + 6)).Value = dt.Rows[i]["CATALOG_DESC"];
+                        /*ws.Cell("F" + (i + 6)).Value = dt.Rows[i][""];*/
+                        ws.Cell("G" + (i + 6)).Value = dt.Rows[i]["TAR_INST_AMT"];
+                        ws.Cell("H" + (i + 6)).Value = dt.Rows[i]["NO_OF_OVERDUE"];
+                        ws.Cell("I" + (i + 6)).Value = dt.Rows[i]["MR_COLL"];
+                        /*ws.Cell("J" + (i + 6)).Value = dt.Rows[i][""];
+                        ws.Cell("K" + (i + 6)).Value = dt.Rows[i]["NO_OF_OVERDUE"];*/
+                        ws.Cell("L" + (i + 6)).Value = dt.Rows[i]["OVERDUE"];
+                        ws.Cell("M" + (i + 6)).Value = dt.Rows[i]["MONTHLY_COLL"];
+                        ws.Cell("N" + (i + 6)).Value = dt.Rows[i]["INST_COLL"];
+                        ws.Cell("O" + (i + 6)).Value = dt.Rows[i]["ATTEN_V"];
                     }
 
                 }

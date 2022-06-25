@@ -8,6 +8,10 @@
     actionName = System.Text.RegularExpressions.Regex.Replace(actionName, "[A-Z]", " $0");
 
 
+    if ((ViewBag.actionName) != null)
+    {
+        actionName = ViewBag.actionName;
+    }
 }
 
 <!DOCTYPE html>
