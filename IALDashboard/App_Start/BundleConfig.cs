@@ -48,7 +48,7 @@ namespace IALDashboard
                       "~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
                       "~/Content/plugins/daterangepicker/daterangepicker.css",
                       "~/Content/plugins/select2/css/select2.min.css",
-                      "~/Content/dist/css/adminlte.min.css"));
+                      "~/Content/adminlte.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/dtcss").Include(
                     "~/Content/datatables/jquery.dataTables.min.css",

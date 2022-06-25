@@ -1,13 +1,16 @@
-﻿@{ 
+﻿@{
 
     System.Data.DataTable menuAccess = Session["menuAccess"] as System.Data.DataTable;
     var UserName = Session["user_name"];
     var UserId = Session["user_id"];
     var user_image = UserId + ".jpg";
 
-    var user_image_path = Url.Content("~/Content/dist/img/" + user_image);
+    var user_image_path = Url.Content("~/Content/images/" + user_image);
 
-    if (!File.Exists(user_image_path))
+    var mapPath = Server.MapPath("~/Content/images/" + user_image);
+
+
+    if (!File.Exists(mapPath))
     {
         user_image_path = Url.Content("~/Content/dist/img/ifad-wave.png");
     }
@@ -16,8 +19,8 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-        <img src="@(Url.Content("~/Content/dist/img/ifad-wave.png"))" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+    <a href="#" class="brand-link">
+        <img src="@(Url.Content("~/Content/dist/img/ifad-wave.png"))" alt="Logo" class="brand-image" style="opacity: .8">
         <span class="brand-text font-weight-light">IFAD Autos Ltd</span>
     </a>
 
@@ -26,10 +29,10 @@
         <!-- Sidebar user (optional) -->
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
+            <a class="image" id="profile_pic" href="~/User/UpdateProfilePicture">
                 <img src="@user_image_path" class="img-circle elevation-2" alt="User Image">
 
-            </div>
+            </a>
             <div class="info">
                 <a href="#" class="d-block">
                     @UserName
@@ -37,18 +40,18 @@
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
+        <!-- SidebarSearch Form
+               <div class="form-inline">
+                   <div class="input-group" data-widget="sidebar-search">
+                       <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                       <div class="input-group-append">
+                           <button class="btn btn-sidebar">
+                               <i class="fas fa-search fa-fw"></i>
+                           </button>
+                       </div>
+                   </div>
+               </div>
+        -->
         <!-- Sidebar Menu -->
         <nav class="mt-2">
 
@@ -117,10 +120,12 @@
 
 
 
-      
-        
+
+
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
+
+

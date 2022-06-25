@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace IALDashboard.Controllers
 {
+    [Filters.AuthorizedUser]
     public class HomeController : Controller
     {
         public ActionResult Index()

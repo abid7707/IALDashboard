@@ -207,7 +207,20 @@
         $(document).ready(function () {
             //Initialize Select2 Elements
             $('.select2').select2()
+
+            $("body").on("click", "#profile_pic", function () {
+                $("#ProfilePic").modal("show");
+            });
         });
+
+
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+        function clearImage() {
+            document.getElementById('formFile').value = null;
+            frame.src = "";
+        }
 
     </script>
 </body>

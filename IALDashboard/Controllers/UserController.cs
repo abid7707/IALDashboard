@@ -3,6 +3,7 @@ using IALDashboard.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,7 +17,33 @@ namespace IALDashboard.Controllers
         {
             return View();
         }
+        [Filters.AuthorizedUser]
+        public ActionResult UpdateProfilePicture() {
 
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult ProfilePictureSubmit(HttpPostedFileBase file)
+        {
+            string user_id = Session["user_id"].ToString();
+            if (file != null)
+            {
+                var directoryPath = Server.MapPath("~/Content/images");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var fileGuid = Guid.NewGuid();
+                var filename = string.Concat(user_id, Path.GetExtension(file.FileName)).ToLower();
+                var savePath = Path.Combine(directoryPath, filename);
+                file.SaveAs(savePath);
+            }
+
+            return RedirectToAction("Dashboard", "Home");
+        }
 
         public ActionResult Login()
         {
@@ -84,6 +111,42 @@ namespace IALDashboard.Controllers
         }
 
 
+        [Filters.AuthorizedUser]
+        public ActionResult ChangePassword()
+        {
+
+            return View();
+        }
+
+
+        [Filters.AuthorizedUser]
+        [HttpPost]
+        public ActionResult PasswordChange()
+        {
+
+            string current_password = Request["current_password"];
+            string new_password = Request["new_password"];
+            string user_id = Session["user_id"].ToString();
+
+            User user = new User();
+            user.user_id = user_id;
+            user.password = current_password;
+
+            DataTable dt = new User_DAL().VerifyUser(user);
+            if (dt.Rows.Count > 0)
+            {
+                int result = new User_DAL().password_update(user_id, new_password);
+            }
+            else
+            {
+
+                ViewBag.message = "Current Password does not match.";
+                return View("ChangePassword");
+
+            }
+
+            return RedirectToAction("logout");
+        }
         [Filters.AuthorizedUser]
         public ActionResult Save(FormCollection f)
         {

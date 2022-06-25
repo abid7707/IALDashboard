@@ -171,6 +171,27 @@ namespace IALDashboard.DAL
 
         }
 
+        public int password_update(string USER_ID, string USER_PASS)
+        {
+            int result = 0;
+            string password = MD5(USER_PASS);
+            try
+            {
+                string StrSql = "UPDATE USER_TAB SET  USER_PASS='" + password + "' WHERE USER_ID='" + USER_ID + "'";
+                OracleCommand command = GetSPCommand(StrSql);
+                result = ExecuteCommand(command);
+            }
+            catch
+            {
+            }
+            finally
+            {
+                Dispose();
+            }
+            return result;
+
+        }
+
         public int menu_access_save(string USER_ID, int MENU_ID)
         {
 
