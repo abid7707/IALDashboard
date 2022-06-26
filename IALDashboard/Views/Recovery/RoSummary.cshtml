@@ -9,7 +9,7 @@
 
 <div class="row">
 
-    @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
+    @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
     {
         <div class="col-md-6">
             <!-- general form elements -->
@@ -66,7 +66,7 @@
             <div class="card-header">
 
                 <input class="btn btn-outline-primary" type="submit" value="Export to Excel" />
-                
+
 
             </div>
             <!-- /.card-header -->
@@ -112,7 +112,7 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-      }
+    }
 </div>
 
 <script>
@@ -138,7 +138,7 @@
                 const roSummary = await rawResponse.json();
                 if (roSummary.length == 0) {
                     alert("Please Set Apropriate Date and Zone");
-                }  
+                }
 
                 var i = 0;
                 document.querySelector('#ro-tbody').innerHTML = '';

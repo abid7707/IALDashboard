@@ -58,10 +58,11 @@
 @using (Html.BeginForm("ProfilePictureSubmit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="imgUp col-md-3">
-        @Html.TextBox("file", "", new { type = "file", @class= "uploadFile img" }) <br />
-        <input type="submit" value="Upload" />
+        @Html.TextBox("file", "", new { type = "file", @class= "uploadFile img", required="required" }) <br />
+        
         <div class="imagePreview"></div>
         @ViewBag.Message
+        <input type="submit" value="Upload" />
     </div>
 }
 

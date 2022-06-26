@@ -1,10 +1,8 @@
 ﻿using IALDashboard.DAL;
 using IALDashboard.Models;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,7 +16,8 @@ namespace IALDashboard.Controllers
             return View();
         }
         [Filters.AuthorizedUser]
-        public ActionResult UpdateProfilePicture() {
+        public ActionResult UpdateProfilePicture()
+        {
 
             return View();
         }
@@ -42,7 +41,8 @@ namespace IALDashboard.Controllers
                 file.SaveAs(savePath);
             }
 
-            return RedirectToAction("Dashboard", "Home");
+            return RedirectToAction("Index", "Home");
+
         }
 
         public ActionResult Login()

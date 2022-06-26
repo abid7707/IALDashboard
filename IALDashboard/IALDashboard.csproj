@@ -153,7 +153,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RecoveryController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\BaseDataAccessLayer.cs" />
@@ -185,6 +187,7 @@
     <Content Include="Content\fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
     <Content Include="Content\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
     <Content Include="Content\fonts\montserrat\OFL.txt" />
+    <Content Include="Content\images\ifad-wave.png" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -2393,18 +2396,18 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\EditUser.cshtml" />
-    <Content Include="Views\Report\DailyStockReport.cshtml" />
-    <Content Include="Views\Report\Index.cshtml" />
-    <Content Include="Views\Report\RoSheet.cshtml" />
-    <Content Include="Views\Report\RoSummary.cshtml" />
-    <Content Include="Views\Report\RoZoneWiseSummary.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Recovery\RoSheet.cshtml" />
+    <Content Include="Views\Recovery\RoSummary.cshtml" />
+    <Content Include="Views\Recovery\RoZoneWiseSummary.cshtml" />
+    <Content Include="Views\Recovery\CollectionReport.cshtml" />
+    <Content Include="Views\Inventory\DailyStockReport.cshtml" />
     <None Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\UpdateProfilePicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

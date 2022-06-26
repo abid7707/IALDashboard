@@ -9,7 +9,7 @@
 
 <div class="row">
 
-    @using (Html.BeginForm("ExportROSheet", "Report", FormMethod.Post))
+    @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
     {
         <div class="col-md-3">
             <!-- general form elements -->
@@ -117,7 +117,7 @@
                 const roSummary = await rawResponse.json();
                 if (roSummary.length == 0) {
                     alert("Please Set Apropriate Date");
-                }  
+                }
                 var i = 0;
                 document.querySelector('#ro-tbody').innerHTML = '';
                 roSummary.forEach(rs => {

@@ -15,7 +15,7 @@
     @Styles.Render("~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css")
     @Styles.Render("~/Content/adminlte.min.css")
 <style>
-    
+
     .login-banner {
         height: 10em;
         background-image: url( @Url.Content("~/Content/images/banner.jpg") );
@@ -27,12 +27,34 @@
         font-size: 1.5rem;
         font-weight: 300;
     }
+
+    .my-bg {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    .my-bg::before {
+        content: "";
+        background-image: url( @Url.Content("/Content/images/ifad-wave.png") );
+        background-size: cover;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.1;
+    }
+
 </style>
 </head>
 
 
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page my-bg">
     <div class="login-box">
         
         <div class="login-logo">
@@ -40,8 +62,8 @@
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="login-banner">
-            </div>
+            @*<div class="login-banner">
+            </div>*@
 
             <div class="card-body login-card-body">
 

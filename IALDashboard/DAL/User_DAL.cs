@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using IALDashboard.Models;
+using System.Data;
+using System.Data.OracleClient;
 using System.Security.Cryptography;
 using System.Text;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.OracleClient;
-using System.Configuration;
-using IALDashboard.Models;
 
 namespace IALDashboard.DAL
 {
@@ -48,14 +42,15 @@ namespace IALDashboard.DAL
             DataTable userinfo = new DataTable();
 
             string condition = "";
-            if (userid != "") {
+            if (userid != "")
+            {
                 condition = " WHERE user_id='" + userid + "'";
             }
 
             try
             {
 
-                string StrSql = " SELECT USER_ID, USER_NAME, USER_PASS, USER_EMAIL, USER_AREA, USER_LEVEL FROM USER_TAB "+condition;
+                string StrSql = " SELECT USER_ID, USER_NAME, USER_PASS, USER_EMAIL, USER_AREA, USER_LEVEL FROM USER_TAB " + condition;
                 OracleCommand command = GetSQLCommand(StrSql);
                 OracleDataAdapter odaAdapter = new OracleDataAdapter(command);
                 odaAdapter.Fill(userinfo);
@@ -104,7 +99,7 @@ namespace IALDashboard.DAL
             try
             {
 
-                string StrSql = @"SELECT a.USER_ID,m.MENU_ID,m.MENU_LABEL,m.MENU_LINK,m.MENU_PARENT,m.SEQ FROM, m.ICON MENU_TAB m left outer join MENU_ACCESS_TAB a  on a.MENU_ID=m.MENU_ID and a.user_id='" + user_id + "' order by m.seq";
+                string StrSql = @"SELECT a.USER_ID,m.MENU_ID,m.MENU_LABEL,m.MENU_LINK,m.MENU_PARENT,m.SEQ , m.ICON FROM MENU_TAB m left outer join MENU_ACCESS_TAB a  on a.MENU_ID=m.MENU_ID and a.user_id='" + user_id + "' order by m.seq";
                 OracleCommand command = GetSQLCommand(StrSql);
                 OracleDataAdapter odaAdapter = new OracleDataAdapter(command);
                 odaAdapter.Fill(usermenu);
@@ -123,9 +118,9 @@ namespace IALDashboard.DAL
 
         }
 
-      
 
-        public int user_save(string USER_ID, string USER_NAME, string Password, string USER_EMAIL = "", string USER_AREA="")
+
+        public int user_save(string USER_ID, string USER_NAME, string Password, string USER_EMAIL = "", string USER_AREA = "")
         {
 
             int result = 0;
@@ -135,7 +130,7 @@ namespace IALDashboard.DAL
             {
 
                 string StrSql = "INSERT INTO USER_TAB (USER_ID, USER_NAME, USER_PASS,USER_EMAIL,USER_AREA) VALUES('" + USER_ID + "','" + USER_NAME + "','" + password + "','" + USER_EMAIL + "','" + USER_AREA + "')";
-                OracleCommand command =  GetSPCommand(StrSql);
+                OracleCommand command = GetSPCommand(StrSql);
                 result = ExecuteCommand(command);
 
             }
@@ -150,7 +145,7 @@ namespace IALDashboard.DAL
 
         }
 
-        public int user_update(string USER_ID, string USER_NAME, string USER_EMAIL = "", string USER_AREA="")
+        public int user_update(string USER_ID, string USER_NAME, string USER_EMAIL = "", string USER_AREA = "")
         {
             int result = 0;
             //string password = MD5(Password);
@@ -200,7 +195,7 @@ namespace IALDashboard.DAL
             try
             {
 
-                string StrSql = "INSERT INTO MENU_ACCESS_TAB (USER_ID, MENU_ID) VALUES('"+USER_ID+"',"+MENU_ID+")";
+                string StrSql = "INSERT INTO MENU_ACCESS_TAB (USER_ID, MENU_ID) VALUES('" + USER_ID + "'," + MENU_ID + ")";
                 OracleCommand command = GetSPCommand(StrSql);
 
                 result = ExecuteCommand(command);

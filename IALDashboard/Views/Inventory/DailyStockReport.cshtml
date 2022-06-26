@@ -18,15 +18,15 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">DataTable with default features</h3>
-        
+
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        
 
-      
 
-        @using (Html.BeginForm("ExportDailyStockReport", "Report", FormMethod.Post))
+
+
+        @using (Html.BeginForm("ExportDailyStockReport", "Inventory", FormMethod.Post))
         {
             <input class="btn btn-block btn-outline-primary" type="submit" value="Export" />
         }

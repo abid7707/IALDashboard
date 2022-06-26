@@ -150,6 +150,32 @@ namespace IALDashboard.DAL
             return dt;
         }
 
+        public DataTable getROByCODE(string ro_code)
+        {
+            DataTable dt = new DataTable("ro");
+
+            try
+            {
+
+                OracleCommand com = GetSPCommand("PROC_GET_RO_BY_CODE");
+                com.Parameters.Add("P_RO_CODE", OracleType.VarChar).Value = ro_code;
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+
+                oraData.Fill(dt);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
         public DataTable ZoneInfo()
         {
             DataTable dt = new DataTable("zonelist");
