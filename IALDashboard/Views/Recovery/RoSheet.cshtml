@@ -13,7 +13,7 @@
         <div class="col-md-6 col-sm-12">
             <!-- general form elements -->
             <div class="card card-primary">
-                @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
+                @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Get))
                 {
 
 
@@ -136,15 +136,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('btn-export-to-excel').onclick = function () {
-            alert("clicked!");
-            var table = document.getElementById("ro-table");
-
+           
             var from_date = document.getElementById('from-date').value;
             var ro_code = document.getElementById('ro-code').value;
+          
+            window.open("ExportROSheet?from_date=" + from_date + "&ro_code=" + ro_code + "&zone_name=", '_blank');
 
-            var zone_name = document.getElementById('zone-name').value;
-            location('roSheet?from_date=' + from_date + '&');
-            location.href = 'roSheet?from_date=' + from_date+ '&';
+        
 
 
             (async () => {

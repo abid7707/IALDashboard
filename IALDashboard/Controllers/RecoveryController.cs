@@ -54,8 +54,8 @@ namespace IALDashboard.Controllers
         }
 
 
-        [HttpPost]
-        public FileResult ExportROSheet(string from_date, string ro_code, string zone_name)
+        [HttpGet]
+        public ActionResult ExportROSheet(string from_date, string ro_code, string zone_name)
         {
             from_date = from_date + "-01";
 
