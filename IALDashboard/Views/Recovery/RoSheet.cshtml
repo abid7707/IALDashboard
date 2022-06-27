@@ -7,81 +7,85 @@
 }
 
 
-<div class="row">
 
-    @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
-    {
+    
 
-
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
             <!-- general form elements -->
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Monthly RO Sheet</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
+                @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
+                {
 
-                <div class="card-body">
 
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label>Select Month</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    <div class="card-header">
+                        <h3 class="card-title">Monthly RO Sheet</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Select Month</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                                    <input class="form-control" type="month" name="from_date" required id="from-date" />
                                 </div>
-                                <input class="form-control" type="month" name="from_date" required id="from-date" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Select Zone</label>
+                                <select class="form-control" style="width: 100%;" name="zone_name" id="zoneName" required>
+                                    <option selected="" value="">Select</option>
+                                    @{
+                                        foreach (System.Data.DataRow zone in zonelist.Rows)
+                                        {
+                                            <option value="@zone["ZONE_NAME"]">@zone["ZONE_NAME"]</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Select RO</label>
+                                <select class="form-control select2" style="width: 100%;" name="ro_code" id="ro-code">
+                                    <option selected="" data-ro="" value="">Select</option>
+
+                                    @{
+                                        foreach (System.Data.DataRow ro in rolist.Rows)
+                                        {
+                                            <option data-ro="@ro["RO_NAME"]" value="@ro["RO_CODE"]">@ro["RO_CODE"] - @ro["RO_NAME"]</option>
+                                        }
+                                    }
+
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label>Select RO</label>
-                            <select class="form-control select2" style="width: 100%;" name="ro_code" required id="ro-code">
-                                <option selected="" data-ro="" value="">Select</option>
 
-                                @{
-                                    foreach (System.Data.DataRow ro in rolist.Rows)
-                                    {
-                                        <option data-ro="@ro["RO_NAME"]" value="@ro["RO_CODE"]">@ro["RO_CODE"] - @ro["RO_NAME"]</option>
+                        
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button id="btn-get-ro-sheet" class="btn btn-primary" type="button">Submit</button>
+                        <input id="btn-export-to-excel" class="btn btn-outline-primary pull-right" type="button" value="Export to Excel" />
+
+                    </div>
                                     }
-                                }
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group" style="display:none">
-                        <label>Select Zone</label>
-                        <select class="form-control" style="width: 100%;" name="zone_name" id="zone-name">
-                            <option selected="" value="">Select</option>
-                            @{
-                                foreach (System.Data.DataRow zone in zonelist.Rows)
-                                {
-                                    <option value="@zone["ZONE_NAME"]">@zone["ZONE_NAME"]</option>
-                                }
-                            }
-                        </select>
-                    </div>
-
                 </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                    <button id="btn-get-ro-sheet" class="btn btn-primary" type="button">Submit</button>
-
-                </div>
-
-            </div>
+          
         </div>
         <!-- /.card -->
 
 
 
-        <div class="card">
+        <div class="card col-sm-12 col-md-12">
             <div class="card-header">
-                <input class="btn btn-outline-primary" type="submit" value="Export to Excel" />
+                
 
             </div>
             <!-- /.card-header -->
@@ -94,25 +98,26 @@
                 @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
                 <div class="table">
                     <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
-                    <table id="ro-table" class="table-responsive table-striped">
+                    <table id="ro-table" class="table-responsive table-striped nowrap">
                         <thead id="report-header">
                             <tr>
-                                <th>SL No.</th>
-                                <th>Order No</th>
-                                <th>Customer Name</th>
-                                <th>Reg. No.</th>
-                                <th>Model</th>
-                                <th>1st EMI DT. </th>
-                                <th>EMI AMT.</th>
-                                <th>Target Inst. Amt.</th>
-                                <th>No. of OVD.</th>
-                                <th>MR Coll.</th>
-                                <th>DP+DC Due</th>
-                                <th>INST DC</th>
-                                <th>Overdue</th>
-                                <th>Monthly Coll.</th>
-                                <th>Inst Coll.</th>
-                                <th>Atten V.</th>
+                                <th nowrap>SL No.</th>
+                                <th nowrap>Order No</th>
+                                <th nowrap>Customer Name</th>
+                                <th nowrap>RO Name</th>
+                                <th nowrap>Reg. No.</th>
+                                <th nowrap>Model</th>
+                                <th nowrap>1st EMI DT. </th>
+                                <th nowrap>EMI AMT.</th>
+                                <th nowrap>Target Inst. Amt.</th>
+                                <th nowrap>No. of OVD.</th>
+                                <th nowrap>MR Coll.</th>
+                                <th nowrap>DP+DC Due</th>
+                                <th nowrap>INST DC</th>
+                                <th nowrap>Overdue</th>
+                                <th nowrap>Monthly Coll.</th>
+                                <th nowrap>Inst Coll.</th>
+                                <th nowrap>Atten V.</th>
                             </tr>
                         </thead>
                         <tbody id="ro-tbody">
@@ -126,11 +131,38 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-    }
-</div>
+ 
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('btn-export-to-excel').onclick = function () {
+            alert("clicked!");
+            var table = document.getElementById("ro-table");
+
+            var from_date = document.getElementById('from-date').value;
+            var ro_code = document.getElementById('ro-code').value;
+
+            var zone_name = document.getElementById('zone-name').value;
+            location('roSheet?from_date=' + from_date + '&');
+            location.href = 'roSheet?from_date=' + from_date+ '&';
+
+
+            (async () => {
+                const rawResponse = await fetch('ExportROSheet', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ from_date: from_date, ro_code: ro_code, zone_name: '' })
+                });
+                location.href = 'roSheet';
+
+
+            })();
+
+        }
+
         document.getElementById('btn-get-ro-sheet').onclick = function () {
 
             var table = document.getElementById("ro-table");
@@ -138,7 +170,7 @@
             var from_date = document.getElementById('from-date').value;
             var ro_code = document.getElementById('ro-code').value;
 
-            var zone_name = document.getElementById('zone-name').value;
+            var zone_name = document.getElementById('zoneName').value;
 
 
             (async () => {
@@ -148,7 +180,7 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ from_date: from_date, ro_code: ro_code, zone_name : '' })
+                    body: JSON.stringify({ from_date: from_date, ro_code: ro_code, zone_name: zone_name })
                 });
                 const rolist = await rawResponse.json();
                 if (rolist.length == 0) {
@@ -159,22 +191,23 @@
                 rolist.forEach(ro => {
                     i += 1;
                     row = `<tr>
-                                <td>${i}</td>
-                                <td>${ro["ORDER_NO"]}</td>
-                                <td>${ro["CUSTOMER_NAME"]}</td>
-                                <td>${ro["REGNO"]}</td>
-                                <td>${ro["CATALOG_NO"]}</td>
-                                <td>${ro["FSTINSAL_DATE"]}</td>
-                                <td>${ro["EMI_AMOUNT"]}</td>
-                                <td>${ro["TAR_INST_AMT"]}</td>
-                                <td>${ro["NO_OF_OVERDUE"]}</td>
-                                <td>${ro["MR_COLL"]}</td>
-                                <td>${ro["DP_DC_PAYMENT"]}</td>
-                                <td>${ro["INS_DC_PAYMENT"]}</td>
-                                <td>${ro["OVERDUE"]}</td>
-                                <td>${ro["MONTHLY_COLL"]}</td>
-                                <td>${ro["INST_COLL"]}</td>
-                                <td>${ro["ATTEN_V"]}</td>
+                                <td nowrap>${i}</td>
+                                <td nowrap>${ro["ORDER_NO"]}</td>
+                                <td nowrap>${ro["CUSTOMER_NAME"]}</td>
+                                <td nowrap>${ro["RO_NAME"]}</td>
+                                <td nowrap>${ro["REGNO"]}</td>
+                                <td nowrap>${ro["CATALOG_NO"]}</td>
+                                <td nowrap>${ro["FSTINSAL_DATE"]}</td>
+                                <td nowrap>${ro["EMI_AMOUNT"]}</td>
+                                <td nowrap>${ro["TAR_INST_AMT"]}</td>
+                                <td nowrap>${ro["NO_OF_OVERDUE"]}</td>
+                                <td nowrap>${ro["MR_COLL"]}</td>
+                                <td nowrap>${ro["DP_DC_PAYMENT"]}</td>
+                                <td nowrap>${ro["INS_DC_PAYMENT"]}</td>
+                                <td nowrap>${ro["OVERDUE"]}</td>
+                                <td nowrap>${ro["MONTHLY_COLL"]}</td>
+                                <td nowrap>${ro["INST_COLL"]}</td>
+                                <td nowrap>${ro["ATTEN_V"]}</td>
                            </tr>`;
                     document.querySelector('#ro-tbody').innerHTML += row;
 
@@ -187,7 +220,58 @@
 
         }
 
+
+
+
+
+
+        document.getElementById('zoneName').addEventListener('change', function () {
+            var from_date = document.getElementById('from-date').value;
+            var zone_name = document.getElementById('zoneName').value;
+
+            if (from_date == '') {
+                alert('select month!');
+                document.getElementById('zoneName').value = "";
+            } else {
+                (async () => {
+                    const rawResponse = await fetch('GetJsonROListByZone', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ from_date: from_date, zone_name: zone_name })
+                    });
+                    const rolist = await rawResponse.json();
+                    if (rolist.length == 0) {
+                        alert("No RO Found!");
+                    }
+                    document.querySelector('#ro-code').innerHTML = '';
+                    row = `<option value="">Select</option>`
+                    rolist.forEach(ro => {
+                        row += `<option value=${ro["RO_CODE"]}>${ro["RO_NAME"]}</option>`
+                    });
+
+                    document.querySelector('#ro-code').innerHTML = row;
+
+                    console.log(rolist);
+                })();
+            }
+        });
+
+
+
+
+
+
+
+
     });
 
 
+
+
+</script>
+
+<script>
 </script>

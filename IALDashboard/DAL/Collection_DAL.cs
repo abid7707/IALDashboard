@@ -64,6 +64,33 @@ namespace IALDashboard.DAL
             return dt;
         }
 
+        public DataTable ROListByZone(string from_date, string zone_name)
+        {
+
+            DataTable dt = new DataTable("ROSheet");
+
+            try
+            {
+
+                OracleCommand com = GetSPCommand("PROC_RO_BY_ZONE");
+                com.Parameters.Add("P_FROM_DATE", OracleType.VarChar).Value = from_date;
+                com.Parameters.Add("P_ZONE_NAME", OracleType.VarChar).Value = zone_name;
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+
+                oraData.Fill(dt);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
 
 
         public DataTable ROSummary(string from_date, string zone_name)

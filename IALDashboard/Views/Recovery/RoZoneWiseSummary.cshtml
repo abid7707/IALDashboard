@@ -9,39 +9,41 @@
 
 <div class="row">
 
-    @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
-    {
+    
         <div class="col-md-3">
-            <!-- general form elements -->
+            
+                <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Zone Wise Summary</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                @*@using (Html.BeginForm("getROSummary", "Report", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {*@
-                <div class="card-body">
+                @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
+                {
+                    <div class="card-body">
 
-                    <label>Select Month</label>
+                        <label>Select Month</label>
 
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            <input class="form-control" type="month" name="from_date" required id="from-date" />
+                            <!--<input id="datemask" type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/yyyy" data-mask>-->
                         </div>
-                        <input class="form-control" type="month" name="from_date" required id="from-date" />
-                        <!--<input id="datemask" type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/yyyy" data-mask>-->
+
                     </div>
+                    <!-- /.card-body -->
 
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                    <button id="btn-get-ro-zonewise-summary" class="btn btn-primary" type="button">Submit</button>
-                </div>
-                @*}*@
+                    <div class="card-footer">
+                        <button id="btn-get-ro-zonewise-summary" class="btn btn-primary" type="button">Submit</button>
+                        <input class="btn btn-outline-primary pull-right" type="submit" value="Export to Excel" />
+                    </div>
+                }
             </div>
-        </div>
+                
+            </div>
         <!-- /.card -->
 
 
@@ -50,7 +52,7 @@
             <div class="card-header">
 
 
-                <input class="btn btn-outline-primary pull-right" type="submit" value="Export to Excel" />
+                @*<input class="btn btn-outline-primary pull-right" type="submit" value="Export to Excel" />*@
 
 
             </div>
@@ -92,7 +94,6 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-    }
 </div>
 
 <script>

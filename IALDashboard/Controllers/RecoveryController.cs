@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace IALDashboard.Controllers
 {
+    [Filters.AuthorizedUser]
     public class RecoveryController : Controller
     {
         // GET: Recovery
@@ -18,6 +19,7 @@ namespace IALDashboard.Controllers
         //-------------------------------RO SHEET-------------------------------
         public ActionResult RoSheet()
         {
+            ViewBag.actionName = "RO Sheet";
             string zone_name = "";
             DataTable dt_ro = new Collection_DAL().ROInfo(zone_name);
             DataTable dt_zone = new Collection_DAL().ZoneInfo();
@@ -38,6 +40,19 @@ namespace IALDashboard.Controllers
             JSONString = JsonConvert.SerializeObject(dt);
             return JSONString;
         }
+
+        [HttpPost]
+        public string GetJsonROListByZone(string from_date, string zone_name)
+        {
+            from_date = from_date + "-01";
+
+            DataTable dt = new Collection_DAL().ROListByZone(from_date, zone_name);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(dt);
+            return JSONString;
+        }
+
 
         [HttpPost]
         public FileResult ExportROSheet(string from_date, string ro_code, string zone_name)
@@ -80,10 +95,10 @@ namespace IALDashboard.Controllers
                 ws.Cell("F5").Value = "1st EMI DATE";
                 ws.Range("F5").Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("G5").Value = "1st EMI DATE";
+                ws.Cell("G5").Value = "EMI AMT.";
                 ws.Range("G5").Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("H5").Value = "Target INST AMT";
+                ws.Cell("H5").Value = "Target INST AMT.";
                 ws.Range("H5").Style.Font.SetBold().Font.FontSize = 12;
 
                 ws.Cell("I5").Value = "NO of Overdue";
@@ -151,6 +166,7 @@ namespace IALDashboard.Controllers
 
         public ActionResult RoSummary()
         {
+            ViewBag.actionName = "RO Summary";
             DataTable dt_zone = new Collection_DAL().ZoneInfo();
             ViewBag.zonelist = dt_zone;
             return View();
@@ -174,6 +190,7 @@ namespace IALDashboard.Controllers
 
         public ActionResult RoZoneWiseSummary()
         {
+            ViewBag.actionName = "RO Zone Wise Summary";
             return View();
         }
 
@@ -196,6 +213,25 @@ namespace IALDashboard.Controllers
         }
 
 
+
+        //-------------------------------Collection Report-------------------------------
+        [HttpPost]
+        public FileResult ExportCollectionReport(string from_date)
+        {
+
+            string date = from_date + "-01";
+            DataTable dt = new Collection_DAL().CollectionReport(date);
+            var rows = dt.Rows.Count;
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Collection_" + from_date + ".xlsx");
+                }
+            }
+        }
 
 
 

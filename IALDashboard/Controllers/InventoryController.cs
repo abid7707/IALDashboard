@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace IALDashboard.Controllers
 {
+    [Filters.AuthorizedUser]
     public class InventoryController : Controller
     {
         // GET: Inventory
@@ -18,22 +19,7 @@ namespace IALDashboard.Controllers
         }
 
 
-        [HttpPost]
-        public FileResult ExportCollectionReport(string from_date)
-        {
-            from_date = from_date + "-01";
-            DataTable dt = new Collection_DAL().CollectionReport(from_date);
-            var rows = dt.Rows.Count;
-            using (XLWorkbook wb = new XLWorkbook())
-            {
-                wb.Worksheets.Add(dt);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "daily_stock_report.xlsx");
-                }
-            }
-        }
+
 
         [HttpPost]
         public FileResult ExportDailyStockReport()
