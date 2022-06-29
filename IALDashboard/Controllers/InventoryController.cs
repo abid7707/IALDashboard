@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using IALDashboard.DAL;
+using System;
 using System.Data;
 using System.IO;
 using System.Web.Mvc;
@@ -12,7 +13,7 @@ namespace IALDashboard.Controllers
         // GET: Inventory
         public ActionResult DailyStockReport()
         {
-            DataTable dt = new Stock_DAL().StockTableTemp();
+            DataTable dt = new Stock_DAL().DailyStockProcessData();
 
             ViewBag.stocklist = dt;
             return View();
@@ -25,7 +26,7 @@ namespace IALDashboard.Controllers
         public FileResult ExportDailyStockReport()
         {
 
-            DataTable dt = new Stock_DAL().StockTableTemp();
+            DataTable dt = new Stock_DAL().DailyStockProcessData();
 
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -146,36 +147,36 @@ namespace IALDashboard.Controllers
                     {
                         ws.Cell("A" + (i + 3)).Value = i + 1;
                         ws.Cell("B" + (i + 3)).Value = dt.Rows[i]["PRODUCT_FAMILY"];
-                        ws.Cell("C" + (i + 3)).Value = dt.Rows[i]["PDI_PTS"];
+                        ws.Cell("C" + (i + 3)).Value = dt.Rows[i]["PARTDES"];
                         ws.Cell("D" + (i + 3)).Value = dt.Rows[i]["TOTAL_QTY"];
-                        ws.Cell("E" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#RFD_CKD"];
-                        ws.Cell("F" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#DO_ISSUED"];
-                        ws.Cell("G" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#BOOKED_DAP"];
-                        ws.Cell("H" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD#PDI_PTS"];
-                        ws.Cell("I" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU#RFD_CBU"];
-                        ws.Cell("J" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU#DO_ISSUED"];
-                        ws.Cell("K" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU#BOOKED_DAP"];
-                        ws.Cell("L" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU#PDI_PTS"];
-                        ws.Cell("M" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR#RFD"];
-                        ws.Cell("N" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR#DO_ISSUED"];
-                        ws.Cell("O" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR#BOOKED"];
-                        ws.Cell("P" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR#PDI_PTS"];
-                        ws.Cell("Q" + (i + 3)).Value = dt.Rows[i]["CTG#RFD"];
-                        ws.Cell("R" + (i + 3)).Value = dt.Rows[i]["CTG#DO_ISSUED"];
-                        ws.Cell("S" + (i + 3)).Value = dt.Rows[i]["CTG#BOOKED"];
-                        ws.Cell("T" + (i + 3)).Value = dt.Rows[i]["CTG#PDI_PTS"];
-                        ws.Cell("U" + (i + 3)).Value = dt.Rows[i]["CUMILLA#RFD"];
-                        ws.Cell("V" + (i + 3)).Value = dt.Rows[i]["CUMILLA#DO_ISSUED"];
-                        ws.Cell("W" + (i + 3)).Value = dt.Rows[i]["CUMILLA#BOOKED"];
-                        ws.Cell("X" + (i + 3)).Value = dt.Rows[i]["CUMILLA#PDI_PTS"];
-                        ws.Cell("Y" + (i + 3)).Value = dt.Rows[i]["JASHORE#RFD"];
-                        ws.Cell("Z" + (i + 3)).Value = dt.Rows[i]["JASHORE#DO_ISSUED"];
-                        ws.Cell("AA" + (i + 3)).Value = dt.Rows[i]["JASHORE#BOOKED"];
-                        ws.Cell("AB" + (i + 3)).Value = dt.Rows[i]["JASHORE#PDI_PTS"];
-                        ws.Cell("AC" + (i + 3)).Value = dt.Rows[i]["BOGRA#RFD"];
-                        ws.Cell("AD" + (i + 3)).Value = dt.Rows[i]["BOGRA#DO_ISSUED"];
-                        ws.Cell("AE" + (i + 3)).Value = dt.Rows[i]["BOGRA#BOOKED"];
-                        ws.Cell("AF" + (i + 3)).Value = dt.Rows[i]["BOGRA#PDI_PTS"];
+                        ws.Cell("E" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD_XX_RFD_CKD"];
+                        ws.Cell("F" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD_XX_DO_ISSUED"];
+                        ws.Cell("G" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD_XX_BOOKED_DAP"];
+                        ws.Cell("H" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CKD_XX_PDI_PTS"];
+                        ws.Cell("I" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU_XX_RFD_CBU"];
+                        ws.Cell("J" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU_XX_DO_ISSUED"];
+                        ws.Cell("K" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU_XX_BOOKED_DAP"];
+                        ws.Cell("L" + (i + 3)).Value = dt.Rows[i]["DHAMRAI_CBU_XX_PDI_PTS"];
+                        ws.Cell("M" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR_XX_RFD"];
+                        ws.Cell("N" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR_XX_DO_ISSUED"];
+                        ws.Cell("O" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR_XX_BOOKED"];
+                        ws.Cell("P" + (i + 3)).Value = dt.Rows[i]["JOYDEBPUR_XX_PDI_PTS"];
+                        ws.Cell("Q" + (i + 3)).Value = dt.Rows[i]["CHATTOGRAM_XX_RFD"];
+                        ws.Cell("R" + (i + 3)).Value = dt.Rows[i]["CHATTOGRAM_XX_DO_ISSUED"];
+                        ws.Cell("S" + (i + 3)).Value = dt.Rows[i]["CHATTOGRAM_XX_BOOKED"];
+                        ws.Cell("T" + (i + 3)).Value = dt.Rows[i]["CHATTOGRAM_XX_PDI_PTS"];
+                        ws.Cell("U" + (i + 3)).Value = dt.Rows[i]["CUMILLA_XX_RFD"];
+                        ws.Cell("V" + (i + 3)).Value = dt.Rows[i]["CUMILLA_XX_DO_ISSUED"];
+                        ws.Cell("W" + (i + 3)).Value = dt.Rows[i]["CUMILLA_XX_BOOKED"];
+                        ws.Cell("X" + (i + 3)).Value = dt.Rows[i]["CUMILLA_XX_PDI_PTS"];
+                        ws.Cell("Y" + (i + 3)).Value = dt.Rows[i]["JASHORE_XX_RFD"];
+                        ws.Cell("Z" + (i + 3)).Value = dt.Rows[i]["JASHORE_XX_DO_ISSUED"];
+                        ws.Cell("AA" + (i + 3)).Value = dt.Rows[i]["JASHORE_XX_BOOKED"];
+                        ws.Cell("AB" + (i + 3)).Value = dt.Rows[i]["JASHORE_XX_PDI_PTS"];
+                        ws.Cell("AC" + (i + 3)).Value = dt.Rows[i]["BOGRA_XX_RFD"];
+                        ws.Cell("AD" + (i + 3)).Value = dt.Rows[i]["BOGRA_XX_DO_ISSUED"];
+                        ws.Cell("AE" + (i + 3)).Value = dt.Rows[i]["BOGRA_XX_BOOKED"];
+                        ws.Cell("AF" + (i + 3)).Value = dt.Rows[i]["BOGRA_XX_PDI_PTS"];
                         ws.Cell("AG" + (i + 3)).Value = dt.Rows[i]["RFD"];
                         ws.Cell("AH" + (i + 3)).Value = dt.Rows[i]["DO_ISSUED"];
                         ws.Cell("AI" + (i + 3)).Value = dt.Rows[i]["BOOKED"];
@@ -193,7 +194,7 @@ namespace IALDashboard.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Daily Stock Report "+DateTime.Now.ToString("yyyy-dd-M")+ ".xlsx");
                 }
 
             }
