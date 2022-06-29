@@ -65,7 +65,7 @@ namespace IALDashboard.Controllers
 
             using (XLWorkbook wb = new XLWorkbook())
             {
-                var ws = wb.Worksheets.Add("Stock Report");
+                var ws = wb.Worksheets.Add("ROSheet");
 
                 ws.Range("A1:P5").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                 ws.Cell("A1").Value = "Monthly Target Sheet ";
@@ -74,7 +74,7 @@ namespace IALDashboard.Controllers
                 ws.Cell("A2").Value = "Month: " + from_date;
                 ws.Range("A2:P2").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("A3").Value = "RO Name: " + ro_row["RO_NAME"];
+                ws.Cell("A3").Value = "RO CODE: " + ro_row["RO_CODE"] + "RO Name: " + ro_row["RO_NAME"] + " ZONE: " + zone_name;
                 ws.Range("A3:P3").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
                 ws.Cell("A5").Value = "Sl NO";
@@ -224,7 +224,10 @@ namespace IALDashboard.Controllers
             var rows = dt.Rows.Count;
             using (XLWorkbook wb = new XLWorkbook())
             {
-                wb.Worksheets.Add(dt);
+                var ws = wb.Worksheets.Add(dt);
+                ws.SetAutoFilter(false);
+                /*wb.Worksheets.Add(dt);*/
+
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);

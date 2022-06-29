@@ -71,7 +71,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button id="btn-get-ro-sheet" class="btn btn-primary" type="button">Submit</button>
+                        <button id="btn-get-ro-sheet" class="btn btn-primary myPreLoader" type="button">Submit</button>
                         <input id="btn-export-to-excel" class="btn btn-outline-primary pull-right" type="button" value="Export to Excel" />
 
                     </div>
@@ -194,7 +194,7 @@
                                 <td nowrap>${ro["CUSTOMER_NAME"]}</td>
                                 <td nowrap>${ro["RO_NAME"]}</td>
                                 <td nowrap>${ro["REGNO"]}</td>
-                                <td nowrap>${ro["CATALOG_NO"]}</td>
+                                <td nowrap>${ro["CATALOG_DESC"]}</td>
                                 <td nowrap>${ro["FSTINSAL_DATE"]}</td>
                                 <td nowrap>${ro["EMI_AMOUNT"]}</td>
                                 <td nowrap>${ro["TAR_INST_AMT"]}</td>
@@ -212,6 +212,7 @@
                 });
 
                 console.log(rolist);
+                hidePreloader();
 
 
             })();

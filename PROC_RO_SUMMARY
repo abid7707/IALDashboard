@@ -1,0 +1,120 @@
+CREATE OR REPLACE PROCEDURE REPORTDB.PROC_RO_SUMMARY (
+   P_FROM_DATE IN      VARCHAR2,
+   P_ZONE_NAME IN      VARCHAR2,
+   pcursor     OUT SYS_REFCURSOR
+   )
+AS
+BEGIN
+ 
+   OPEN PCURSOR FOR 
+      SELECT  DISTINCT RO_CODE, RO_NAME, MAX(ZONE_NAME) ZONE_NAME, SUM(TAR_INST_AMT) TAR_INST_AMT, SUM(ACTUAL_OD) ACTUAL_OD,  SUM(MONTHLY_COLL) MONTHLY_COLL,
+                SUM(INST_COLL) INST_COLL, SUM(OD_COLECTION) OD_COLECTION,SUM(BAL_COLL - OD_COLECTION) EXCESS_COLLECTION, 
+                COUNT(ORDER_NO) NO_OF_VEHICLE, SUM(ATTEN_V) ATTEN_V, 
+                CASE WHEN SUM(TAR_INST_AMT) = 0 THEN 0
+                ELSE TRUNC(SUM(MONTHLY_COLL) / SUM(TAR_INST_AMT) * 100, 0) END TAR_COLL_PERCENT,
+                CASE WHEN SUM(TAR_INST_AMT) = 0 THEN 0
+                ELSE TRUNC(SUM(INST_COLL) / SUM(TAR_INST_AMT) * 100, 0) END INST_COLL_PERCENT,
+                CASE WHEN COUNT(ORDER_NO) = 0 THEN 0
+                ELSE TRUNC(SUM(ATTEN_V) / COUNT(ORDER_NO) * 100, 0) END ATTN_V_PERCENT
+                
+                
+                FROM (
+
+                SELECT ROW_ID, ORDER_NO, CUSTOMER_NO, CUSTOMER_NAME, PRESENT_CITY, 
+                                FINANCIAL_INST, C_CUSTOMER_NO, C_CUSTOMER_NAME, C_PRESENT_CITY, RO_CODE, TAR_INST_AMT,
+                                RO_NAME, ZONE_NAME, REGNO, CATALOG_NO, CATALOG_DESC, STATUS, 
+                                LA_STATUS, NOVEHICLE, AUTHORIZE_CODE, FROM_DATE, 
+                                OPEN_AMOUNT, CREATE_DATE, LEASING_DATE , FSTINSAL_DATE, EMI_AMOUNT, LAST_MONTH_TOTALDUE, OPENING_OVERDUE,
+                                TOTALDUE, INTOTALDUE, INTRESTAMT, DP_AMOUNT, DP_OPEN, DELIVERY_DATE, SELLPRICE, 
+                                MR_COLL, MONTHLY_COLL, LAST_INSTAL_DATE, DP_PENALTY,  DP_PARTIAL_PENALTY , INSTAL_PENALTY, 
+                                INSTAL_PARTIAL_PENALTY, DCDC_PENALTY , LAST_MONTH_MR_COLL, OP_RECEIVABLE_BAL, OVERDUE, ACTUAL_OD,
+                                CL_RECEIVABLE, OP_TAR_INST_AMT, INST_COLL, AGEING, (MONTHLY_COLL - INST_COLL) BAL_COLL,
+                                CASE WHEN (MONTHLY_COLL - INST_COLL) <= OPENING_OVERDUE THEN (MONTHLY_COLL - INST_COLL)
+                                ELSE OPENING_OVERDUE END OD_COLECTION,
+                                CASE WHEN MONTHLY_COLL = 0 THEN 0
+                                ELSE 1 END ATTEN_V
+                                
+                                FROM
+                                
+                                (SELECT ROW_ID, ORDER_NO, CUSTOMER_NO, CUSTOMER_NAME, PRESENT_CITY, 
+                                        FINANCIAL_INST, C_CUSTOMER_NO, C_CUSTOMER_NAME, C_PRESENT_CITY, RO_CODE, 
+                                        RO_NAME, ZONE_NAME, REGNO, CATALOG_NO, CATALOG_DESC, STATUS, 
+                                        LA_STATUS, NOVEHICLE, AUTHORIZE_CODE, FROM_DATE, TAR_INST_AMT,
+                                        TRUNC(OPEN_AMOUNT,0) OPEN_AMOUNT, CREATE_DATE, LEASING_DATE , FSTINSAL_DATE, TRUNC(EMI_AMOUNT,0) EMI_AMOUNT, 
+                                        TRUNC(LAST_MONTH_TOTALDUE,0) LAST_MONTH_TOTALDUE , TRUNC(OPENING_OVERDUE,0) OPENING_OVERDUE,
+                                        TRUNC(TOTALDUE, 0) TOTALDUE, TRUNC(INTOTALDUE,0) INTOTALDUE, TRUNC(INTRESTAMT,0) INTRESTAMT, TRUNC(DP_AMOUNT,0) DP_AMOUNT, DP_OPEN, DELIVERY_DATE, SELLPRICE, 
+                                        MR_COLL, MONTHLY_COLL, LAST_INSTAL_DATE, TRUNC(DP_PENALTY,0) DP_PENALTY,  TRUNC(DP_PARTIAL_PENALTY,0) DP_PARTIAL_PENALTY, 
+                                        TRUNC(INSTAL_PENALTY,0) INSTAL_PENALTY,  TRUNC(INSTAL_PARTIAL_PENALTY,0) INSTAL_PARTIAL_PENALTY, 
+                                        TRUNC(DCDC_PENALTY,0) DCDC_PENALTY, TRUNC(LAST_MONTH_MR_COLL,0) LAST_MONTH_MR_COLL, 
+                                        TRUNC(OP_RECEIVABLE_BAL,0) OP_RECEIVABLE_BAL, TRUNC(OVERDUE,0) OVERDUE, TRUNC(ACTUAL_OD,0) ACTUAL_OD,
+                                        TRUNC(CL_RECEIVABLE,0) CL_RECEIVABLE, TRUNC(OP_TAR_INST_AMT,0) OP_TAR_INST_AMT,
+                                        CASE WHEN MONTHLY_COLL >= OP_TAR_INST_AMT THEN OP_TAR_INST_AMT
+                                                     ELSE MONTHLY_COLL END INST_COLL,
+                                         CASE WHEN NO_OF_OVERDUE <= 6 THEN '06 Month'
+                                         WHEN NO_OF_OVERDUE <= 12 THEN '12 Month'
+                                         WHEN NO_OF_OVERDUE <= 24 THEN '24 Month'
+                                         WHEN NO_OF_OVERDUE <= 36 THEN '36 Month'
+                                         WHEN NO_OF_OVERDUE <= 48 THEN '48 Month'
+                                         WHEN NO_OF_OVERDUE <= 60 THEN '60 Month'
+                                         WHEN NO_OF_OVERDUE <= 72 THEN '72 Month'
+                                         ELSE '72 Month Above'
+                                         END AGEING
+                                
+                                FROM
+
+                                (SELECT ROW_ID, ORDER_NO, CUSTOMER_NO, CUSTOMER_NAME, PRESENT_CITY, 
+                                        FINANCIAL_INST, C_CUSTOMER_NO, C_CUSTOMER_NAME, C_PRESENT_CITY, RO_CODE, 
+                                        RO_NAME, ZONE_NAME, REGNO, CATALOG_NO, CATALOG_DESC, STATUS, 
+                                        LA_STATUS, NOVEHICLE, AUTHORIZE_CODE, FROM_DATE, 
+                                        OPEN_AMOUNT, CREATE_DATE, LEASING_DATE , FSTINSAL_DATE, EMI_AMOUNT, LAST_MONTH_TOTALDUE, OPENING_OVERDUE, 
+                                        TOTALDUE, INTOTALDUE, INTRESTAMT, DP_AMOUNT, DP_OPEN, DELIVERY_DATE, SELLPRICE, 
+                                        MR_COLL, MONTHLY_COLL, LAST_INSTAL_DATE, DP_PENALTY, DP_PARTIAL_PENALTY, INSTAL_PENALTY, 
+                                        INSTAL_PARTIAL_PENALTY, DCDC_PENALTY, LAST_MONTH_MR_COLL, OP_RECEIVABLE_BAL, OVERDUE, ACTUAL_OD,
+                                        CASE WHEN EMI_AMOUNT = 0 THEN 0
+                                        ELSE (NVL(OPENING_OVERDUE, 0) / EMI_AMOUNT) END NO_OF_OVERDUE ,
+                                        
+                                        CL_RECEIVABLE, 
+                                        CASE WHEN OP_RECEIVABLE_BAL >= EMI_AMOUNT THEN EMI_AMOUNT
+                                                     ELSE OP_RECEIVABLE_BAL END OP_TAR_INST_AMT,
+                                        CASE WHEN EMI_AMOUNT >= CL_RECEIVABLE THEN CL_RECEIVABLE
+                                                     ELSE EMI_AMOUNT END TAR_INST_AMT
+                                        FROM
+                                            (
+                                                SELECT CUS.ROW_ID, CUS.ORDER_NO, CUS.CUSTOMER_NO, CUS.CUSTOMER_NAME, CUS.PRESENT_CITY, 
+                                                CUS.FINANCIAL_INST, CUS.C_CUSTOMER_NO, CUS.C_CUSTOMER_NAME, CUS.C_PRESENT_CITY, CUS.RO_CODE, 
+                                                CUS.RO_NAME, CUS.ZONE_NAME, CUS.REGNO, CUS.CATALOG_NO, CUS.CATALOG_DESC, CUS.STATUS, 
+                                                CUS.LA_STATUS, CUS.NOVEHICLE, CUS.AUTHORIZE_CODE, 
+                                                CUS.LEASING_DATE , COLL.FSTINSAL_DATE, COLL.EMI_AMOUNT,  LAST_MONTH_COLL.LAST_MONTH_TOTALDUE,
+                                                CASE WHEN LAST_MONTH_COLL.LAST_MONTH_TOTALDUE < (MR_COLL - MONTHLY_COLL) THEN 0
+                                                    ELSE  LAST_MONTH_TOTALDUE - (MR_COLL - MONTHLY_COLL) END OPENING_OVERDUE,
+                                                COLL.TOTALDUE, COLL.INTOTALDUE, COLL.INTRESTAMT, COLL.DP_AMOUNT, COLL.DP_OPEN, COLL.DELIVERY_DATE, COLL.SELLPRICE, 
+                                                COLL.MR_COLL, COLL.MONTHLY_COLL, COLL.LAST_INSTAL_DATE, COLL.DP_PENALTY, COLL.DP_PARTIAL_PENALTY, COLL.INSTAL_PENALTY, 
+                                                COLL.INSTAL_PARTIAL_PENALTY, COLL.DCDC_PENALTY, COLL.FROM_DATE, COLL.TO_DATE, COLL.OPEN_AMOUNT, COLL.CREATE_DATE, 
+                                                
+                                                (MR_COLL - MONTHLY_COLL) LAST_MONTH_MR_COLL, 
+                                                CASE WHEN INTOTALDUE < (MR_COLL - MONTHLY_COLL) 
+                                                THEN 0 ELSE (INTOTALDUE - (MR_COLL - MONTHLY_COLL)) END OP_RECEIVABLE_BAL,
+                                                (TOTALDUE - MR_COLL) OVERDUE,
+                                                CASE WHEN TOTALDUE < MR_COLL THEN 0
+                                                ELSE (TOTALDUE - MR_COLL) END ACTUAL_OD,
+                                                CASE WHEN INTOTALDUE < MR_COLL THEN 0
+                                                ELSE (INTOTALDUE - MR_COLL) END CL_RECEIVABLE
+                                                FROM IAL_C_CO_COLLECTION_DETAIL COLL LEFT JOIN  IAL_C_COWISE_CUSTOMER_INFO CUS
+                                                ON COLL.ORDER_NO = CUS.ORDER_NO AND COLL.FROM_DATE = CUS.FROM_DATE
+                                                LEFT JOIN
+                                                (SELECT DISTINCT ORDER_NO, TOTALDUE as LAST_MONTH_TOTALDUE
+                                                FROM IAL_C_CO_COLLECTION_DETAIL WHERE FROM_DATE = ADD_MONTHS(TO_DATE(P_FROM_DATE,'yyyy-mm-dd'), -1)) LAST_MONTH_COLL
+                                                ON COLL.ORDER_NO = LAST_MONTH_COLL.ORDER_NO
+                                                where COLL.FROM_DATE=TO_DATE(P_FROM_DATE,'yyyy-mm-dd') AND CUS.ZONE_NAME like NVL(P_ZONE_NAME, '%')
+                        
+                    )))) GROUP BY RO_CODE, RO_NAME;
+                        
+                    
+
+   
+EXCEPTION
+   WHEN OTHERS
+   THEN
+       dbms_output.put_line('Error!'); 
+END PROC_RO_SUMMARY;
+/

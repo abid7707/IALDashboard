@@ -30,6 +30,12 @@
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
+        <!---  After wrapper in layout -->
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="~/Content/images/ifad-wave.png" alt="IFAD" height="60" width="60">
+        </div>
+
         @Html.Partial("_Navbar")
         @Html.Partial("_Aside")
 
@@ -64,6 +70,7 @@
 
     </div>
 
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/datatable")
@@ -71,6 +78,12 @@
 
     <!-- Page specific script -->
     <script type="text/javascript">
+        function hidePreloader() {
+
+            $(".preloader").css('height', 0);
+
+            $(".preloader img").css('height', 0);
+        }
 
         var tableToExcel = (function () {
             var uri = 'data:application/vnd.ms-excel;base64,'
@@ -102,6 +115,13 @@
                 ordering: false,
                 info: false,
             });
+
+            $("body").on("click", ".myPreLoader", function () {
+
+                $('.preloader').removeAttr("style");
+                $('.preloader img').removeAttr("style");
+
+            })
         });
 
         $(document).ready(function () {

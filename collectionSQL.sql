@@ -72,19 +72,35 @@ CL.Receivable.balance = INTOTALDUE < MR_COLL ? 0 : INTOTALDUE - MR_COLL
 
 
 -- COMPLEX L1
-(R)=IF(AB2>=Q2,Q2,AB2)
-OpeningTar.Inst.Amt =  OP_RECEIVABLE_BAL >= EMI_AMOUNT ? EMI_AMOUNT : OP_RECEIVABLE_BAL
+()=IF(AB2>=Q2,Q2,AB2)
+RAW_OP_TAR_INST_AMT =  OP_RECEIVABLE_BAL >= EMI_AMOUNT ? EMI_AMOUNT : OP_RECEIVABLE_BAL
 
-      OP_TAR_INST_AMT = CASE WHEN OP_RECEIVABLE_BAL >= EMI_AMOUNT THEN EMI_AMOUNT
+      RAW_OP_TAR_INST_AMT = CASE WHEN OP_RECEIVABLE_BAL >= EMI_AMOUNT THEN EMI_AMOUNT
                         ELSE OP_RECEIVABLE_BAL END OP_TAR_INST_AMT
 
 (S)=IF(Q2>=AC2,AC2,Q2)
-Tar.Inst.Amt = EMI_AMOUNT >= CL_RECEIVABLE ? CL_RECEIVABLE : EMI_AMOUNT
-      TAR_INST_AMT = CASE WHEN EMI_AMOUNT >= CL_RECEIVABLE THEN CL_RECEIVABLE
-                     ELSE EMI_AMOUNT END TAR_INST_AMT
+Tar.Inst.Amt = CL_RECEIVABLE >= EMI_AMOUNT ? EMI_AMOUNT : CL_RECEIVABLE
+      RAW_TAR_INST_AMT = CASE WHEN CL_RECEIVABLE >= EMI_AMOUNT THEN EMI_AMOUNT
+                        ELSE CL_RECEIVABLE END RAW_TAR_INST_AMT
 
 -- COMPLEX L2
 
+(R)OpeningTar.Inst.Amt =IF(TO_DATE<FSTINSAL_DATE,0,IF(OVERDUE<EMI_AMOUNT*(-1),0,RAW_OP_TAR_INST_AMT))
+   OP_TAR_INST_AMT  = CASE WHEN TO_DATE < FSTINSAL_DATE THEN 0
+                      WHEN OVERDUE < (EMI_AMOUNT * (-1)) THEN 0
+                      ELSE RAW_OP_TAR_INST_AMT END OP_TAR_INST_AMT
+
+                      if (TO_DATE < FSTINSAL_DATE){
+                        print(0);
+                      } else if (OVERDUE < (EMI_AMOUNT * (-1))) {
+                        print(0);
+                      } else {
+                        print(RAW_OP_TAR_INST_AMT)
+                      }
+
+(S)TAR_INST_AMT  = CASE WHEN TO_DATE < FSTINSAL_DATE THEN 0
+                      WHEN OPENING_OVERDUE < (EMI_AMOUNT * (-1)) THEN 0
+                      ELSE RAW_TAR_INST_AMT END TAR_INST_AMT
 
 
 (AL)=IF(AK2>=R2,R2,AK2)
@@ -103,13 +119,13 @@ Bal.Coll = MONTHLY_COLL - Inst.COll
 
 -------------------???????-----------------------------
 Last_Month_TotalDue = last month TOTALDUE
-
-(Z)=IF(T2<AI2,0,T2-AI2)
-Opening Overdue = Last_Month_TotalDue < Last_Month_MR_Collection ? 0 : Last_Month_TotalDue - Last_Month_MR_Collection
+ 
+(Z)=IF(T2<AI2,0,T2-AI2) ??
+Opening Overdue = Last_Month_TotalDue - Last_Month_MR_Collection
 
 
 (AN)=IF(AM2<=Z2,AM2,Z2)
-OvdColl = Bal.Coll <= OpeningOverdue ? Bal.Coll : OpeningOverdue
+OvdColl = Bal.Coll <= OPENING_OVERDUE ? Bal.Coll : OPENING_OVERDUE
 
 (AO)=AM2-AN2
 ExcessColl = Bal.Col - OvdColl
@@ -123,12 +139,12 @@ No.OVD = Opening Overdue / EMI_AMOUNT
 IF(V2<=48,"48 month",IF(V2<=60,"60 month",IF(V2<=72,"72 month",IF(V2>72,"72 month above"))))))))
 
 Ageing = CASE WHEN NO.OVD <= 6 THEN '06 Month'
-         CASE WHEN NO.OVD <= 12 THEN '12 Month'
-         CASE WHEN NO.OVD <= 24 THEN '24 Month'
-         CASE WHEN NO.OVD <= 36 THEN '36 Month'
-         CASE WHEN NO.OVD <= 48 THEN '48 Month'
-         CASE WHEN NO.OVD <= 60 THEN '60 Month'
-         CASE WHEN NO.OVD <= 72 THEN '72 Month'
+         WHEN NO.OVD <= 12 THEN '12 Month'
+         WHEN NO.OVD <= 24 THEN '24 Month'
+         WHEN NO.OVD <= 36 THEN '36 Month'
+         WHEN NO.OVD <= 48 THEN '48 Month'
+         WHEN NO.OVD <= 60 THEN '60 Month'
+         WHEN NO.OVD <= 72 THEN '72 Month'
          ELSE '72 Month Above'
          END
 
