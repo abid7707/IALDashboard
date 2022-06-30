@@ -74,19 +74,25 @@ namespace IALDashboard.Controllers
                 {
                     var ws = wb.Worksheets.Add(row["RO_NAME"].ToString());
 
-
+                    ws.Column("A").Width = 5;
+                    ws.Column("B").Width = 8;
+                    ws.Column("C").Width = 12;
+                    ws.Column("E").Width = 16;
+                    ws.Column("F").Width = 10;
+                    ws.Column("J").Width = 12;
+                    ws.Column("M").Width = 12;
 
                     ws.Range("A1:P5").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                    ws.Cell("A1").Value = "Monthly Target Sheet ";
-                    ws.Range("A1:P1").Merge().Style.Font.SetBold().Font.FontSize = 14;
+                    ws.Cell("A1").Value = "Ifad Autos Ltd (Monthly Target Sheet)";
+                    ws.Range("A1:O1").Merge().Style.Font.SetBold().Font.FontSize = 14;
 
                     ws.Cell("A2").Value = "Month: " + from_date;
-                    ws.Range("A2:P2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                    ws.Range("A2:O2").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
                     ws.Cell("A3").Value = "RO CODE: " + row["RO_CODE"].ToString() + "RO Name: " + row["RO_NAME"].ToString() + " ZONE: " + zone_name;
-                    ws.Range("A3:P3").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                    ws.Range("A3:O3").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
-                    ws.Cell("A5").Value = "Sl NO";
+                    ws.Cell("A5").Value = "SL NO";
                     ws.Range("A5").Style.Font.SetBold().Font.FontSize = 12;
 
                     ws.Cell("B5").Value = "Order No";
@@ -101,16 +107,16 @@ namespace IALDashboard.Controllers
                     ws.Cell("E5").Value = "Model Name";
                     ws.Range("E5").Style.Font.SetBold().Font.FontSize = 12;
 
-                    ws.Cell("F5").Value = "1st EMI DATE";
+                    ws.Cell("F5").Value = "1st Date";
                     ws.Range("F5").Style.Font.SetBold().Font.FontSize = 12;
 
                     ws.Cell("G5").Value = "EMI AMT.";
                     ws.Range("G5").Style.Font.SetBold().Font.FontSize = 12;
 
-                    ws.Cell("H5").Value = "Target INST AMT.";
+                    ws.Cell("H5").Value = "Tar Inst Amt.";
                     ws.Range("H5").Style.Font.SetBold().Font.FontSize = 12;
 
-                    ws.Cell("I5").Value = "NO of Overdue";
+                    ws.Cell("I5").Value = "NO.Ovd";
                     ws.Range("I5").Style.Font.SetBold().Font.FontSize = 12;
 
                     ws.Cell("J5").Value = "MR COLL";
@@ -128,11 +134,8 @@ namespace IALDashboard.Controllers
                     ws.Cell("N5").Value = "Monthly Coll";
                     ws.Range("N5").Style.Font.SetBold().Font.FontSize = 12;
 
-                    ws.Cell("O5").Value = "Inst. Coll";
+                    ws.Cell("O5").Value = "Atten V";
                     ws.Range("O5").Style.Font.SetBold().Font.FontSize = 12;
-
-                    ws.Cell("P5").Value = "Atten V";
-                    ws.Range("P5").Style.Font.SetBold().Font.FontSize = 12;
 
                     DataRow[] rodt = dt.Select("RO_CODE =" + row["RO_CODE"]);
                     int i = 0;
@@ -144,7 +147,6 @@ namespace IALDashboard.Controllers
                     double SUB_INS_DC_PAYMENT = 0;
                     double SUB_OVERDUE = 0;
                     double SUB_MONTHLY_COLL = 0;
-                    double SUB_INST_COLL = 0;
                     double SUB_ATTEN_V = 0;
 
                     foreach (DataRow record in rodt)
@@ -157,7 +159,6 @@ namespace IALDashboard.Controllers
                         SUB_INS_DC_PAYMENT += Convert.ToDouble(record["INS_DC_PAYMENT"]);
                         SUB_OVERDUE += Convert.ToDouble(record["OVERDUE"]);
                         SUB_MONTHLY_COLL += Convert.ToDouble(record["MONTHLY_COLL"]);
-                        SUB_INST_COLL += Convert.ToDouble(record["INST_COLL"]);
                         SUB_ATTEN_V += Convert.ToDouble(record["ATTEN_V"]);
 
                         ws.Cell("A" + (i + 6)).Value = i + 1;
@@ -174,8 +175,7 @@ namespace IALDashboard.Controllers
                         ws.Cell("L" + (i + 6)).Value = record["INS_DC_PAYMENT"].ToString();
                         ws.Cell("M" + (i + 6)).Value = record["OVERDUE"].ToString();
                         ws.Cell("N" + (i + 6)).Value = record["MONTHLY_COLL"].ToString();
-                        ws.Cell("O" + (i + 6)).Value = record["INST_COLL"].ToString();
-                        ws.Cell("P" + (i + 6)).Value = record["ATTEN_V"].ToString();
+                        ws.Cell("O" + (i + 6)).Value = record["ATTEN_V"].ToString();
                         i++;
                     }
                     ws.Cell("F" + (i + 6)).Value = "Sub Total";
@@ -187,22 +187,24 @@ namespace IALDashboard.Controllers
                     ws.Cell("L" + (i + 6)).Value = SUB_INS_DC_PAYMENT.ToString();
                     ws.Cell("M" + (i + 6)).Value = SUB_OVERDUE.ToString();
                     ws.Cell("N" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
-                    ws.Cell("O" + (i + 6)).Value = SUB_INST_COLL.ToString();
-                    ws.Cell("P" + (i + 6)).Value = SUB_ATTEN_V.ToString();
+                    ws.Cell("O" + (i + 6)).Value = SUB_ATTEN_V.ToString();
 
-                    ws.Range("F" + (i + 6) + ":P" + (i + 6)).Style.Font.SetBold().Font.FontSize = 12;
+                    ws.Range("F" + (i + 6) + ":O" + (i + 6)).Style.Font.FontSize = 12;
 
-                    ws.Range("A5" + ":P" + (i + 6)).Style.Alignment.SetWrapText(true);
+                    ws.Range("A5" + ":O" + (i + 6)).Style.Alignment.SetWrapText(true);
+
+                    ws.Range("A5" + ":O" + (i + 6)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    ws.Range("A5" + ":O" + (i + 6)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
 
                     ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
-                    ws.PageSetup.AdjustTo(80);
+                    ws.PageSetup.AdjustTo(75);
                     ws.PageSetup.SetRowsToRepeatAtTop(1, 5);
 
                 }
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ROSheet.xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ROSheet-" + zone_name + ".xlsx");
                 }
 
             }

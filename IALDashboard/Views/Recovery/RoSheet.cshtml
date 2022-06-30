@@ -72,7 +72,7 @@
 
                     <div class="card-footer">
                         <button id="btn-get-ro-sheet" class="btn btn-primary myPreLoader" type="button" style="display:none">Submit</button>
-                        <input id="btn-export-to-excel" class="btn btn-outline-primary pull-right" type="button" value="Export to Excel" />
+                        <input id="btn-export-to-excel" class="btn btn-outline-primary" type="submit" value="Export to Excel" />
 
                     </div>
                                     }
@@ -129,7 +129,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('btn-export-to-excel').onclick = function () {
+        @*document.getElementById('btn-export-to-excel').onclick = function () {
            
             var from_date = document.getElementById('from-date').value;
             var ro_code = document.getElementById('ro-code').value;
@@ -154,7 +154,7 @@
 
             })();
 
-        }
+        }*@
 
         document.getElementById('btn-get-ro-sheet').onclick = function () {
 
