@@ -71,7 +71,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <button id="btn-get-ro-sheet" class="btn btn-primary myPreLoader" type="button">Submit</button>
+                        <button id="btn-get-ro-sheet" class="btn btn-primary myPreLoader" type="button" style="display:none">Submit</button>
                         <input id="btn-export-to-excel" class="btn btn-outline-primary pull-right" type="button" value="Export to Excel" />
 
                     </div>
@@ -83,7 +83,7 @@
 
 
 
-        <div class="card col-sm-12 col-md-12">
+        <div class="card col-sm-12 col-md-12" style="display:none">
             <div class="card-header">
                 
 
@@ -91,13 +91,7 @@
             <!-- /.card-header -->
             <div class="card-body">
 
-
-
-
-
-                @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
                 <div class="table">
-                    <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
                     <table id="ro-table" class="table-responsive table-striped nowrap">
                         <thead id="report-header">
                             <tr>
@@ -139,8 +133,9 @@
            
             var from_date = document.getElementById('from-date').value;
             var ro_code = document.getElementById('ro-code').value;
-          
-            window.open("ExportROSheet?from_date=" + from_date + "&ro_code=" + ro_code + "&zone_name=", '_blank');
+            var zone_name = document.getElementById('zoneName').value;
+
+            window.open("ExportROSheet?from_date=" + from_date + "&ro_code=" + ro_code + "&zone_name=" + zone_name , '_blank');
 
         
 
