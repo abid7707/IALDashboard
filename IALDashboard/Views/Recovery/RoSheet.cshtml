@@ -129,34 +129,40 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        @*document.getElementById('btn-export-to-excel').onclick = function () {
-           
+        document.getElementById('zoneName').addEventListener('change', function () {
             var from_date = document.getElementById('from-date').value;
-            var ro_code = document.getElementById('ro-code').value;
             var zone_name = document.getElementById('zoneName').value;
+            if (from_date == '') {
+                alert('select month!');
+                document.getElementById('zoneName').value = "";
+            } else {
+                (async () => {
+                    const rawResponse = await fetch('GetJsonROListByZone', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ from_date: from_date, zone_name: zone_name })
+                    });
+                    const rolist = await rawResponse.json();
+                    if (rolist.length == 0) {
+                        alert("No RO Found!");
+                    }
+                    document.querySelector('#ro-code').innerHTML = '';
+                    row = `<option value="">Select</option>`
+                    rolist.forEach(ro => {
+                        row += `<option value=${ro["RO_CODE"]}>${ro["RO_NAME"]}</option>`
+                    });
 
-            window.open("ExportROSheet?from_date=" + from_date + "&ro_code=" + ro_code + "&zone_name=" + zone_name , '_blank');
+                    document.querySelector('#ro-code').innerHTML = row;
 
+                    console.log(rolist);
+                })();
+            }
+        });
         
-
-
-            (async () => {
-                const rawResponse = await fetch('ExportROSheet', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ from_date: from_date, ro_code: ro_code, zone_name: '' })
-                });
-                location.href = 'roSheet';
-
-
-            })();
-
-        }*@
-
-        document.getElementById('btn-get-ro-sheet').onclick = function () {
+       @* document.getElementById('btn-get-ro-sheet___1').onclick = function () {
 
             var table = document.getElementById("ro-table");
 
@@ -213,45 +219,13 @@
             })();
 
         }
+*@
 
 
 
 
 
-
-        document.getElementById('zoneName').addEventListener('change', function () {
-            var from_date = document.getElementById('from-date').value;
-            var zone_name = document.getElementById('zoneName').value;
-
-            if (from_date == '') {
-                alert('select month!');
-                document.getElementById('zoneName').value = "";
-            } else {
-                (async () => {
-                    const rawResponse = await fetch('GetJsonROListByZone', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ from_date: from_date, zone_name: zone_name })
-                    });
-                    const rolist = await rawResponse.json();
-                    if (rolist.length == 0) {
-                        alert("No RO Found!");
-                    }
-                    document.querySelector('#ro-code').innerHTML = '';
-                    row = `<option value="">Select</option>`
-                    rolist.forEach(ro => {
-                        row += `<option value=${ro["RO_CODE"]}>${ro["RO_NAME"]}</option>`
-                    });
-
-                    document.querySelector('#ro-code').innerHTML = row;
-
-                    console.log(rolist);
-                })();
-            }
-        });
+        
 
 
 

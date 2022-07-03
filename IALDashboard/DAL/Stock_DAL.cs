@@ -224,7 +224,8 @@ namespace IALDashboard.DAL
                 + " FROM REPORTDB.IAL_DAILY_STK_RPT_PROS_DATA "
                 + " GROUP BY PARTDES, "
                 + "    PART_NO, "
-                + "    PRODUCT_FAMILY ";
+                + "    PRODUCT_FAMILY "
+                + "ORDER BY PRODUCT_FAMILY";
 
                 OracleCommand command = GetSQLCommand(StrSql);
                 OracleDataAdapter odaAdapter = new OracleDataAdapter(command);

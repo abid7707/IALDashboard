@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
+                @using (Html.BeginForm("ExportROSummary", "Recovery", FormMethod.Post))
                 {
                     <div class="card-body">
                         <div class="row">
@@ -158,9 +158,9 @@
                                 <td>${rs["ATTEN_V"]}</td>
                                 <td>${rs["TAR_COLL_PERCENT"]}</td>
                                 <td>${rs["INST_COLL_PERCENT"]}</td>
+                                <td>${rs["OVERDUE_COLL_PERCENT"]}</td>
                                 <td></td>
-                                <td></td>
-                                <td>${rs["ATTN_V_PERCENT"]}</td>
+                                <td>${rs["ATTEN_V_PERCENT"]}</td>
                            </tr>`;
                     document.querySelector('#ro-tbody').innerHTML += row;
 
