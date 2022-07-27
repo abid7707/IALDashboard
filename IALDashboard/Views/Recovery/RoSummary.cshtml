@@ -86,8 +86,8 @@
                                 <th>Zone Name</th>
                                 <th>RO Code</th>
                                 <th>RO Name</th>
-                                <th>Target Inst. Amt</th>
-                                <th>Actual OD</th>
+                                <th>OP. Target Inst. Amt</th>
+                                <th>Actual OP.Overdue</th>
                                 <th>Monthly Coll</th>
                                 <th>Inst Coll</th>
                                 <th>OD Coll</th>
@@ -148,8 +148,8 @@
                                 <td>${rs["ZONE_NAME"]}</td>
                                 <td>${rs["RO_CODE"]}</td>
                                 <td>${rs["RO_NAME"]}</td>
-                                <td>${rs["TAR_INST_AMT"]}</td>
-                                <td>${rs["ACTUAL_OD"]}</td>
+                                <td>${rs["OP_TAR_INST_AMT"]}</td>
+                                <td>${rs["ACTUAL_OPENING_OVERDUE"]}</td>
                                 <td>${rs["MONTHLY_COLL"]}</td>
                                 <td>${rs["INST_COLL"]}</td>
                                 <td>${rs["OD_COLECTION"]}</td>
@@ -159,7 +159,7 @@
                                 <td>${rs["TAR_COLL_PERCENT"]}</td>
                                 <td>${rs["INST_COLL_PERCENT"]}</td>
                                 <td>${rs["OVERDUE_COLL_PERCENT"]}</td>
-                                <td></td>
+                                <td>${rs["EXCESS_COLLECTION_PERCENT"]}</td>
                                 <td>${rs["ATTEN_V_PERCENT"]}</td>
                            </tr>`;
                     document.querySelector('#ro-tbody').innerHTML += row;

@@ -152,6 +152,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -2402,6 +2403,7 @@
     <Content Include="Views\Recovery\RoZoneWiseSummary.cshtml" />
     <Content Include="Views\Recovery\CollectionReport.cshtml" />
     <Content Include="Views\Inventory\DailyStockReport.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
     <None Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\UpdateProfilePicture.cshtml" />
   </ItemGroup>

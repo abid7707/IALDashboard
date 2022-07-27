@@ -72,7 +72,7 @@
 
                     <div class="card-footer">
                         <button id="btn-get-ro-sheet" class="btn btn-primary myPreLoader" type="button" style="display:none">Submit</button>
-                        <input id="btn-export-to-excel" class="btn btn-outline-primary" type="submit" value="Export to Excel" />
+                        <input id="btn-export-to-excel" class="btn btn-outline-primary myPreLoader" type="submit" value="Export to Excel" />
 
                     </div>
                                     }
@@ -129,6 +129,11 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('btn-export-to-excel').addEventListener('click', function () {
+            setTimeout(function () { hidePreloader(); }, 1000);
+        });
+
+
         document.getElementById('zoneName').addEventListener('change', function () {
             var from_date = document.getElementById('from-date').value;
             var zone_name = document.getElementById('zoneName').value;
@@ -161,6 +166,7 @@
                 })();
             }
         });
+        
         
        @* document.getElementById('btn-get-ro-sheet___1').onclick = function () {
 

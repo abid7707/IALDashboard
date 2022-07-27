@@ -104,6 +104,36 @@ namespace IALDashboard.DAL
                 OracleCommand com = GetSPCommand("PROC_RO_SUMMARY");
                 com.Parameters.Add("P_FROM_DATE", OracleType.VarChar).Value = from_date;
                 com.Parameters.Add("P_ZONE_NAME", OracleType.VarChar).Value = zone_name;
+                com.Parameters.Add("P_RO_CODE", OracleType.VarChar).Value = "";
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+
+                oraData.Fill(dt);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
+        public DataTable ROSummaryByROCode(string from_date, string ro_code)
+        {
+
+            DataTable dt = new DataTable("ROSheet");
+
+            try
+            {
+
+                OracleCommand com = GetSPCommand("PROC_RO_SUMMARY");
+                com.Parameters.Add("P_FROM_DATE", OracleType.VarChar).Value = from_date;
+                com.Parameters.Add("P_ZONE_NAME", OracleType.VarChar).Value = "";
+                com.Parameters.Add("P_RO_CODE", OracleType.VarChar).Value = ro_code;
                 com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
                 OracleDataAdapter oraData = new OracleDataAdapter(com);
 
@@ -131,6 +161,7 @@ namespace IALDashboard.DAL
 
                 OracleCommand com = GetSPCommand("PROC_RO_ZONEWISE_SUMMARY");
                 com.Parameters.Add("P_FROM_DATE", OracleType.VarChar).Value = from_date;
+                com.Parameters.Add("P_CATALOG_NO", OracleType.VarChar).Value = "";
                 com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
                 OracleDataAdapter oraData = new OracleDataAdapter(com);
 
@@ -227,6 +258,8 @@ namespace IALDashboard.DAL
 
             return dt;
         }
+
+
 
 
 

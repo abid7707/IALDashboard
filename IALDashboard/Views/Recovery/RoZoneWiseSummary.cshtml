@@ -19,7 +19,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                @using (Html.BeginForm("ExportROSheet", "Recovery", FormMethod.Post))
+                @using (Html.BeginForm("ExportROZoneWiseSummary", "Recovery", FormMethod.Post))
                 {
                     <div class="card-body">
 
@@ -136,7 +136,7 @@
                                 <td>${rs["ATTEN_V"]}</td>
                                 <td>${rs["GROUP_COLL_PERCENT"]}</td>
                                 <td>${rs["INST_COLL_PERCENT"]}</td>
-                                <td></td>
+                                <td>${rs["OD_COLLECTION_PERCENT"]}</td>
                                 <td></td>
                                 <td>${rs["ATTN_V_PERCENT"]}</td>
                            </tr>`;
