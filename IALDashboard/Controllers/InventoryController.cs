@@ -138,8 +138,11 @@ namespace IALDashboard.Controllers
                 ws.Range("AN1:AN2").Merge().Style.Font.SetBold().Font.FontSize = 12;
                 ws.Cell("AO1").Value = "Total OT Stock";
                 ws.Range("AO1:AO2").Merge().Style.Font.SetBold().Font.FontSize = 12;
-                ws.Cell("AP1").Value = "LC";
+                ws.Cell("AP1").Value = "CDK in STOCK";
                 ws.Range("AP1:AP2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+
+                ws.Cell("AQ1").Value = "LC";
+                ws.Range("AQ1:AQ2").Merge().Style.Font.SetBold().Font.FontSize = 12;
 
                 DataTable part_segment_list = new Stock_DAL().GetPartSegment();
                 double SUB_TOTAL_QTY = 0;
@@ -181,6 +184,7 @@ namespace IALDashboard.Controllers
                 double SUB_BUS_BODY_QTY = 0;
                 double SUB_TOTAL_OT_QTY = 0;
                 double SUB_LC_QTY = 0;
+                double SUB_CKD_IN_STOCK = 0;
 
                 int i = 0;
                 int c = 0;
@@ -235,7 +239,8 @@ namespace IALDashboard.Controllers
                         ws.Cell("AM" + (i + 3)).Value = stock_row["OUTSIDE_BWS_QTY"];
                         ws.Cell("AN" + (i + 3)).Value = stock_row["BUS_BODY_QTY"];
                         ws.Cell("AO" + (i + 3)).Value = stock_row["TOTAL_OT_QTY"];
-                        ws.Cell("AP" + (i + 3)).Value = stock_row["LC_QTY"];
+                        ws.Cell("AP" + (i + 3)).Value = stock_row["CKD_IN_STOCK"];
+                        ws.Cell("AQ" + (i + 3)).Value = stock_row["LC_QTY"];
 
                         SUB_TOTAL_QTY += Convert.ToDouble(stock_row["TOTAL_QTY"]);
                         SUB_DHAMRAI_CKD_XX_RFD += Convert.ToDouble(stock_row["DHAMRAI_CKD_XX_RFD"]);
@@ -275,6 +280,7 @@ namespace IALDashboard.Controllers
                         SUB_OUTSIDE_BWS_QTY += Convert.ToDouble(stock_row["OUTSIDE_BWS_QTY"]);
                         SUB_BUS_BODY_QTY += Convert.ToDouble(stock_row["BUS_BODY_QTY"]);
                         SUB_TOTAL_OT_QTY += Convert.ToDouble(stock_row["TOTAL_OT_QTY"]);
+                        SUB_CKD_IN_STOCK += Convert.ToDouble(stock_row["CKD_IN_STOCK"]);
                         SUB_LC_QTY += Convert.ToDouble(stock_row["LC_QTY"]);
 
                         i++;
@@ -329,7 +335,8 @@ namespace IALDashboard.Controllers
                 ws.Cell("AM" + (i + 3)).Value = SUB_OUTSIDE_BWS_QTY;
                 ws.Cell("AN" + (i + 3)).Value = SUB_BUS_BODY_QTY;
                 ws.Cell("AO" + (i + 3)).Value = SUB_TOTAL_OT_QTY;
-                ws.Cell("AP" + (i + 3)).Value = SUB_LC_QTY;
+                ws.Cell("AP" + (i + 3)).Value = SUB_CKD_IN_STOCK;
+                ws.Cell("AQ" + (i + 3)).Value = SUB_LC_QTY;
                 ws.Cell("C" + (i + 3)).Value = "Total";
                 ws.Range("C" + (i + 3) + ":AP" + (i + 3)).Style.Font.SetBold();
 

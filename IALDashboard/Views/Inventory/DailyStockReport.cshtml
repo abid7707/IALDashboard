@@ -12,6 +12,69 @@
         /* Stick to the left */
         /*z-index: 9999 !important;*/
     }
+
+    #dailyStockReport2 td, th {
+        padding: 2px !important;
+    }
+    /*
+    .rotate {
+        -moz-transform: rotate(-90.0deg);
+        -o-transform: rotate(-90.0deg);
+        -webkit-transform: rotate(-90.0deg);
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+        -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+
+    }
+
+
+    #dailyStockReport2 td{
+        -moz-transform: rotate(-90.0deg);
+        -o-transform: rotate(-90.0deg);
+        -webkit-transform: rotate(-90.0deg);
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+        -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+    }
+        */
+
+    .table-header-rotated {
+        border-collapse: collapse;
+    }
+
+        .table-header-rotated td {
+            width: 30px;
+        }
+
+        .table-header-rotated th {
+            padding: 5px 10px;
+        }
+
+        .table-header-rotated td {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+        }
+
+        .table-header-rotated th.rotate {
+            height: 100px;
+            white-space: nowrap;
+        }
+
+            .table-header-rotated th.rotate > div {
+                -webkit-transform: translate(1px, 21px) rotate(-90deg);
+                -ms-transform: translate(1px, 21px) rotate(-90deg);
+                transform: translate(1px, 21px) rotate(-90deg);
+                width: 30px;
+            }
+
+                .table-header-rotated th.rotate > div > span {
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 10px;
+                }
+
+        .table-header-rotated th.row-header {
+            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
+        }
 </style>
 
 
@@ -19,21 +82,83 @@
     <div class="card-header">
         @using (Html.BeginForm("ExportDailyStockReport", "Inventory", FormMethod.Post))
         {
-            <input class="btn btn-outline-primary" type="submit" value="Export to Excel" />
+            <div class="text-left">  <input class="btn btn-outline-primary" type="submit" value="Export to Excel" /></div>
         }
+
+        <div class="text-right">
+            <span style="font-size:xx-small">-A</span> <input type="range" id="slider" min="5" max="30" step="2" /><span style="font-size:large">+A</span>
+        </div>
+
+
 
     </div>
     <!-- /.card-header -->
     <div class="card-body">
 
-        <div class="table">
-            <table id="dailyStockReport2" class="table table-bordered table-striped table-condensed display nowrap daily-stock-report2 dailyStockReport" style="width:100%">
-                <thead id="report-header">
-                    <tr>
-                        <th rowspan="2">SL No</th>
-                        <th rowspan="2">Segment</th>
-                        <th rowspan="2">Model</th>
-                        <th rowspan="2">Total Qty</th>
+        <div class="table-responsive">
+            @* <table id="dailyStockReport2" class="table table-bordered table-condensed nowrap daily-stock-report2 dailyStockReport" style="width:100%">*@
+            <table id="stock_report_table" class="table-bordered table-header-rotated" style="width:100%; font-size:x-small">
+                <thead>
+
+                    <tr style="display:none;">
+                        <td class="head-cell">SL</td>
+                        <td class="head-cell">PRODUCT_FAMILY</td>
+                        <td class="head-cell">PARtdES</td>
+                        <td class="head-cell">TOTAL_QTY</td>
+                        <td class="head-cell">DHAMRAI CKD RFD CKD</td>
+                        <td class="head-cell">DHAMRAI CKD DO ISSUED</td>
+                        <td class="head-cell">DHAMRAI CKD BOOKED DAP</td>
+                        <td class="head-cell">DHAMRAI CKD PDI PTS</td>
+
+                        <td class="head-cell">DHAMRAI CBU RFD CBU</td>
+                        <td class="head-cell">DHAMRAI CBU DO ISSUED</td>
+                        <td class="head-cell">DHAMRAI CBU BOOKED DAP</td>
+                        <td class="head-cell">DHAMRAI CBU PDI PTS</td>
+
+                        <td class="head-cell">JOYDEBPUR RFD</td>
+                        <td class="head-cell">JOYDEBPUR DO ISSUED</td>
+                        <td class="head-cell">JOYDEBPUR BOOKED</td>
+                        <td class="head-cell">JOYDEBPUR PDI PTS</td>
+
+                        <td class="head-cell">CHATTOGRAM RFD</td>
+                        <td class="head-cell">CHATTOGRAM DO ISSUED</td>
+                        <td class="head-cell">CHATTOGRAM BOOKED</td>
+                        <td class="head-cell">CHATTOGRAM PDI PTS</td>
+
+                        <td class="head-cell">CUMILLA RFD</td>
+                        <td class="head-cell">CUMILLA DO ISSUED</td>
+                        <td class="head-cell">CUMILLA BOOKED</td>
+                        <td class="head-cell">CUMILLA PDI PTS</td>
+
+                        <td class="head-cell">JASHORE RFD</td>
+                        <td class="head-cell">JASHORE DO ISSUED</td>
+                        <td class="head-cell">JASHORE BOOKED</td>
+                        <td class="head-cell">JASHORE PDI PTS</td>
+
+                        <td class="head-cell">BOGRA RFD</td>
+                        <td class="head-cell">BOGRA DO ISSUED</td>
+                        <td class="head-cell">BOGRA BOOKED</td>
+                        <td class="head-cell">BOGRA PDI PTS</td>
+
+                        <td class="head-cell">RFD</td>
+                        <td class="head-cell">DO ISSUED</td>
+                        <td class="head-cell">BOOKED</td>
+                        <td class="head-cell">PDI PTS</td>
+
+                        <td class="head-cell">FAIR DEMO QTY</td>
+                        <td class="head-cell">DEALER PD QTY</td>
+                        <td class="head-cell">OUTSIDE BWS QTY</td>
+                        <td class="head-cell">BUS BODY QTY</td>
+                        <td class="head-cell">TOTAL OT QTY</td>
+                        <td class="head-cell">LC QTY</td>
+                    </tr>
+
+
+                    <tr class="table-header-rotated">
+                        <th rowspan="2" class="rotate"><div>SL No</div></th>
+                        <th rowspan="2" class="rotate"><div>Segment</div></th>
+                        <th rowspan="2" class="rotate">Model</th>
+                        <th rowspan="2" class="rotate"><div>Total Qty</div></th>
                         <th colspan="4">Dhamrai CKD</th>
                         <th colspan="4">Dhamrai CBU </th>
                         <th colspan="4">Joydevpur</th>
@@ -42,120 +167,279 @@
                         <th colspan="4">Jashore</th>
                         <th colspan="4">Bogra</th>
                         <th colspan="4">Total</th>
-                        <th rowspan="2">Fair & Demo</th>
-                        <th rowspan="2">Dealer Point Display</th>
-                        <th rowspan="2">Outside Body W/S</th>
-                        <th rowspan="2">Bus Body</th>
-                        <th rowspan="2">Total OT Stock</th>
-                        <th rowspan="2">LC</th>
+                        <th rowspan="2" class="rotate"><div>Fair & Demo</div></th>
+                        <th rowspan="2" class="rotate"><div>Dealer Point Display</div></th>
+                        <th rowspan="2" class="rotate"><div>Outside Body W/S</div></th>
+                        <th rowspan="2" class="rotate"><div>Bus Body</div></th>
+                        <th rowspan="2" class="rotate"><div>Total OT Stock</div></th>
+                        <th rowspan="2" class="rotate"><div>CKD IN STOCK</div></th>
+                        <th rowspan="2" class="rotate"><div>LC</div></th>
+
                     </tr>
-                    <tr class="sticky-header">
+                    <tr class="table-header-rotated">
                         <!--Dhamrai CKD-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Dhamrai CBU-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Joydevpur-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Chattagram-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Cumilla-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Jassore-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Bogra-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                         <!--Total-->
-                        <th>RFD</th>
-                        <th nowrap>DO ISSUED</th>
-                        <th>Booked</th>
-                        <th>PDI/PTS</th>
+                        <th class="rotate"><div>RFD</div></th>
+                        <th class="rotate"><div>DO</div></th>
+                        <th class="rotate"><div>Booked</div></th>
+                        <th class="rotate"><div>PDI/PTS</div></th>
                     </tr>
                 </thead>
                 <tbody>
                     @{
 
-                        foreach (System.Data.DataRow stock in ViewBag.stocklist.Rows)
-                        {
-                            <tr>
-                                <td>@i</td>
-                                <td>@stock["PART_SEGMENT"]</td>
-                                <td nowrap>@stock["MODEL"]</td>
-                                <td>@stock["TOTAL_QTY"]</td>
-                                <!--Dhamrai CKD-->
-                                <td>@stock["DHAMRAI_CKD_XX_RFD"]</td>
-                                <td>@stock["DHAMRAI_CKD_XX_DO_ISSUED"]</td>
-                                <td>@stock["DHAMRAI_CKD_XX_BOOKED_DAP"]</td>
-                                <td>@stock["DHAMRAI_CKD_XX_PDI_PTS"]</td>
-                                <!--Dhamrai CBU-->
-                                <td>@stock["DHAMRAI_CBU_XX_RFD"]</td>
-                                <td>@stock["DHAMRAI_CBU_XX_DO_ISSUED"]</td>
-                                <td>@stock["DHAMRAI_CBU_XX_BOOKED_DAP"]</td>
-                                <td>@stock["DHAMRAI_CBU_XX_PDI_PTS"]</td>
-                                <!--Joydevpur-->
-                                <td>@stock["JOYDEBPUR_XX_RFD"]</td>
-                                <td>@stock["JOYDEBPUR_XX_DO_ISSUED"]</td>
-                                <td>@stock["JOYDEBPUR_XX_BOOKED"]</td>
-                                <td>@stock["JOYDEBPUR_XX_PDI_PTS"]</td>
-                                <!--Chattagram-->
-                                <td>@stock["CHATTOGRAM_XX_RFD"]</td>
-                                <td>@stock["CHATTOGRAM_XX_DO_ISSUED"]</td>
-                                <td>@stock["CHATTOGRAM_XX_BOOKED"]</td>
-                                <td>@stock["CHATTOGRAM_XX_PDI_PTS"]</td>
-                                <!--Cumilla-->
-                                <td>@stock["CUMILLA_XX_RFD"]</td>
-                                <td>@stock["CUMILLA_XX_DO_ISSUED"]</td>
-                                <td>@stock["CUMILLA_XX_BOOKED"]</td>
-                                <td>@stock["CUMILLA_XX_PDI_PTS"]</td>
-                                <!--Jashore-->
-                                <td>@stock["JASHORE_XX_RFD"]</td>
-                                <td>@stock["JASHORE_XX_DO_ISSUED"]</td>
-                                <td>@stock["JASHORE_XX_BOOKED"]</td>
-                                <td>@stock["JASHORE_XX_PDI_PTS"]</td>
-                                <!--Bogra-->
-                                <td>@stock["BOGRA_XX_RFD"]</td>
-                                <td>@stock["BOGRA_XX_DO_ISSUED"]</td>
-                                <td>@stock["BOGRA_XX_BOOKED"]</td>
-                                <td>@stock["BOGRA_XX_PDI_PTS"]</td>
-                                <!--Total-->
-                                <td>@stock["RFD"]</td>
-                                <td>@stock["DO_ISSUED"]</td>
-                                <td>@stock["BOOKED"]</td>
-                                <td>@stock["PDI_PTS"]</td>
-                                <!--Others-->
-                                <td>@stock["FAIR_DEMO_QTY"]</td>
-                                <td>@stock["DEALER_PD_QTY"]</td>
-                                <td>@stock["OUTSIDE_BWS_QTY"]</td>
-                                <td>@stock["BUS_BODY_QTY"]</td>
-                                <td>@stock["TOTAL_OT_QTY"]</td>
-                                <td>@stock["LC_QTY"]</td>
-                            </tr>
+                            var SUB_DHAMRAI_CKD_XX_RFD = 0;
+                            var SUB_DHAMRAI_CKD_XX_DO_ISSUED = 0;
+                            var SUB_DHAMRAI_CKD_XX_BOOKED_DAP = 0;
+                            var SUB_DHAMRAI_CKD_XX_PDI_PTS = 0;
+
+                            var SUB_DHAMRAI_CBU_XX_RFD = 0;
+                            var SUB_DHAMRAI_CBU_XX_DO_ISSUED = 0;
+                            var SUB_DHAMRAI_CBU_XX_BOOKED_DAP = 0;
+                            var SUB_DHAMRAI_CBU_XX_PDI_PTS = 0;
+
+                            var SUB_JOYDEBPUR_XX_RFD = 0;
+                            var SUB_JOYDEBPUR_XX_DO_ISSUED = 0;
+                            var SUB_JOYDEBPUR_XX_BOOKED = 0;
+                            var SUB_JOYDEBPUR_XX_PDI_PTS = 0;
+
+                            var SUB_CHATTOGRAM_XX_RFD = 0;
+                            var SUB_CHATTOGRAM_XX_DO_ISSUED = 0;
+                            var SUB_CHATTOGRAM_XX_BOOKED = 0;
+                            var SUB_CHATTOGRAM_XX_PDI_PTS = 0;
+
+                            var SUB_CUMILLA_XX_RFD = 0;
+                            var SUB_CUMILLA_XX_DO_ISSUED = 0;
+                            var SUB_CUMILLA_XX_BOOKED = 0;
+                            var SUB_CUMILLA_XX_PDI_PTS = 0;
+
+                            var SUB_JASHORE_XX_RFD = 0;
+                            var SUB_JASHORE_XX_DO_ISSUED = 0;
+                            var SUB_JASHORE_XX_BOOKED = 0;
+                            var SUB_JASHORE_XX_PDI_PTS = 0;
+
+                            var SUB_BOGRA_XX_RFD = 0;
+                            var SUB_BOGRA_XX_DO_ISSUED = 0;
+                            var SUB_BOGRA_XX_BOOKED = 0;
+                            var SUB_BOGRA_XX_PDI_PTS = 0;
+
+                            var SUB_RFD = 0;
+                            var SUB_DO_ISSUED = 0;
+                            var SUB_BOOKED = 0;
+                            var SUB_PDI_PTS = 0;
+
+                            var SUB_FAIR_DEMO_QTY = 0;
+                            var SUB_DEALER_PD_QTY = 0;
+                            var SUB_OUTSIDE_BWS_QTY = 0;
+                            var SUB_BUS_BODY_QTY = 0;
+                            var SUB_TOTAL_OT_QTY = 0;
+                            var SUB_CKD_IN_STOCK = 0;
+                            var SUB_LC_QTY = 0;
+                            var SUB_TOTAL_QTY = 0;
+
+
+
+
+                            foreach (System.Data.DataRow stock in ViewBag.stocklist.Rows)
+                            {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@stock["PRODUCT_FAMILY"]</td>
+                                            <td nowrap>@stock["PARTDES"]</td>
+                                            <td>@stock["TOTAL_QTY"]</td>
+                                            <!--Dhamrai CKD-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD RFD">@stock["DHAMRAI_CKD_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD DO ISSUE">@stock["DHAMRAI_CKD_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD BOOKED">@stock["DHAMRAI_CKD_XX_BOOKED_DAP"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD PDI/PTS">@stock["DHAMRAI_CKD_XX_PDI_PTS"]</td>
+                                            <!---Dhamrai CBU-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU RFD">@stock["DHAMRAI_CBU_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI DO ISSUE ">@stock["DHAMRAI_CBU_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU BOOKED">@stock["DHAMRAI_CBU_XX_BOOKED_DAP"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU ">@stock["DHAMRAI_CBU_XX_PDI_PTS"]</td>
+                                            <!-- -Joydevpur-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JOYDEBPUR RFD ">@stock["JOYDEBPUR_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JOYDEBPUR DO ISSUE ">@stock["JOYDEBPUR_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JOYDEBPUR BOOKED">@stock["JOYDEBPUR_XX_BOOKED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JOYDEBPUR PDI/PTS">@stock["JOYDEBPUR_XX_PDI_PTS"]</td>
+                                            <!---Chattagram-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; BOGRA RFD ">@stock["CHATTOGRAM_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CHATTOGRAM DO ISSUE ">@stock["CHATTOGRAM_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CHATTOGRAM BOOKED">@stock["CHATTOGRAM_XX_BOOKED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CHATTOGRAM PDI/PTS">@stock["CHATTOGRAM_XX_PDI_PTS"]</td>
+                                            <!-- class="data-cell"  title="@stock["PARTDES"] &#64; BOGRA RFD "-Cumilla-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CUMILLA RFD ">@stock["CUMILLA_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CUMILLA DO ISSUE ">@stock["CUMILLA_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CUMILLA BOOKED">@stock["CUMILLA_XX_BOOKED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CUMILLA PDI/PTS">@stock["CUMILLA_XX_PDI_PTS"]</td>
+                                            <!-- Jashore-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JASHORE RFD ">@stock["JASHORE_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JASHORE DO ISSUE ">@stock["JASHORE_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JASHORE BOOKED">@stock["JASHORE_XX_BOOKED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; JASHORE PDI/PTS">@stock["JASHORE_XX_PDI_PTS"]</td>
+                                            <!---Bogra-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; BOGRA RFD ">@stock["BOGRA_XX_RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; BOGRA DO ISSUE ">@stock["BOGRA_XX_DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; BOGRA RFD BOOKED">@stock["BOGRA_XX_BOOKED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; BOGRA RFD PDI/PTS">@stock["BOGRA_XX_PDI_PTS"]</td>
+                                            <!---Total-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; TOTAL RFD ">@stock["RFD"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; TOTAL DO ISSUE ">@stock["DO_ISSUED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; TOTAL RFD BOOKED">@stock["BOOKED"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; TOTAL RFD PDI/PTS">@stock["PDI_PTS"]</td>
+                                            <!-- class="data-cell"   &#64; BOGRA RFD "-Others-->
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; FAIR_DEMO">@stock["FAIR_DEMO_QTY"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DEALER POINT DISPLAY ">@stock["DEALER_PD_QTY"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; OUTSIDE BWS QTY ">@stock["OUTSIDE_BWS_QTY"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; BUS BODY QTY ">@stock["BUS_BODY_QTY"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; TOTAL OT QTY ">@stock["TOTAL_OT_QTY"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; CKD IN STOCK ">@stock["CKD_IN_STOCK"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; LC QTY ">@stock["LC_QTY"]</td>
+                                        </tr>
 
                             i++;
+
+                            SUB_DHAMRAI_CKD_XX_RFD += Convert.ToInt16(stock["DHAMRAI_CKD_XX_RFD"]);
+                            SUB_DHAMRAI_CKD_XX_DO_ISSUED += Convert.ToInt16(stock["DHAMRAI_CKD_XX_DO_ISSUED"]);
+                            SUB_DHAMRAI_CKD_XX_BOOKED_DAP += Convert.ToInt16(stock["DHAMRAI_CKD_XX_BOOKED_DAP"]);
+                            SUB_DHAMRAI_CKD_XX_PDI_PTS += Convert.ToInt16(stock["DHAMRAI_CKD_XX_PDI_PTS"]);
+
+                            SUB_DHAMRAI_CBU_XX_RFD += Convert.ToInt16(stock["DHAMRAI_CBU_XX_RFD"]);
+                            SUB_DHAMRAI_CBU_XX_DO_ISSUED += Convert.ToInt16(stock["DHAMRAI_CBU_XX_DO_ISSUED"]);
+                            SUB_DHAMRAI_CBU_XX_BOOKED_DAP += Convert.ToInt16(stock["DHAMRAI_CBU_XX_BOOKED_DAP"]);
+                            SUB_DHAMRAI_CBU_XX_PDI_PTS += Convert.ToInt16(stock["DHAMRAI_CBU_XX_PDI_PTS"]);
+
+                            SUB_JOYDEBPUR_XX_RFD += Convert.ToInt16(stock["JOYDEBPUR_XX_RFD"]);
+                            SUB_JOYDEBPUR_XX_DO_ISSUED += Convert.ToInt16(stock["JOYDEBPUR_XX_DO_ISSUED"]);
+                            SUB_JOYDEBPUR_XX_BOOKED += Convert.ToInt16(stock["JOYDEBPUR_XX_BOOKED"]);
+                            SUB_JOYDEBPUR_XX_PDI_PTS += Convert.ToInt16(stock["JOYDEBPUR_XX_PDI_PTS"]);
+
+                            SUB_CHATTOGRAM_XX_RFD += Convert.ToInt16(stock["CHATTOGRAM_XX_RFD"]);
+                            SUB_CHATTOGRAM_XX_DO_ISSUED += Convert.ToInt16(stock["CHATTOGRAM_XX_DO_ISSUED"]);
+                            SUB_CHATTOGRAM_XX_BOOKED += Convert.ToInt16(stock["CHATTOGRAM_XX_BOOKED"]);
+                            SUB_CHATTOGRAM_XX_PDI_PTS += Convert.ToInt16(stock["CHATTOGRAM_XX_PDI_PTS"]);
+
+                            SUB_CUMILLA_XX_RFD += Convert.ToInt16(stock["CUMILLA_XX_RFD"]);
+                            SUB_CUMILLA_XX_DO_ISSUED += Convert.ToInt16(stock["CUMILLA_XX_DO_ISSUED"]);
+                            SUB_CUMILLA_XX_BOOKED += Convert.ToInt16(stock["CUMILLA_XX_BOOKED"]);
+                            SUB_CUMILLA_XX_PDI_PTS += Convert.ToInt16(stock["CUMILLA_XX_PDI_PTS"]);
+
+                            SUB_JASHORE_XX_RFD += Convert.ToInt16(stock["JASHORE_XX_RFD"]);
+                            SUB_JASHORE_XX_DO_ISSUED += Convert.ToInt16(stock["JASHORE_XX_DO_ISSUED"]);
+                            SUB_JASHORE_XX_BOOKED += Convert.ToInt16(stock["JASHORE_XX_BOOKED"]);
+                            SUB_JASHORE_XX_PDI_PTS += Convert.ToInt16(stock["JASHORE_XX_PDI_PTS"]);
+
+                            SUB_BOGRA_XX_RFD += Convert.ToInt16(stock["BOGRA_XX_RFD"]);
+                            SUB_BOGRA_XX_DO_ISSUED += Convert.ToInt16(stock["BOGRA_XX_DO_ISSUED"]);
+                            SUB_BOGRA_XX_BOOKED += Convert.ToInt16(stock["BOGRA_XX_BOOKED"]);
+                            SUB_BOGRA_XX_PDI_PTS += Convert.ToInt16(stock["BOGRA_XX_PDI_PTS"]);
+
+                            SUB_RFD += Convert.ToInt16(stock["RFD"]);
+                            SUB_DO_ISSUED += Convert.ToInt16(stock["DO_ISSUED"]);
+                            SUB_BOOKED += Convert.ToInt16(stock["BOOKED"]);
+                            SUB_PDI_PTS += Convert.ToInt16(stock["PDI_PTS"]);
+
+                            SUB_FAIR_DEMO_QTY += Convert.ToInt16(stock["FAIR_DEMO_QTY"]);
+                            SUB_DEALER_PD_QTY += Convert.ToInt16(stock["DEALER_PD_QTY"]);
+                            SUB_OUTSIDE_BWS_QTY += Convert.ToInt16(stock["OUTSIDE_BWS_QTY"]);
+                            SUB_BUS_BODY_QTY += Convert.ToInt16(stock["BUS_BODY_QTY"]);
+                            SUB_TOTAL_OT_QTY += Convert.ToInt16(stock["TOTAL_OT_QTY"]);
+                            SUB_CKD_IN_STOCK += Convert.ToInt16(stock["CKD_IN_STOCK"]);
+                            SUB_LC_QTY += Convert.ToInt16(stock["LC_QTY"]);
+                            SUB_TOTAL_QTY += Convert.ToInt16(stock["TOTAL_QTY"]);
+
                         }
                     }
                 </tbody>
                 <tfoot>
+
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <th>@SUB_TOTAL_QTY</th>
+                        <th>@SUB_DHAMRAI_CKD_XX_RFD</th>
+                        <th>@SUB_DHAMRAI_CKD_XX_DO_ISSUED</th>
+                        <th>@SUB_DHAMRAI_CKD_XX_BOOKED_DAP</th>
+                        <th>@SUB_DHAMRAI_CKD_XX_PDI_PTS</th>
+
+                        <th>@SUB_DHAMRAI_CBU_XX_RFD</th>
+                        <th>@SUB_DHAMRAI_CBU_XX_DO_ISSUED</th>
+                        <th>@SUB_DHAMRAI_CBU_XX_BOOKED_DAP</th>
+                        <th>@SUB_DHAMRAI_CBU_XX_PDI_PTS</th>
+
+                        <th>@SUB_JOYDEBPUR_XX_RFD</th>
+                        <th>@SUB_JOYDEBPUR_XX_DO_ISSUED</th>
+                        <th>@SUB_JOYDEBPUR_XX_BOOKED</th>
+                        <th>@SUB_JOYDEBPUR_XX_PDI_PTS</th>
+
+                        <th>@SUB_CHATTOGRAM_XX_RFD</th>
+                        <th>@SUB_CHATTOGRAM_XX_DO_ISSUED</th>
+                        <th>@SUB_CHATTOGRAM_XX_BOOKED</th>
+                        <th>@SUB_CHATTOGRAM_XX_PDI_PTS</th>
+
+                        <th>@SUB_CUMILLA_XX_RFD</th>
+                        <th>@SUB_CUMILLA_XX_DO_ISSUED</th>
+                        <th>@SUB_CUMILLA_XX_BOOKED</th>
+                        <th>@SUB_CUMILLA_XX_PDI_PTS</th>
+
+                        <th>@SUB_JASHORE_XX_RFD</th>
+                        <th>@SUB_JASHORE_XX_DO_ISSUED</th>
+                        <th>@SUB_JASHORE_XX_BOOKED</th>
+                        <th>@SUB_JASHORE_XX_PDI_PTS</th>
+
+                        <th>@SUB_BOGRA_XX_RFD</th>
+                        <th>@SUB_BOGRA_XX_DO_ISSUED</th>
+                        <th>@SUB_BOGRA_XX_BOOKED</th>
+                        <th>@SUB_BOGRA_XX_PDI_PTS</th>
+
+                        <th>@SUB_RFD</th>
+                        <th>@SUB_DO_ISSUED</th>
+                        <th>@SUB_BOOKED</th>
+                        <th>@SUB_PDI_PTS</th>
+
+                        <th>@SUB_FAIR_DEMO_QTY</th>
+                        <th>@SUB_DEALER_PD_QTY</th>
+                        <th>@SUB_OUTSIDE_BWS_QTY</th>
+                        <th>@SUB_BUS_BODY_QTY</th>
+                        <th>@SUB_TOTAL_OT_QTY</th>
+                        <th>@SUB_CKD_IN_STOCK</th>
+                        <th>@SUB_LC_QTY</th>
+
+
+                    </tr>
 
                 </tfoot>
             </table>
@@ -166,6 +450,8 @@
 <!-- /.card -->
 
 @section Scripts{
+    <script src="@Url.Content("~/")Scripts/rowspanizer/jquery.rowspanizer.min.js"></script>
+
     <script>
         $(document).ready(function () {
             $('.dailyStockReport').DataTable({
@@ -261,26 +547,59 @@
                 },
 
             });
-      
-            $('#dailyStockReport1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
+
+            $('#stock_report_table').DataTable({
+                //fixedHeader: true,
+                responsive: true,
+                paging: false,
+                ordering: false,
+                info: false,
+                // fixedColumns: {
+                //    left: 4
+                // },
             });
 
 
-            $(".dailyStockReport td").each(function () {
+            $("#stock_report_table").rowspanizer({
+                vertical_align: 'middle'
+                , columns: [1]
+            });
+
+
+            $(".data-cell").each(function () {
                 var val = $(this).text();
                 var intVal = parseInt(val);
                 if (intVal == 0) {
                     $(this).text("");
-                
+
+                } else {
+                    if (intVal > 0) {
+                        $(this).css('background-color', '#FEF9E7');
+
+                    }
                 }
             })
+
+
+            $('.data-cell').on("mouseover", function () {
+                var td = $(this);
+                var th = td.closest('tbody').prev('thead').children('tr:first').find('>td.head-cell:eq(' + td.index() + ')');
+
+                //  td.attr("title", th.text());
+            });
+
+            var size = $('.table-header-rotated').css('font-size');
+            var fontsize = parseInt(size);
+            $("#slider").val(fontsize);
+            $("#slider").on("input", function () {
+                $('.table-header-rotated').css("font-size", $(this).val() + "px");
+                $('.table-header-rotated').css("width", "100%");
+                $('.table-header-rotated td,th').css("width", parseInt($(this).val()) + 0);
+
+            });
         });
     </script>
-    
+
 }
 
 

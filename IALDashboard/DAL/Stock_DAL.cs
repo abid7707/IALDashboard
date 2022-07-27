@@ -147,7 +147,7 @@ namespace IALDashboard.DAL
 
                 string StrSql = " SELECT PARTDES, "
                 + "    PART_NO, "
-                + "    PRODUCT_FAMILY, SEQ, MODEL, PART_SEGMENT,"
+                + "    PRODUCT_FAMILY, SEQ, MODEL, PART_SEGMENT, MAX(CKD_IN_STOCK) CKD_IN_STOCK,"
                 + "    sum(NVL(BUS_BODY_QTY, 0)) BUS_BODY_QTY, "
                 + "    sum(NVL(DEALER_PD_QTY, 0)) DEALER_PD_QTY, "
                 + "    sum(NVL(FAIR_DEMO_QTY, 0)) FAIR_DEMO_QTY, "

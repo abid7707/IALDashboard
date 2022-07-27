@@ -79,7 +79,7 @@
                 @using (Html.BeginForm("Verify", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="User ID" name="user_id" required="required">
+                        <input type="text" class="form-control" placeholder="User ID" name="user_id" required="required" autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
