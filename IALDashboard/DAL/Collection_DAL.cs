@@ -151,7 +151,7 @@ namespace IALDashboard.DAL
             return dt;
         }
 
-        public DataTable RoZoneWiseSummary(string from_date)
+        public DataTable RoZoneWiseSummary(string from_date, string contract)
         {
 
             DataTable dt = new DataTable("ROZoneWiseSummary");
@@ -162,6 +162,7 @@ namespace IALDashboard.DAL
                 OracleCommand com = GetSPCommand("PROC_RO_ZONEWISE_SUMMARY");
                 com.Parameters.Add("P_FROM_DATE", OracleType.VarChar).Value = from_date;
                 com.Parameters.Add("P_CATALOG_NO", OracleType.VarChar).Value = "";
+                com.Parameters.Add("P_CONTRACT", OracleType.VarChar).Value = contract;
                 com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
                 OracleDataAdapter oraData = new OracleDataAdapter(com);
 

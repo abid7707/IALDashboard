@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "PartLCEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var lc_stock = ViewBag.part_lc_stock;
+}
+@using (Html.BeginForm("LCStockSave", "LC", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header text-right">
+
+                    <button type="submit" class=" btn btn-success"> Save </button>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-condensed" id="table_lc_stock">
+                        <thead>
+                            <tr>
+                                <th>Segment</th>
+                                <th>Part</th>
+                                <th>Model</th>
+                                <th style="width:100px;">LC Qty</th>
+                                <th>Last Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+
+                                foreach (System.Data.DataRow p in lc_stock.Rows)
+                                {
+
+                                    <tr>
+
+                                        <td>@p["PART_SEGMENT"]</td>
+
+                                        <td><input type="hidden" value="@p["PART_NO"]" name="PART_NO" /> @p["PART_NO"]</td>
+
+                                        <td>@p["MODEL"]</td>
+
+                                        <td><input type="number" class="form-control form-control-sm" name="LC_QTY" value="@p["LC_QTY"]" /></td>
+                                        <td>@p["ENTRY_DATE"]</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts{
+    <script src="@Url.Content("~/")Scripts/rowspanizer/jquery.rowspanizer.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#table_lc_stock input").each(function (u, v) {
+                var val = $(this).val();
+                if (val < 1) {
+                    $(this).css('background-color', '#cdcdcd');
+                }
+            });
+
+
+            $('input').on('change', function () {
+                var val = $(this).val();
+                if (val < 1) {
+                    $(this).css('background-color', '#cdcdcd');
+                } else {
+                    $(this).css('background-color', 'transparent');
+                }
+            });
+
+
+        });
+    </script>
+    }

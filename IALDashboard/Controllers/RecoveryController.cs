@@ -482,9 +482,8 @@ namespace IALDashboard.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public ActionResult ExportROZoneWiseSummary(string from_date)
+        public ActionResult ExportROZoneWiseSummary(string from_date, string contract)
         {
             string date = from_date + "-01";
 
@@ -492,7 +491,7 @@ namespace IALDashboard.Controllers
 
             String formatted_from_date = formatted_date.ToString("MMMM, yyyy");
 
-            DataTable dt = new Collection_DAL().RoZoneWiseSummary(date);
+            DataTable dt = new Collection_DAL().RoZoneWiseSummary(date, contract);
 
 
             using (XLWorkbook wb = new XLWorkbook())
@@ -508,12 +507,16 @@ namespace IALDashboard.Controllers
                 ws.Column("J").Width = 12;
                 ws.Column("M").Width = 12;
 
-                ws.Range("A1:Q5").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
-                ws.Cell("A1").Value = "Ifad Autos Ltd (RO Summary)";
-                ws.Range("A1:Q1").Merge().Style.Font.SetBold().Font.FontSize = 14;
+                ws.Range("A1:O5").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                ws.Cell("A1").Value = "Ifad Autos Ltd (Zone wise Summary) - " + contract;
+                ws.Range("A1:O1").Merge().Style.Font.SetBold().Font.FontSize = 14;
 
                 ws.Cell("A2").Value = "Collection for the Month of " + formatted_from_date;
-                ws.Range("A2:Q2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+                ws.Range("A2:O2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+
+
+
+
 
                 ws.Cell("A5").Value = "SL NO";
                 ws.Range("A5").Style.Font.SetBold().Font.FontSize = 12;
@@ -524,7 +527,7 @@ namespace IALDashboard.Controllers
                 ws.Cell("C5").Value = "Tar Inst Amt.";
                 ws.Range("C5").Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("D5").Value = "A.OverDue Amt";
+                ws.Cell("D5").Value = "Opening AOD";
                 ws.Range("D5").Style.Font.SetBold().Font.FontSize = 12;
 
                 ws.Cell("E5").Value = "Monthly  Collection";
@@ -561,31 +564,47 @@ namespace IALDashboard.Controllers
                 ws.Range("O5").Style.Font.SetBold().Font.FontSize = 12;
 
                 int i = 0;
-                /*double SUB_TAR_INST_AMT = 0;
-                double SUB_ACTUAL_OD = 0;
-                double SUB_MONTHLY_COLL = 0;
-                double SUB_INST_COLL = 0;
-                double SUB_OD_COLLECTION = 0;
-                double SUB_EXCESS_COLLECTION = 0;
-                double SUB_NO_OF_VEHICLE = 0;
-                double SUB_ATTEN_V = 0;
-                double SUB_TAR_COLL_PERCENT = 0;
-                double SUB_INST_COLL_PERCENT = 0;
-                double AVG_INST_COLL_PERCENT = 0;
-                double AVG_OVERDUE_COLL_PERCENT = 0;
-                double AVG_ATTEN_V_PERCENT = 0;*/
+                int j = 1;
+                
+              
 
                 DataTable ZoneList = new Collection_DAL().ZoneInfo();
 
-                foreach (DataRow zone in ZoneList.Rows)
+                int zone_group_start = 5;
+
+                DataTable zone_group_dt = new DataTable("zone_group_table");
+                zone_group_dt.Columns.Add("ZONE_GROUP", typeof(string));
+             
+
+               DataTable dtZoneGroup=   dt.DefaultView.ToTable(true, "ZONE_GROUP");
+
+
+
+
+                foreach (DataRow zone in dtZoneGroup.Rows)
                 {
-                    DataRow[] rs = dt.Select("ZONE_NAME = '" + zone["ZONE_NAME"].ToString() + "'");
+                     DataRow[] rs = dt.Select("ZONE_GROUP = '" + zone["ZONE_GROUP"].ToString() + "'");
+
+                    double SUB_TAR_INST_AMT = 0;
+                    double SUB_ACTUAL_OD = 0;
+                    double SUB_MONTHLY_COLL = 0;
+                    double SUB_INST_COLL = 0;
+                    double SUB_OD_COLLECTION = 0;
+                    double SUB_EXCESS_COLLECTION = 0;
+                    double SUB_NO_OF_VEHICLE = 0;
+                    double SUB_ATTEN_V = 0;
+                    double G_COLL_PERCENT = 0;
+                    double AVG_INST_COLL_PERCENT = 0;
+                    double AVG_OVERDUE_COLL_PERCENT = 0;
+                    double AVG_ATTEN_V_PERCENT = 0;
+                    double AVG_EXCESS_COLLECTION_PERCENT = 0;
+                    double AVG_ATTN_V_PERCENT = 0;
 
                     if (rs.Length != 0)
                     {
                         foreach (DataRow record in rs)
                         {
-                            /* SUB_TAR_INST_AMT += Convert.ToDouble(record["TAR_INST_AMT"]);
+                             SUB_TAR_INST_AMT += Convert.ToDouble(record["TAR_INST_AMT"]);
                              SUB_ACTUAL_OD += Convert.ToDouble(record["ACTUAL_OD"]);
                              SUB_MONTHLY_COLL += Convert.ToDouble(record["MONTHLY_COLL"]);
                              SUB_INST_COLL += Convert.ToDouble(record["INST_COLL"]);
@@ -593,14 +612,18 @@ namespace IALDashboard.Controllers
                              SUB_EXCESS_COLLECTION += Convert.ToDouble(record["EXCESS_COLLECTION"]);
                              SUB_NO_OF_VEHICLE += Convert.ToDouble(record["NO_OF_VEHICLE"]);
                              SUB_ATTEN_V += Convert.ToDouble(record["ATTEN_V"]);
-                             SUB_TAR_COLL_PERCENT += Convert.ToDouble(record["TAR_COLL_PERCENT"]);
-                             *//*SUB_INST_COLL_PERCENT += Convert.ToDouble(record["INST_COLL_PERCENT"]);
-                             AVG_INST_COLL_PERCENT = SUB_INST_COLL_PERCENT / (i + 1);*//*
-                             AVG_INST_COLL_PERCENT = Math.Round(SUB_INST_COLL / SUB_TAR_INST_AMT * 100, 0);
+                            /*SUB_TAR_COLL_PERCENT += Convert.ToDouble(record["TAR_COLL_PERCENT"]);
+                            SUB_INST_COLL_PERCENT += Convert.ToDouble(record["INST_COLL_PERCENT"]);
+                            AVG_INST_COLL_PERCENT = SUB_INST_COLL_PERCENT / (i + 1);*/
+                            G_COLL_PERCENT= Math.Round(SUB_MONTHLY_COLL / SUB_TAR_INST_AMT * 100, 0);
+                            AVG_INST_COLL_PERCENT = Math.Round(SUB_INST_COLL / SUB_TAR_INST_AMT * 100, 0);
                              AVG_OVERDUE_COLL_PERCENT = Math.Round(SUB_OD_COLLECTION / SUB_ACTUAL_OD * 100, 0);
                              AVG_ATTEN_V_PERCENT = Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
-                            */
-                            ws.Cell("A" + (i + 6)).Value = i + 1;
+                            AVG_EXCESS_COLLECTION_PERCENT = Math.Round(SUB_EXCESS_COLLECTION / SUB_TAR_INST_AMT * 100, 0);
+                            AVG_ATTN_V_PERCENT= Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
+
+
+                            ws.Cell("A" + (i + 6)).Value =j;
                             ws.Cell("B" + (i + 6)).Value = record["ZONE_NAME"].ToString();
                             ws.Cell("C" + (i + 6)).Value = record["TAR_INST_AMT"].ToString();
                             ws.Cell("D" + (i + 6)).Value = record["ACTUAL_OD"].ToString();
@@ -617,23 +640,37 @@ namespace IALDashboard.Controllers
                             ws.Cell("O" + (i + 6)).Value = record["ATTN_V_PERCENT"].ToString();
 
                             i++;
+                            j++;
                         }
 
-                        /*ws.Cell("D" + (i + 6)).Value = "Sub Total";
-                        ws.Cell("E" + (i + 6)).Value = SUB_TAR_INST_AMT.ToString();
-                        ws.Cell("F" + (i + 6)).Value = SUB_ACTUAL_OD.ToString();
-                        ws.Cell("G" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
-                        ws.Cell("H" + (i + 6)).Value = SUB_INST_COLL.ToString();
-                        ws.Cell("I" + (i + 6)).Value = SUB_OD_COLLECTION.ToString();
-                        ws.Cell("J" + (i + 6)).Value = SUB_EXCESS_COLLECTION.ToString();
-                        ws.Cell("K" + (i + 6)).Value = SUB_NO_OF_VEHICLE.ToString();
-                        ws.Cell("L" + (i + 6)).Value = SUB_ATTEN_V.ToString();
-                        ws.Cell("M" + (i + 6)).Value = SUB_TAR_COLL_PERCENT.ToString();
-                        ws.Cell("N" + (i + 6)).Value = AVG_INST_COLL_PERCENT.ToString();
-                        ws.Cell("O" + (i + 6)).Value = AVG_OVERDUE_COLL_PERCENT.ToString();
-                        ws.Cell("Q" + (i + 6)).Value = AVG_ATTEN_V_PERCENT.ToString();
-                        ws.Range("D" + (i + 6) + ":Q" + (i + 6)).Style.Font.SetBold().Font.FontSize = 12;
-                        i++;*/
+                        ws.Cell("B" + (i + 6)).Value = zone["ZONE_GROUP"].ToString()+ " Total";
+                        ws.Cell("C" + (i + 6)).Value = SUB_TAR_INST_AMT.ToString();
+                        ws.Cell("D" + (i + 6)).Value = SUB_ACTUAL_OD.ToString();
+                        ws.Cell("E" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
+                        ws.Cell("F" + (i + 6)).Value = SUB_INST_COLL.ToString();
+                        ws.Cell("G" + (i + 6)).Value = SUB_OD_COLLECTION.ToString();
+                        ws.Cell("H" + (i + 6)).Value = SUB_EXCESS_COLLECTION.ToString();
+                        ws.Cell("I" + (i + 6)).Value = SUB_NO_OF_VEHICLE.ToString();
+                        ws.Cell("J" + (i + 6)).Value = SUB_ATTEN_V.ToString();
+                        ws.Cell("K" + (i + 6)).Value = G_COLL_PERCENT.ToString();
+                        ws.Cell("L" + (i + 6)).Value =  AVG_INST_COLL_PERCENT.ToString();
+                        ws.Cell("M" + (i + 6)).Value = AVG_OVERDUE_COLL_PERCENT.ToString();
+                        ws.Cell("N" + (i + 6)).Value = AVG_EXCESS_COLLECTION_PERCENT.ToString();
+                        ws.Cell("O" + (i + 6)).Value = AVG_ATTN_V_PERCENT.ToString();
+                        
+                        ws.Range("A" + (i + 6) + ":O" + (i + 6)).
+                            Style.Font.SetBold().Font.FontSize = 12;
+
+
+                        ws.Range("A" +(zone_group_start) + ":O" + (i + 6)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                        ws.Range("A" + (zone_group_start)+":O" + (i + 6)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                       
+
+                        i++;
+                        i++;
+                        zone_group_start = i + 6;
+
 
                     }/*if (rs.Length != 0)*/
 
@@ -644,10 +681,9 @@ namespace IALDashboard.Controllers
 
 
 
-                ws.Range("A5" + ":Q" + (i + 6)).Style.Alignment.SetWrapText(true);
+                ws.Range("A5" + ":O" + (i + 6)).Style.Alignment.SetWrapText(true);
 
-                ws.Range("A5" + ":Q" + (i + 6)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                ws.Range("A5" + ":Q" + (i + 6)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+               
 
                 ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
                 ws.PageSetup.AdjustTo(75);
@@ -656,7 +692,7 @@ namespace IALDashboard.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ROZoneWiseSummary-" + formatted_from_date + ".xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  " ZoneWiseSummary-"+ contract+ " " + formatted_from_date + ".xlsx");
                 }
 
             }
@@ -665,7 +701,7 @@ namespace IALDashboard.Controllers
         }
 
         [HttpPost]
-        public string GetJsonRoZoneWiseSummary(string from_date)
+        public string GetJsonRoZoneWiseSummary(string from_date, string contract)
         {
             from_date = from_date + "-01";
 
@@ -674,12 +710,219 @@ namespace IALDashboard.Controllers
             string year = new_from_date[0];
             string month = new_from_date[1];
 
-            DataTable dt = new Collection_DAL().RoZoneWiseSummary(from_date);
+            DataTable dt = new Collection_DAL().RoZoneWiseSummary(from_date, contract);
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(dt);
             return JSONString;
         }
+
+
+
+        //[HttpPost]
+        //public ActionResult ExportROZoneWiseSummary(string from_date, string contract)
+        //{
+        //    string date = from_date + "-01";
+
+        //    DateTime formatted_date = DateTime.ParseExact(date, "yyyy-MM-dd", null);
+
+        //    String formatted_from_date = formatted_date.ToString("MMMM, yyyy");
+
+        //    DataTable dt = new Collection_DAL().RoZoneWiseSummary(date, contract);
+
+
+        //    using (XLWorkbook wb = new XLWorkbook())
+        //    {
+
+        //        var ws = wb.Worksheets.Add(from_date);
+
+        //        ws.Column("A").Width = 5;
+        //        ws.Column("B").Width = 8;
+        //        ws.Column("C").Width = 12;
+        //        ws.Column("E").Width = 16;
+        //        ws.Column("F").Width = 10;
+        //        ws.Column("J").Width = 12;
+        //        ws.Column("M").Width = 12;
+
+        //        ws.Range("A1:Q5").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        //        ws.Cell("A1").Value = "Ifad Autos Ltd (Zone wise Summary) - "+ contract;
+        //        ws.Range("A1:Q1").Merge().Style.Font.SetBold().Font.FontSize = 14;
+
+        //        ws.Cell("A2").Value = "Collection for the Month of " + formatted_from_date;
+        //        ws.Range("A2:Q2").Merge().Style.Font.SetBold().Font.FontSize = 12;
+
+
+
+
+
+        //        ws.Cell("A5").Value = "SL NO";
+        //        ws.Range("A5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("B5").Value = "Zone";
+        //        ws.Range("B5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("C5").Value = "Tar Inst Amt.";
+        //        ws.Range("C5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("D5").Value = "A.OverDue Amt";
+        //        ws.Range("D5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("E5").Value = "Monthly  Collection";
+        //        ws.Range("E5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("F5").Value = "Inst. Coll";
+        //        ws.Range("F5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("G5").Value = "Ovd Coll";
+        //        ws.Range("G5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("H5").Value = "Excess Coll";
+        //        ws.Range("H5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("I5").Value = "No.Veh";
+        //        ws.Range("I5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("J5").Value = "Att. Veh";
+        //        ws.Range("J5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("K5").Value = "G.Coll%";
+        //        ws.Range("K5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("L5").Value = "Inst.Coll %";
+        //        ws.Range("L5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("M5").Value = "Ovd Coll%";
+        //        ws.Range("M5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("N5").Value = "Excess Coll%";
+        //        ws.Range("N5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        ws.Cell("O5").Value = "Atten %";
+        //        ws.Range("O5").Style.Font.SetBold().Font.FontSize = 12;
+
+        //        int i = 0;
+        //        /*double SUB_TAR_INST_AMT = 0;
+        //        double SUB_ACTUAL_OD = 0;
+        //        double SUB_MONTHLY_COLL = 0;
+        //        double SUB_INST_COLL = 0;
+        //        double SUB_OD_COLLECTION = 0;
+        //        double SUB_EXCESS_COLLECTION = 0;
+        //        double SUB_NO_OF_VEHICLE = 0;
+        //        double SUB_ATTEN_V = 0;
+        //        double SUB_TAR_COLL_PERCENT = 0;
+        //        double SUB_INST_COLL_PERCENT = 0;
+        //        double AVG_INST_COLL_PERCENT = 0;
+        //        double AVG_OVERDUE_COLL_PERCENT = 0;
+        //        double AVG_ATTEN_V_PERCENT = 0;*/
+
+        //        DataTable ZoneList = new Collection_DAL().ZoneInfo();
+
+        //        string zone_group = ""; 
+
+        //        foreach (DataRow zone in ZoneList.Rows)
+        //        {
+        //          //  DataRow[] rs = dt.Select("ZONE_NAME = '" + zone["ZONE_NAME"].ToString() + "'");
+        //            DataRow[] rs = dt.Select();
+
+        //            if (rs.Length != 0)
+        //            {
+        //                foreach (DataRow record in rs)
+        //                {
+        //                    /* SUB_TAR_INST_AMT += Convert.ToDouble(record["TAR_INST_AMT"]);
+        //                     SUB_ACTUAL_OD += Convert.ToDouble(record["ACTUAL_OD"]);
+        //                     SUB_MONTHLY_COLL += Convert.ToDouble(record["MONTHLY_COLL"]);
+        //                     SUB_INST_COLL += Convert.ToDouble(record["INST_COLL"]);
+        //                     SUB_OD_COLLECTION += Convert.ToDouble(record["OD_COLECTION"]);
+        //                     SUB_EXCESS_COLLECTION += Convert.ToDouble(record["EXCESS_COLLECTION"]);
+        //                     SUB_NO_OF_VEHICLE += Convert.ToDouble(record["NO_OF_VEHICLE"]);
+        //                     SUB_ATTEN_V += Convert.ToDouble(record["ATTEN_V"]);
+        //                     SUB_TAR_COLL_PERCENT += Convert.ToDouble(record["TAR_COLL_PERCENT"]);
+        //                     *//*SUB_INST_COLL_PERCENT += Convert.ToDouble(record["INST_COLL_PERCENT"]);
+        //                     AVG_INST_COLL_PERCENT = SUB_INST_COLL_PERCENT / (i + 1);*//*
+        //                     AVG_INST_COLL_PERCENT = Math.Round(SUB_INST_COLL / SUB_TAR_INST_AMT * 100, 0);
+        //                     AVG_OVERDUE_COLL_PERCENT = Math.Round(SUB_OD_COLLECTION / SUB_ACTUAL_OD * 100, 0);
+        //                     AVG_ATTEN_V_PERCENT = Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
+        //                    */
+        //                    ws.Cell("A" + (i + 6)).Value = i + 1;
+        //                    ws.Cell("B" + (i + 6)).Value = record["ZONE_NAME"].ToString();
+        //                    ws.Cell("C" + (i + 6)).Value = record["TAR_INST_AMT"].ToString();
+        //                    ws.Cell("D" + (i + 6)).Value = record["ACTUAL_OD"].ToString();
+        //                    ws.Cell("E" + (i + 6)).Value = record["MONTHLY_COLL"].ToString();
+        //                    ws.Cell("F" + (i + 6)).Value = record["INST_COLL"].ToString();
+        //                    ws.Cell("G" + (i + 6)).Value = record["OD_COLECTION"].ToString();
+        //                    ws.Cell("H" + (i + 6)).Value = record["EXCESS_COLLECTION"].ToString();
+        //                    ws.Cell("I" + (i + 6)).Value = record["NO_OF_VEHICLE"].ToString();
+        //                    ws.Cell("J" + (i + 6)).Value = record["ATTEN_V"].ToString();
+        //                    ws.Cell("K" + (i + 6)).Value = record["GROUP_COLL_PERCENT"].ToString();
+        //                    ws.Cell("L" + (i + 6)).Value = record["INST_COLL_PERCENT"].ToString();
+        //                    ws.Cell("M" + (i + 6)).Value = record["OD_COLLECTION_PERCENT"].ToString();
+        //                    ws.Cell("N" + (i + 6)).Value = record["EXCESS_COLL_PERCENT"].ToString();
+        //                    ws.Cell("O" + (i + 6)).Value = record["ATTN_V_PERCENT"].ToString();
+
+        //                    i++;
+        //                }
+
+        //                /*ws.Cell("D" + (i + 6)).Value = "Sub Total";
+        //                ws.Cell("E" + (i + 6)).Value = SUB_TAR_INST_AMT.ToString();
+        //                ws.Cell("F" + (i + 6)).Value = SUB_ACTUAL_OD.ToString();
+        //                ws.Cell("G" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
+        //                ws.Cell("H" + (i + 6)).Value = SUB_INST_COLL.ToString();
+        //                ws.Cell("I" + (i + 6)).Value = SUB_OD_COLLECTION.ToString();
+        //                ws.Cell("J" + (i + 6)).Value = SUB_EXCESS_COLLECTION.ToString();
+        //                ws.Cell("K" + (i + 6)).Value = SUB_NO_OF_VEHICLE.ToString();
+        //                ws.Cell("L" + (i + 6)).Value = SUB_ATTEN_V.ToString();
+        //                ws.Cell("M" + (i + 6)).Value = SUB_TAR_COLL_PERCENT.ToString();
+        //                ws.Cell("N" + (i + 6)).Value = AVG_INST_COLL_PERCENT.ToString();
+        //                ws.Cell("O" + (i + 6)).Value = AVG_OVERDUE_COLL_PERCENT.ToString();
+        //                ws.Cell("Q" + (i + 6)).Value = AVG_ATTEN_V_PERCENT.ToString();
+        //                ws.Range("D" + (i + 6) + ":Q" + (i + 6)).Style.Font.SetBold().Font.FontSize = 12;
+        //                i++;*/
+
+        //            }/*if (rs.Length != 0)*/
+
+        //        }
+
+
+
+
+
+
+        //        ws.Range("A5" + ":Q" + (i + 6)).Style.Alignment.SetWrapText(true);
+
+        //        ws.Range("A5" + ":Q" + (i + 6)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+        //        ws.Range("A5" + ":Q" + (i + 6)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+        //        ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+        //        ws.PageSetup.AdjustTo(75);
+        //        ws.PageSetup.SetRowsToRepeatAtTop(1, 5);
+
+        //        using (MemoryStream stream = new MemoryStream())
+        //        {
+        //            wb.SaveAs(stream);
+        //            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ROZoneWiseSummary-" + formatted_from_date + ".xlsx");
+        //        }
+
+        //    }
+
+
+        //}
+
+        //[HttpPost]
+        //public string GetJsonRoZoneWiseSummary(string from_date, string contract)
+        //{
+        //    from_date = from_date + "-01";
+
+        //    string[] new_from_date = from_date.Split('-');
+
+        //    string year = new_from_date[0];
+        //    string month = new_from_date[1];
+
+        //    DataTable dt = new Collection_DAL().RoZoneWiseSummary(from_date, contract);
+
+        //    string JSONString = string.Empty;
+        //    JSONString = JsonConvert.SerializeObject(dt);
+        //    return JSONString;
+        //}
 
 
 
