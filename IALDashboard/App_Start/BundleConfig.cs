@@ -16,14 +16,17 @@ namespace IALDashboard
                         "~/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
+            // ready for production, use the build tool at  to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/js/adminlte.min.js",
-                      "~/Scripts/js/demo.js"));
+                      "~/Content/plugins/chart.js/Chart.min.js",
+                      "~/Scripts/js/demo.js",
+                      "~/Scripts/js/pages/dashboard3.js"
+                      ));
 
 
 

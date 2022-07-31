@@ -16,17 +16,17 @@ $(function () {
   var salesChart = new Chart($salesChart, {
     type: 'bar',
     data: {
-      labels: ['JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      labels: ['JUN','FEB','MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       datasets: [
         {
-          backgroundColor: '#007bff',
-          borderColor: '#007bff',
-          data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
+              backgroundColor: '#3299a8',
+              borderColor: '#3299a8',
+              data: [750000000, 730000000, 720000000, 770000000, 790000000, 800000000, 820000000, 810000000, 820000000, 840000000, 850000000, 810000000]
         },
         {
           backgroundColor: '#ced4da',
           borderColor: '#ced4da',
-          data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
+            data: [650000000, 670000000, 620000000, 670000000, 690000000, 700000000, 720000000, 750000000, 860000000, 690000000, 730000000, 700000000]
         }
       ]
     },
@@ -34,7 +34,14 @@ $(function () {
       maintainAspectRatio: false,
       tooltips: {
         mode: mode,
-        intersect: intersect
+          intersect: intersect,
+          callbacks: {
+              label: function (tooltipItem) {
+                  var value = tooltipItem.yLabel;
+                  value /= 10000000;
+                  return value + " Cr";
+              }
+          }
       },
       hover: {
         mode: mode,
@@ -52,17 +59,17 @@ $(function () {
             color: 'rgba(0, 0, 0, .2)',
             zeroLineColor: 'transparent'
           },
-          ticks: $.extend({
+            ticks: $.extend({
+            maxTicksLimit: 5,
             beginAtZero: true,
 
             // Include a dollar sign in the ticks
             callback: function (value) {
-              if (value >= 1000) {
-                value /= 1000
-                value += 'k'
+                if (value >= 10000000) {
+                value /= 10000000
+                value += 'Cr'
               }
-
-              return '$' + value
+                return '\u09F3' + value
             }
           }, ticksStyle)
         }],

@@ -210,9 +210,29 @@ namespace IALDashboard.Controllers
 
                         ws.Range("F" + (i + 6) + ":P" + (i + 6)).Style.Font.SetBold().Font.FontSize = 11;
 
-                        ws.Cell("I" + (i + 10)).Value = ro_summary.Rows[0]["TAR_COLL_PERCENT"];
+                        ws.Range("F" + (i + 9) + ":P" + (i + 9)).Style.Font.SetBold().Font.FontSize = 11;
 
+                        ws.Cell("G" + (i + 9)).Value = "Inst Coll";
+                        ws.Cell("H" + (i + 9)).Value = "Ovd. COll";
+                        ws.Cell("I" + (i + 9)).Value = "Excess Coll";
+                        ws.Cell("J" + (i + 9)).Value = "No. Veh";
+                        ws.Cell("K" + (i + 9)).Value = "Atten. Veh";
+                        ws.Cell("L" + (i + 9)).Value = "T. Coll%";
+                        ws.Cell("M" + (i + 9)).Value = "Inst. Coll";
+                        ws.Cell("N" + (i + 9)).Value = "Ovd Coll%";
+                        ws.Cell("O" + (i + 9)).Value = "Excess Coll%";
+                        ws.Cell("P" + (i + 9)).Value = "Atten%";
 
+                        ws.Cell("G" + (i + 10)).Value = ro_summary.Rows[0]["INST_COLL"];
+                        ws.Cell("H" + (i + 10)).Value = ro_summary.Rows[0]["OD_COLECTION"];
+                        ws.Cell("I" + (i + 10)).Value = ro_summary.Rows[0]["EXCESS_COLLECTION"];
+                        ws.Cell("J" + (i + 10)).Value = ro_summary.Rows[0]["NO_OF_VEHICLE"];
+                        ws.Cell("K" + (i + 10)).Value = ro_summary.Rows[0]["ATTEN_V"];
+                        ws.Cell("L" + (i + 10)).Value = ro_summary.Rows[0]["TAR_COLL_PERCENT"];
+                        ws.Cell("M" + (i + 10)).Value = ro_summary.Rows[0]["INST_COLL_PERCENT"];
+                        ws.Cell("N" + (i + 10)).Value = ro_summary.Rows[0]["OVERDUE_COLL_PERCENT"];
+                        ws.Cell("O" + (i + 10)).Value = ro_summary.Rows[0]["EXCESS_COLLECTION_PERCENT"];
+                        ws.Cell("P" + (i + 10)).Value = ro_summary.Rows[0]["ATTEN_V_PERCENT"];
 
 
                         ws.Range("A5" + ":P" + (i + 6)).Style.Alignment.SetWrapText(true);
