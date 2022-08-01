@@ -148,11 +148,11 @@ namespace IALDashboard.Controllers
                 double SUB_TOTAL_QTY = 0;
                 double SUB_DHAMRAI_CKD_XX_RFD = 0;
                 double SUB_DHAMRAI_CKD_XX_DO_ISSUED = 0;
-                double SUB_DHAMRAI_CKD_XX_BOOKED_DAP = 0;
+                double SUB_DHAMRAI_CKD_XX_BOOKED = 0;
                 double SUB_DHAMRAI_CKD_XX_PDI_PTS = 0;
                 double SUB_DHAMRAI_CBU_XX_RFD = 0;
                 double SUB_DHAMRAI_CBU_XX_DO_ISSUED = 0;
-                double SUB_DHAMRAI_CBU_XX_BOOKED_DAP = 0;
+                double SUB_DHAMRAI_CBU_XX_BOOKED = 0;
                 double SUB_DHAMRAI_CBU_XX_PDI_PTS = 0;
                 double SUB_JOYDEBPUR_XX_RFD = 0;
                 double SUB_JOYDEBPUR_XX_DO_ISSUED = 0;
@@ -201,14 +201,14 @@ namespace IALDashboard.Controllers
                     {
                         ws.Cell("A" + (i + 3)).Value = i + 1;
                         ws.Cell("C" + (i + 3)).Value = stock_row["MODEL"];
-                        ws.Cell("D" + (i + 3)).Value = stock_row["TOTAL_QTY"];
+                        ws.Cell("D" + (i + 3)).Value = (Convert.ToInt16(stock_row["TOTAL_QTY"]) + Convert.ToInt16(stock_row["LC_QTY"])) ;
                         ws.Cell("E" + (i + 3)).Value = stock_row["DHAMRAI_CKD_XX_RFD"];
                         ws.Cell("F" + (i + 3)).Value = stock_row["DHAMRAI_CKD_XX_DO_ISSUED"];
-                        ws.Cell("G" + (i + 3)).Value = stock_row["DHAMRAI_CKD_XX_BOOKED_DAP"];
+                        ws.Cell("G" + (i + 3)).Value = stock_row["DHAMRAI_CKD_XX_BOOKED"];
                         ws.Cell("H" + (i + 3)).Value = stock_row["DHAMRAI_CKD_XX_PDI_PTS"];
                         ws.Cell("I" + (i + 3)).Value = stock_row["DHAMRAI_CBU_XX_RFD"];
                         ws.Cell("J" + (i + 3)).Value = stock_row["DHAMRAI_CBU_XX_DO_ISSUED"];
-                        ws.Cell("K" + (i + 3)).Value = stock_row["DHAMRAI_CBU_XX_BOOKED_DAP"];
+                        ws.Cell("K" + (i + 3)).Value = stock_row["DHAMRAI_CBU_XX_BOOKED"];
                         ws.Cell("L" + (i + 3)).Value = stock_row["DHAMRAI_CBU_XX_PDI_PTS"];
                         ws.Cell("M" + (i + 3)).Value = stock_row["JOYDEBPUR_XX_RFD"];
                         ws.Cell("N" + (i + 3)).Value = stock_row["JOYDEBPUR_XX_DO_ISSUED"];
@@ -245,11 +245,11 @@ namespace IALDashboard.Controllers
                         SUB_TOTAL_QTY += Convert.ToDouble(stock_row["TOTAL_QTY"]);
                         SUB_DHAMRAI_CKD_XX_RFD += Convert.ToDouble(stock_row["DHAMRAI_CKD_XX_RFD"]);
                         SUB_DHAMRAI_CKD_XX_DO_ISSUED += Convert.ToDouble(stock_row["DHAMRAI_CKD_XX_DO_ISSUED"]);
-                        SUB_DHAMRAI_CKD_XX_BOOKED_DAP += Convert.ToDouble(stock_row["DHAMRAI_CKD_XX_BOOKED_DAP"]);
+                        SUB_DHAMRAI_CKD_XX_BOOKED += Convert.ToDouble(stock_row["DHAMRAI_CKD_XX_BOOKED"]);
                         SUB_DHAMRAI_CKD_XX_PDI_PTS += Convert.ToDouble(stock_row["DHAMRAI_CKD_XX_PDI_PTS"]);
                         SUB_DHAMRAI_CBU_XX_RFD += Convert.ToDouble(stock_row["DHAMRAI_CBU_XX_RFD"]);
                         SUB_DHAMRAI_CBU_XX_DO_ISSUED += Convert.ToDouble(stock_row["DHAMRAI_CBU_XX_DO_ISSUED"]);
-                        SUB_DHAMRAI_CBU_XX_BOOKED_DAP += Convert.ToDouble(stock_row["DHAMRAI_CBU_XX_BOOKED_DAP"]);
+                        SUB_DHAMRAI_CBU_XX_BOOKED += Convert.ToDouble(stock_row["DHAMRAI_CBU_XX_BOOKED"]);
                         SUB_DHAMRAI_CBU_XX_PDI_PTS += Convert.ToDouble(stock_row["DHAMRAI_CBU_XX_PDI_PTS"]);
                         SUB_JOYDEBPUR_XX_RFD += Convert.ToDouble(stock_row["JOYDEBPUR_XX_RFD"]);
                         SUB_JOYDEBPUR_XX_DO_ISSUED += Convert.ToDouble(stock_row["JOYDEBPUR_XX_DO_ISSUED"]);
@@ -297,14 +297,14 @@ namespace IALDashboard.Controllers
                     }
 
                 }
-                ws.Cell("D" + (i + 3)).Value = SUB_TOTAL_QTY;
+                ws.Cell("D" + (i + 3)).Value = (SUB_TOTAL_QTY+ SUB_LC_QTY);
                 ws.Cell("E" + (i + 3)).Value = SUB_DHAMRAI_CKD_XX_RFD;
                 ws.Cell("F" + (i + 3)).Value = SUB_DHAMRAI_CKD_XX_DO_ISSUED;
-                ws.Cell("G" + (i + 3)).Value = SUB_DHAMRAI_CKD_XX_BOOKED_DAP;
+                ws.Cell("G" + (i + 3)).Value = SUB_DHAMRAI_CKD_XX_BOOKED;
                 ws.Cell("H" + (i + 3)).Value = SUB_DHAMRAI_CKD_XX_PDI_PTS;
                 ws.Cell("I" + (i + 3)).Value = SUB_DHAMRAI_CBU_XX_RFD;
                 ws.Cell("J" + (i + 3)).Value = SUB_DHAMRAI_CBU_XX_DO_ISSUED;
-                ws.Cell("K" + (i + 3)).Value = SUB_DHAMRAI_CBU_XX_BOOKED_DAP;
+                ws.Cell("K" + (i + 3)).Value = SUB_DHAMRAI_CBU_XX_BOOKED;
                 ws.Cell("L" + (i + 3)).Value = SUB_DHAMRAI_CBU_XX_PDI_PTS;
                 ws.Cell("M" + (i + 3)).Value = SUB_JOYDEBPUR_XX_RFD;
                 ws.Cell("N" + (i + 3)).Value = SUB_JOYDEBPUR_XX_DO_ISSUED;

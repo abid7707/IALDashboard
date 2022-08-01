@@ -224,12 +224,12 @@
 
                             var SUB_DHAMRAI_CKD_XX_RFD = 0;
                             var SUB_DHAMRAI_CKD_XX_DO_ISSUED = 0;
-                            var SUB_DHAMRAI_CKD_XX_BOOKED_DAP = 0;
+                            var SUB_DHAMRAI_CKD_XX_BOOKED = 0;
                             var SUB_DHAMRAI_CKD_XX_PDI_PTS = 0;
 
                             var SUB_DHAMRAI_CBU_XX_RFD = 0;
                             var SUB_DHAMRAI_CBU_XX_DO_ISSUED = 0;
-                            var SUB_DHAMRAI_CBU_XX_BOOKED_DAP = 0;
+                            var SUB_DHAMRAI_CBU_XX_BOOKED = 0;
                             var SUB_DHAMRAI_CBU_XX_PDI_PTS = 0;
 
                             var SUB_JOYDEBPUR_XX_RFD = 0;
@@ -276,20 +276,21 @@
 
                             foreach (System.Data.DataRow stock in ViewBag.stocklist.Rows)
                             {
+                            
                                         <tr>
                                             <td>@i</td>
                                             <td>@stock["PRODUCT_FAMILY"]</td>
                                             <td nowrap>@stock["PARTDES"]</td>
-                                            <td>@stock["TOTAL_QTY"]</td>
+                                            <td>@(Convert.ToInt16(stock["TOTAL_QTY"])+ Convert.ToInt16(stock["LC_QTY"]))</td>
                                             <!--Dhamrai CKD-->
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD RFD">@stock["DHAMRAI_CKD_XX_RFD"]</td>
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD DO ISSUE">@stock["DHAMRAI_CKD_XX_DO_ISSUED"]</td>
-                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD BOOKED">@stock["DHAMRAI_CKD_XX_BOOKED_DAP"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD BOOKED">@stock["DHAMRAI_CKD_XX_BOOKED"]</td>
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CKD PDI/PTS">@stock["DHAMRAI_CKD_XX_PDI_PTS"]</td>
                                             <!---Dhamrai CBU-->
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU RFD">@stock["DHAMRAI_CBU_XX_RFD"]</td>
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI DO ISSUE ">@stock["DHAMRAI_CBU_XX_DO_ISSUED"]</td>
-                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU BOOKED">@stock["DHAMRAI_CBU_XX_BOOKED_DAP"]</td>
+                                            <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU BOOKED">@stock["DHAMRAI_CBU_XX_BOOKED"]</td>
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; DHAMRAI CBU ">@stock["DHAMRAI_CBU_XX_PDI_PTS"]</td>
                                             <!-- -Joydevpur-->
                                             <td class="data-cell" title="@stock["PARTDES"] &#64; JOYDEBPUR RFD ">@stock["JOYDEBPUR_XX_RFD"]</td>
@@ -335,12 +336,12 @@
 
                             SUB_DHAMRAI_CKD_XX_RFD += Convert.ToInt16(stock["DHAMRAI_CKD_XX_RFD"]);
                             SUB_DHAMRAI_CKD_XX_DO_ISSUED += Convert.ToInt16(stock["DHAMRAI_CKD_XX_DO_ISSUED"]);
-                            SUB_DHAMRAI_CKD_XX_BOOKED_DAP += Convert.ToInt16(stock["DHAMRAI_CKD_XX_BOOKED_DAP"]);
+                            SUB_DHAMRAI_CKD_XX_BOOKED += Convert.ToInt16(stock["DHAMRAI_CKD_XX_BOOKED"]);
                             SUB_DHAMRAI_CKD_XX_PDI_PTS += Convert.ToInt16(stock["DHAMRAI_CKD_XX_PDI_PTS"]);
 
                             SUB_DHAMRAI_CBU_XX_RFD += Convert.ToInt16(stock["DHAMRAI_CBU_XX_RFD"]);
                             SUB_DHAMRAI_CBU_XX_DO_ISSUED += Convert.ToInt16(stock["DHAMRAI_CBU_XX_DO_ISSUED"]);
-                            SUB_DHAMRAI_CBU_XX_BOOKED_DAP += Convert.ToInt16(stock["DHAMRAI_CBU_XX_BOOKED_DAP"]);
+                            SUB_DHAMRAI_CBU_XX_BOOKED += Convert.ToInt16(stock["DHAMRAI_CBU_XX_BOOKED"]);
                             SUB_DHAMRAI_CBU_XX_PDI_PTS += Convert.ToInt16(stock["DHAMRAI_CBU_XX_PDI_PTS"]);
 
                             SUB_JOYDEBPUR_XX_RFD += Convert.ToInt16(stock["JOYDEBPUR_XX_RFD"]);
@@ -389,15 +390,15 @@
 
                     <tr>
                         <td colspan="3">Total</td>
-                        <th>@SUB_TOTAL_QTY</th>
+                        <th>@(SUB_TOTAL_QTY+SUB_LC_QTY)</th>
                         <th>@SUB_DHAMRAI_CKD_XX_RFD</th>
                         <th>@SUB_DHAMRAI_CKD_XX_DO_ISSUED</th>
-                        <th>@SUB_DHAMRAI_CKD_XX_BOOKED_DAP</th>
+                        <th>@SUB_DHAMRAI_CKD_XX_BOOKED</th>
                         <th>@SUB_DHAMRAI_CKD_XX_PDI_PTS</th>
 
                         <th>@SUB_DHAMRAI_CBU_XX_RFD</th>
                         <th>@SUB_DHAMRAI_CBU_XX_DO_ISSUED</th>
-                        <th>@SUB_DHAMRAI_CBU_XX_BOOKED_DAP</th>
+                        <th>@SUB_DHAMRAI_CBU_XX_BOOKED</th>
                         <th>@SUB_DHAMRAI_CBU_XX_PDI_PTS</th>
 
                         <th>@SUB_JOYDEBPUR_XX_RFD</th>
