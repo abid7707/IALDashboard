@@ -116,12 +116,13 @@ namespace IALDashboard.Controllers
                         ws.Range("D5").Style.Font.SetBold().Font.FontSize = 12;
 
                         ws.Cell("E5").Value = "Model Name";
+
                         ws.Range("E5").Style.Font.SetBold().Font.FontSize = 12;
 
                         ws.Cell("F5").Value = "1st Date";
                         ws.Range("F5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("G5").Value = "EMI AMT.";
+                        ws.Cell("G5").Value = "Term";
                         ws.Range("G5").Style.Font.SetBold().Font.FontSize = 12;
 
                         ws.Cell("H5").Value = "OP. Tar Inst Amt.";
@@ -142,7 +143,7 @@ namespace IALDashboard.Controllers
                         ws.Cell("M5").Value = "Op. Ovd";
                         ws.Range("M5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("N5").Value = "Overdue";
+                        ws.Cell("N5").Value = "EMI AMT.";
                         ws.Range("N5").Style.Font.SetBold().Font.FontSize = 12;
 
                         ws.Cell("O5").Value = "Monthly Coll";
@@ -183,27 +184,26 @@ namespace IALDashboard.Controllers
                             ws.Cell("D" + (i + 6)).Value = record["REGNO"].ToString();
                             ws.Cell("E" + (i + 6)).Value = record["CATALOG_DESC"].ToString();
                             ws.Cell("F" + (i + 6)).Value = record["FSTINSAL_DATE"].ToString();
-                            ws.Cell("G" + (i + 6)).Value = record["EMI_AMOUNT"].ToString();
+                            ws.Cell("G" + (i + 6)).Value = record["TERM"].ToString();
                             ws.Cell("H" + (i + 6)).Value = record["OP_TAR_INST_AMT"].ToString();
                             ws.Cell("I" + (i + 6)).Value = record["NO_OF_OVERDUE"].ToString();
                             ws.Cell("J" + (i + 6)).Value = record["MR_COLL"].ToString();
                             ws.Cell("K" + (i + 6)).Value = record["DUE_DP_AND_DC"].ToString();
                             ws.Cell("L" + (i + 6)).Value = record["INS_DC"].ToString();
                             ws.Cell("M" + (i + 6)).Value = record["OPENING_OVERDUE"].ToString();
-                            ws.Cell("N" + (i + 6)).Value = record["OVERDUE"].ToString();
+                            ws.Cell("N" + (i + 6)).Value = record["EMI_AMOUNT"].ToString();
                             ws.Cell("O" + (i + 6)).Value = record["MONTHLY_COLL"].ToString();
                             ws.Cell("P" + (i + 6)).Value = record["ATTEN_V"].ToString();
                             i++;
                         }
-                        ws.Cell("F" + (i + 6)).Value = "Sub Total";
-                        ws.Cell("G" + (i + 6)).Value = SUB_EMI_AMOUNT.ToString();
+                        ws.Cell("G" + (i + 6)).Value = "Sub Total";
                         ws.Cell("H" + (i + 6)).Value = SUB_TAR_INST_AMT.ToString();
                         ws.Cell("I" + (i + 6)).Value = SUB_NO_OF_OVERDUE.ToString();
                         ws.Cell("J" + (i + 6)).Value = SUB_MR_COLL.ToString();
                         ws.Cell("K" + (i + 6)).Value = SUB_DUE_DP_AND_DC.ToString();
                         ws.Cell("L" + (i + 6)).Value = SUB_INS_DC.ToString();
                         ws.Cell("M" + (i + 6)).Value = SUB_OPENING_OVERDUE.ToString();
-                        ws.Cell("N" + (i + 6)).Value = SUB_OVERDUE.ToString();
+                        ws.Cell("N" + (i + 6)).Value = SUB_EMI_AMOUNT.ToString();
                         ws.Cell("O" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
                         ws.Cell("P" + (i + 6)).Value = SUB_ATTEN_V.ToString();
 
@@ -524,10 +524,10 @@ namespace IALDashboard.Controllers
                 ws.Cell("B5").Value = "Zone";
                 ws.Range("B5").Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("C5").Value = "Tar Inst Amt.";
+                ws.Cell("C5").Value = "OP. Tar Inst Amt.";
                 ws.Range("C5").Style.Font.SetBold().Font.FontSize = 12;
 
-                ws.Cell("D5").Value = "Opening AOD";
+                ws.Cell("D5").Value = "OP A. OD";
                 ws.Range("D5").Style.Font.SetBold().Font.FontSize = 12;
 
                 ws.Cell("E5").Value = "Monthly  Collection";
@@ -565,8 +565,8 @@ namespace IALDashboard.Controllers
 
                 int i = 0;
                 int j = 1;
-                
-              
+
+
 
                 DataTable ZoneList = new Collection_DAL().ZoneInfo();
 
@@ -574,16 +574,16 @@ namespace IALDashboard.Controllers
 
                 DataTable zone_group_dt = new DataTable("zone_group_table");
                 zone_group_dt.Columns.Add("ZONE_GROUP", typeof(string));
-             
 
-               DataTable dtZoneGroup=   dt.DefaultView.ToTable(true, "ZONE_GROUP");
+
+                DataTable dtZoneGroup = dt.DefaultView.ToTable(true, "ZONE_GROUP");
 
 
 
 
                 foreach (DataRow zone in dtZoneGroup.Rows)
                 {
-                     DataRow[] rs = dt.Select("ZONE_GROUP = '" + zone["ZONE_GROUP"].ToString() + "'");
+                    DataRow[] rs = dt.Select("ZONE_GROUP = '" + zone["ZONE_GROUP"].ToString() + "'");
 
                     double SUB_TAR_INST_AMT = 0;
                     double SUB_ACTUAL_OD = 0;
@@ -604,29 +604,29 @@ namespace IALDashboard.Controllers
                     {
                         foreach (DataRow record in rs)
                         {
-                             SUB_TAR_INST_AMT += Convert.ToDouble(record["TAR_INST_AMT"]);
-                             SUB_ACTUAL_OD += Convert.ToDouble(record["ACTUAL_OD"]);
-                             SUB_MONTHLY_COLL += Convert.ToDouble(record["MONTHLY_COLL"]);
-                             SUB_INST_COLL += Convert.ToDouble(record["INST_COLL"]);
-                             SUB_OD_COLLECTION += Convert.ToDouble(record["OD_COLECTION"]);
-                             SUB_EXCESS_COLLECTION += Convert.ToDouble(record["EXCESS_COLLECTION"]);
-                             SUB_NO_OF_VEHICLE += Convert.ToDouble(record["NO_OF_VEHICLE"]);
-                             SUB_ATTEN_V += Convert.ToDouble(record["ATTEN_V"]);
+                            SUB_TAR_INST_AMT += Convert.ToDouble(record["OP_TAR_INST_AMT"]);
+                            SUB_ACTUAL_OD += Convert.ToDouble(record["ACTUAL_OPENING_OVERDUE"]);
+                            SUB_MONTHLY_COLL += Convert.ToDouble(record["MONTHLY_COLL"]);
+                            SUB_INST_COLL += Convert.ToDouble(record["INST_COLL"]);
+                            SUB_OD_COLLECTION += Convert.ToDouble(record["OD_COLECTION"]);
+                            SUB_EXCESS_COLLECTION += Convert.ToDouble(record["EXCESS_COLLECTION"]);
+                            SUB_NO_OF_VEHICLE += Convert.ToDouble(record["NO_OF_VEHICLE"]);
+                            SUB_ATTEN_V += Convert.ToDouble(record["ATTEN_V"]);
                             /*SUB_TAR_COLL_PERCENT += Convert.ToDouble(record["TAR_COLL_PERCENT"]);
                             SUB_INST_COLL_PERCENT += Convert.ToDouble(record["INST_COLL_PERCENT"]);
                             AVG_INST_COLL_PERCENT = SUB_INST_COLL_PERCENT / (i + 1);*/
-                            G_COLL_PERCENT= Math.Round(SUB_MONTHLY_COLL / SUB_TAR_INST_AMT * 100, 0);
+                            G_COLL_PERCENT = Math.Round(SUB_MONTHLY_COLL / SUB_TAR_INST_AMT * 100, 0);
                             AVG_INST_COLL_PERCENT = Math.Round(SUB_INST_COLL / SUB_TAR_INST_AMT * 100, 0);
-                             AVG_OVERDUE_COLL_PERCENT = Math.Round(SUB_OD_COLLECTION / SUB_ACTUAL_OD * 100, 0);
-                             AVG_ATTEN_V_PERCENT = Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
+                            AVG_OVERDUE_COLL_PERCENT = Math.Round(SUB_OD_COLLECTION / SUB_ACTUAL_OD * 100, 0);
+                            AVG_ATTEN_V_PERCENT = Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
                             AVG_EXCESS_COLLECTION_PERCENT = Math.Round(SUB_EXCESS_COLLECTION / SUB_TAR_INST_AMT * 100, 0);
-                            AVG_ATTN_V_PERCENT= Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
+                            AVG_ATTN_V_PERCENT = Math.Round(SUB_ATTEN_V / SUB_NO_OF_VEHICLE * 100, 0);
 
 
-                            ws.Cell("A" + (i + 6)).Value =j;
+                            ws.Cell("A" + (i + 6)).Value = j;
                             ws.Cell("B" + (i + 6)).Value = record["ZONE_NAME"].ToString();
-                            ws.Cell("C" + (i + 6)).Value = record["TAR_INST_AMT"].ToString();
-                            ws.Cell("D" + (i + 6)).Value = record["ACTUAL_OD"].ToString();
+                            ws.Cell("C" + (i + 6)).Value = record["OP_TAR_INST_AMT"].ToString();
+                            ws.Cell("D" + (i + 6)).Value = record["ACTUAL_OPENING_OVERDUE"].ToString();
                             ws.Cell("E" + (i + 6)).Value = record["MONTHLY_COLL"].ToString();
                             ws.Cell("F" + (i + 6)).Value = record["INST_COLL"].ToString();
                             ws.Cell("G" + (i + 6)).Value = record["OD_COLECTION"].ToString();
@@ -643,7 +643,7 @@ namespace IALDashboard.Controllers
                             j++;
                         }
 
-                        ws.Cell("B" + (i + 6)).Value = zone["ZONE_GROUP"].ToString()+ " Total";
+                        ws.Cell("B" + (i + 6)).Value = zone["ZONE_GROUP"].ToString() + " Total";
                         ws.Cell("C" + (i + 6)).Value = SUB_TAR_INST_AMT.ToString();
                         ws.Cell("D" + (i + 6)).Value = SUB_ACTUAL_OD.ToString();
                         ws.Cell("E" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
@@ -653,19 +653,19 @@ namespace IALDashboard.Controllers
                         ws.Cell("I" + (i + 6)).Value = SUB_NO_OF_VEHICLE.ToString();
                         ws.Cell("J" + (i + 6)).Value = SUB_ATTEN_V.ToString();
                         ws.Cell("K" + (i + 6)).Value = G_COLL_PERCENT.ToString();
-                        ws.Cell("L" + (i + 6)).Value =  AVG_INST_COLL_PERCENT.ToString();
+                        ws.Cell("L" + (i + 6)).Value = AVG_INST_COLL_PERCENT.ToString();
                         ws.Cell("M" + (i + 6)).Value = AVG_OVERDUE_COLL_PERCENT.ToString();
                         ws.Cell("N" + (i + 6)).Value = AVG_EXCESS_COLLECTION_PERCENT.ToString();
                         ws.Cell("O" + (i + 6)).Value = AVG_ATTN_V_PERCENT.ToString();
-                        
+
                         ws.Range("A" + (i + 6) + ":O" + (i + 6)).
                             Style.Font.SetBold().Font.FontSize = 12;
 
 
-                        ws.Range("A" +(zone_group_start) + ":O" + (i + 6)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                        ws.Range("A" + (zone_group_start)+":O" + (i + 6)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                        ws.Range("A" + (zone_group_start) + ":O" + (i + 6)).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                        ws.Range("A" + (zone_group_start) + ":O" + (i + 6)).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
 
-                       
+
 
                         i++;
                         i++;
@@ -683,7 +683,7 @@ namespace IALDashboard.Controllers
 
                 ws.Range("A5" + ":O" + (i + 6)).Style.Alignment.SetWrapText(true);
 
-               
+
 
                 ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
                 ws.PageSetup.AdjustTo(75);
@@ -692,7 +692,7 @@ namespace IALDashboard.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  " ZoneWiseSummary-"+ contract+ " " + formatted_from_date + ".xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", " ZoneWiseSummary-" + contract + " " + formatted_from_date + ".xlsx");
                 }
 
             }

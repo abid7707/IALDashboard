@@ -201,8 +201,8 @@
 
                         zone_group = rs["ZONE_GROUP"];
 
-                        TAR_INST_AMT +=  parseInt(rs["TAR_INST_AMT"]);
-                        ACTUAL_OD +=  parseInt(rs["ACTUAL_OD"]);
+                        TAR_INST_AMT += parseInt(rs["OP_TAR_INST_AMT"]);
+                        ACTUAL_OD += parseInt(rs["ACTUAL_OPENING_OVERDUE"]);
                         MONTHLY_COLL +=  parseInt(rs["MONTHLY_COLL"]);
                         INST_COLL +=  parseInt(rs["INST_COLL"]);
                         OD_COLECTION +=  parseInt(rs["OD_COLECTION"]);
@@ -219,8 +219,8 @@
                         row = `<tr>
                                     <td>${i}</td>
                                     <td>${rs["ZONE_NAME"]}</td>
-                                    <td class="text-right">${Commas(rs["TAR_INST_AMT"])}</td>
-                                    <td class="text-right">${Commas(rs["ACTUAL_OD"])}</td>
+                                    <td class="text-right">${Commas(rs["OP_TAR_INST_AMT"])}</td>
+                                    <td class="text-right">${Commas(rs["ACTUAL_OPENING_OVERDUE"])}</td>
                                     <td class="text-right">${Commas(rs["MONTHLY_COLL"])}</td>
                                     <td class="text-right">${Commas(rs["INST_COLL"])}</td>
                                     <td class="text-right">${Commas(rs["OD_COLECTION"])}</td>
