@@ -8,6 +8,7 @@ using IALDashboard.DAL;
 
 namespace IALDashboard.Controllers
 {
+    [Filters.AuthorizedUser]
     public class LCController : Controller
     {
         // GET: LC
@@ -27,9 +28,16 @@ namespace IALDashboard.Controllers
 
 
         [HttpPost]
-        public void LCStockSave(String[] PART_NO, int[] LC_QTY) {
+        public ActionResult LCStockSave(string[] PART_NO, int[] LC_QTY) {
 
-            new Stock_DAL().savePartLCStock(PART_NO, LC_QTY);
+            new Stock_DAL().savePartLCStock(PART_NO, LC_QTY); // Save data
+
+            DataTable dt = new Stock_DAL().GetPartLCStock();
+            ViewBag.actionName = "Part LC Stock";
+            ViewBag.part_lc_stock=dt;
+            ViewBag.save_message = "Save Successfully";
+
+            return View("PartLCEntry");
 
         }
     }

@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var lc_stock = ViewBag.part_lc_stock;
+    var save_message = ViewBag.save_message;
 }
 @using (Html.BeginForm("LCStockSave", "LC", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -59,6 +60,11 @@
 
     <script>
         $(document).ready(function () {
+
+             var save_message = "@save_message";
+            if (save_message != "")
+                alert("@save_message");
+
 
             $("#table_lc_stock input").each(function (u, v) {
                 var val = $(this).val();

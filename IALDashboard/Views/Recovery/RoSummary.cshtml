@@ -13,10 +13,10 @@
         <div class="col-md-6">
             <!-- general form elements -->
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Monthly RO Summary</h3>
-                </div>
-                <!-- /.card-header -->
+                <!--   <div class="card-header">
+          <h3 class="card-title">Monthly RO Summary</h3>
+      </div>
+      /.card-header -->
                 <!-- form start -->
                 @using (Html.BeginForm("ExportROSummary", "Recovery", FormMethod.Post))
                 {
@@ -51,26 +51,21 @@
                     </div>
                     <!-- /.card-body -->
 
-            <div class="card-footer">
-                <button id="btn-get-ro-summary" class="btn btn-primary" type="button">Submit</button>
-                <input class="btn btn-outline-primary pull-right" type="submit" value="Export to Excel" />
+                    <div class="card-footer">
+                        <button id="btn-get-ro-summary" class="btn btn-primary btn-sm myPreLoader" type="button">Submit</button>
+                        <input class="btn btn-outline-primary pull-right btn-sm" type="submit" value="Export to Excel" />
+                    </div>
+                }
             </div>
-                    }
-                </div>
         </div>
         <!-- /.card -->
-
+    </div>
 
 
         <div class="card">
-            <div class="card-header">
-
-                @*<input class="btn btn-outline-primary" type="submit" value="Export to Excel" />*@
-
-
-            </div>
+       
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body table-responsive">
 
 
 
@@ -79,7 +74,7 @@
                 @*<button type="button" class="btn btn-block btn-outline-primary" onclick="tableToExcel('dailyStockReport', 'dailyStockReport')">Export to Excel</button>*@
                 <div class="table">
                     <!--<table id="dailyStockReport" class="table table-bordered table-striped table-condensed display nowrap" style="width:100%">-->
-                    <table id="ro-table" class="table-responsive table-striped" style="width:100%">
+                    <table id="ro-table" class="table-bordered table-striped" style="width:100%; font-size:small" width="100%">
                         <thead id="report-header">
                             <tr>
                                 <th>SL No.</th>
@@ -112,7 +107,7 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-</div>
+
 
 <script>
 
@@ -166,7 +161,8 @@
 
                 });
 
-                console.log(roSummary);
+                
+                hidePreloader();
 
 
             })();

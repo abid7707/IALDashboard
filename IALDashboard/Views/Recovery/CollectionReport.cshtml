@@ -1,9 +1,11 @@
-﻿<div class="col-md-6">
+﻿<div class="col-md-4">
     <!-- general form elements -->
     <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Monthly Collection Report</h3>
-        </div>
+        <!--
+    <div class="card-header">
+        <h3 class="card-title">Monthly Collection Report</h3>
+    </div>
+        -->
         <!-- /.card-header -->
         <!-- form start -->
         @using (Html.BeginForm("ExportCollectionReport", "Recovery", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -24,7 +26,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-outline-primary btn-sm myPreLoader">Export to Excel</button>
             </div>
         }
     </div>

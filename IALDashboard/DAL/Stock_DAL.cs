@@ -273,7 +273,53 @@ namespace IALDashboard.DAL
 
             return dt;
         }
+        public DataTable GetPartLCStock()
+        {
+            DataTable dt = new DataTable("part_lc_stock");
 
+            try
+            {
+
+                OracleCommand com = GetSPCommand("PROC_GET_PART_LC_STOCK");
+                com.Parameters.Add("PCURSOR", OracleType.Cursor).Direction = ParameterDirection.Output;
+                OracleDataAdapter oraData = new OracleDataAdapter(com);
+
+                oraData.Fill(dt);
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Dispose();
+            }
+
+            return dt;
+        }
+
+
+
+        public int savePartLCStock(string[] PART_NO, int[] LC_QTY) { 
+            int i = 0;
+
+            foreach (string part in PART_NO) {
+                string part_no = PART_NO[i];
+                int lc_qty = LC_QTY[i];
+
+                OracleCommand com = GetSPCommand("PROC_LC_STOCK_UPDATE");
+                com.Parameters.Add("P_PART_NO", OracleType.VarChar).Value = part_no;
+                com.Parameters.Add("P_LC_QTY", OracleType.Number).Value = lc_qty;
+
+                com.ExecuteNonQuery();
+
+
+                i++;
+            }
+
+            return i;
+        
+        }
     }
 }
 

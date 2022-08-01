@@ -57,11 +57,14 @@
                             </ol>
                         </div>*@
                     </div>
-                </div><!-- /.container-fluid -->
+                </div>
             </section>
+                -->
+            
 
             <!-- Main content -->
             <section class="content">
+                <br/>
                 @RenderBody()
             </section>
             <!-- /.content -->
@@ -162,19 +165,24 @@
 
             $(function () {
                 var url = window.location;
+                console.log(url);
                 // for single sidebar menu
-                $('ul.nav-sidebar a').filter(function () {
-                    return this.href == url;
-                }).addClass('active');
+                if (url.pathname != "/") {
 
-                // for sidebar menu and treeview
-                $('ul.nav-treeview a').filter(function () {
-                    return this.href == url;
-                }).parentsUntil(".nav-sidebar > .nav-treeview")
-                    .css({ 'display': 'block' })
-                    .addClass('menu-open').prev('a')
-                    .addClass('active');
-            });
+
+                    $('ul.nav-sidebar a').filter(function () {
+                        return this.href == url;
+                    }).addClass('active');
+
+                    // for sidebar menu and treeview
+                    $('ul.nav-treeview a').filter(function () {
+                        return this.href == url;
+                    }).parentsUntil(".nav-sidebar > .nav-treeview")
+                        .css({ 'display': 'block' })
+                        .addClass('menu-open').prev('a')
+                        .addClass('active');
+                }
+                });
 
             @*Active Nav ends here*@
 
