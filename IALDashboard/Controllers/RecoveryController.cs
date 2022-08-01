@@ -128,22 +128,22 @@ namespace IALDashboard.Controllers
                         ws.Cell("H5").Value = "OP. Tar Inst Amt.";
                         ws.Range("H5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("I5").Value = "NO.Ovd";
+                        ws.Cell("I5").Value = "EMI AMT.";
                         ws.Range("I5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("J5").Value = "MR COLL";
+                        ws.Cell("J5").Value = "NO.Ovd";
                         ws.Range("J5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("K5").Value = "DP+DC Due";
+                        ws.Cell("K5").Value = "MR COLL";
                         ws.Range("K5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("L5").Value = "INST DC";
+                        ws.Cell("L5").Value = "DP+DC Due";
                         ws.Range("L5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("M5").Value = "Op. Ovd";
+                        ws.Cell("M5").Value = "INST DC";
                         ws.Range("M5").Style.Font.SetBold().Font.FontSize = 12;
 
-                        ws.Cell("N5").Value = "EMI AMT.";
+                        ws.Cell("N5").Value = "Op. Ovd";
                         ws.Range("N5").Style.Font.SetBold().Font.FontSize = 12;
 
                         ws.Cell("O5").Value = "Monthly Coll";
@@ -186,24 +186,24 @@ namespace IALDashboard.Controllers
                             ws.Cell("F" + (i + 6)).Value = record["FSTINSAL_DATE"].ToString();
                             ws.Cell("G" + (i + 6)).Value = record["TERM"].ToString();
                             ws.Cell("H" + (i + 6)).Value = record["OP_TAR_INST_AMT"].ToString();
-                            ws.Cell("I" + (i + 6)).Value = record["NO_OF_OVERDUE"].ToString();
-                            ws.Cell("J" + (i + 6)).Value = record["MR_COLL"].ToString();
-                            ws.Cell("K" + (i + 6)).Value = record["DUE_DP_AND_DC"].ToString();
-                            ws.Cell("L" + (i + 6)).Value = record["INS_DC"].ToString();
-                            ws.Cell("M" + (i + 6)).Value = record["OPENING_OVERDUE"].ToString();
-                            ws.Cell("N" + (i + 6)).Value = record["EMI_AMOUNT"].ToString();
+                            ws.Cell("I" + (i + 6)).Value = record["EMI_AMOUNT"].ToString();
+                            ws.Cell("J" + (i + 6)).Value = record["NO_OF_OVERDUE"].ToString();
+                            ws.Cell("K" + (i + 6)).Value = record["MR_COLL"].ToString();
+                            ws.Cell("L" + (i + 6)).Value = record["DUE_DP_AND_DC"].ToString();
+                            ws.Cell("M" + (i + 6)).Value = record["INS_DC"].ToString();
+                            ws.Cell("N" + (i + 6)).Value = record["OPENING_OVERDUE"].ToString();
                             ws.Cell("O" + (i + 6)).Value = record["MONTHLY_COLL"].ToString();
                             ws.Cell("P" + (i + 6)).Value = record["ATTEN_V"].ToString();
                             i++;
                         }
                         ws.Cell("G" + (i + 6)).Value = "Sub Total";
                         ws.Cell("H" + (i + 6)).Value = SUB_TAR_INST_AMT.ToString();
-                        ws.Cell("I" + (i + 6)).Value = SUB_NO_OF_OVERDUE.ToString();
-                        ws.Cell("J" + (i + 6)).Value = SUB_MR_COLL.ToString();
-                        ws.Cell("K" + (i + 6)).Value = SUB_DUE_DP_AND_DC.ToString();
-                        ws.Cell("L" + (i + 6)).Value = SUB_INS_DC.ToString();
-                        ws.Cell("M" + (i + 6)).Value = SUB_OPENING_OVERDUE.ToString();
-                        ws.Cell("N" + (i + 6)).Value = SUB_EMI_AMOUNT.ToString();
+                        ws.Cell("I" + (i + 6)).Value = SUB_EMI_AMOUNT.ToString();
+                        ws.Cell("J" + (i + 6)).Value = SUB_NO_OF_OVERDUE.ToString();
+                        ws.Cell("K" + (i + 6)).Value = SUB_MR_COLL.ToString();
+                        ws.Cell("L" + (i + 6)).Value = SUB_DUE_DP_AND_DC.ToString();
+                        ws.Cell("M" + (i + 6)).Value = SUB_INS_DC.ToString();
+                        ws.Cell("N" + (i + 6)).Value = SUB_OPENING_OVERDUE.ToString();
                         ws.Cell("O" + (i + 6)).Value = SUB_MONTHLY_COLL.ToString();
                         ws.Cell("P" + (i + 6)).Value = SUB_ATTEN_V.ToString();
 
